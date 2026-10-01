@@ -1,0 +1,22 @@
+{
+  "name": "otto",
+  "version": "0.1.0",
+  "description": "Parla con Otto, l'agente di LTV, direttamente da Claude Code: account Meta e Google Ads, report, knowledge dei clienti.",
+  "author": { "name": "LTV" },
+  "userConfig": {
+    "token": {
+      "type": "string",
+      "title": "Il tuo token di Otto",
+      "description": "Te lo dà Max. Si incolla una volta sola e resta nel Portachiavi del Mac.",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "mcpServers": {
+    "otto": {
+      "type": "http",
+      "url": "https://otto-hermes.ltvalue.it/mcp",
+      "headers": { "Authorization": "Bearer ${user_config.token}" }
+    }
+  }
+}

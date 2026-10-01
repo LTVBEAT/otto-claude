@@ -1,0 +1,12 @@
+{
+  "name": "ltvbeat",
+  "owner": { "name": "LTV" },
+  "metadata": { "description": "I plugin di Claude Code del team LTV" },
+  "plugins": [
+    {
+      "name": "otto",
+      "source": "./plugins/otto",
+      "description": "Parla con Otto, l'agente di LTV, direttamente da Claude Code"
+    }
+  ]
+}
