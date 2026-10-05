@@ -7,7 +7,7 @@ description: Usa questa skill quando l'utente vuole chiedere qualcosa a Otto, l'
 
 Otto è l'agente di LTV: vede gli account Meta e Google Ads dei clienti, conosce la loro knowledge,
 scrive report e copy, e lavora con Drive, Notion e Slack dell'agenzia. Ci parli con gli strumenti
-`chiedi_a_otto`, `risultato_otto` e `autorizza_otto`.
+`chiedi_a_otto`, `risultato_otto` e `autorizza_otto`, più `prepara_consegna` per dargli un file.
 
 ## Quando passargli la richiesta
 
@@ -19,9 +19,33 @@ scrive report e copy, e lavora con Drive, Notion e Slack dell'agenzia. Ci parli 
 ## Come scrivergli
 
 - Scrivi in italiano, con il cliente e il periodo espliciti («TKART, ultimi 7 giorni»).
-- Otto **non vede i file dell'utente**: se serve un testo o un dato che sta qui, copialo nel messaggio.
+- Otto **non vede i file dell'utente**. Un testo breve (una mail, due appunti) copialo nel
+  messaggio. Un file intero si consegna (sotto).
 - La conversazione continua da sola. Usa `nuova_conversazione: true` solo se l'utente cambia
   argomento da capo.
+
+## Dare un file a Otto
+
+Quando l'utente vuole mettere un file nella knowledge di un cliente («metti questo PDF nella
+knowledge di TKART»):
+
+1. **Cliente certo.** Se non è chiaro di quale cliente è il file, chiedilo prima: senza cliente
+   Otto non archivia niente.
+2. **Niente dati personali.** Non consegnare mai esportazioni con contatti, lead, ordini o
+   pagamenti, per nessun cliente e in particolare per TKART (c'è un accordo sul trattamento dei
+   dati). Se il file sembra uno di questi, fermati e chiedi all'utente.
+   Giudica dal nome del file e da quello che dice l'utente: non aprirlo per controllare.
+3. `prepara_consegna` con il nome del file - ricevi un comando `curl`.
+4. Lancia il comando sostituendo `<percorso del file>` con il percorso vero, quotato correttamente per la shell (attenzione ai nomi con l'apostrofo,
+   es. «Brief dell'agenzia.pdf»: usa le virgolette doppie).
+   Non serve leggere il file prima.
+5. Se `curl` risponde `"ok": true`, chiama `chiedi_a_otto` con la richiesta dell'utente e
+   `consegna` uguale al numero (`cns_...`). Se risponde con un errore, riferiscilo così com'è.
+6. Se l'errore dice «scansione», proponi all'utente di leggere tu il PDF e mandare a Otto il testo
+   nel messaggio, sempre che non contenga dati personali (passo 2).
+
+Ammessi PDF, Word, Excel, PowerPoint, CSV e testo, fino a 25 MB. A Otto arriva il **contenuto**,
+non il file: grafici e immagini non passano.
 
 ## Le risposte
 
