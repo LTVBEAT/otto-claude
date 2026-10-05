@@ -47,6 +47,15 @@ passa a Otto da solo. Puoi anche dirlo esplicitamente: «chiedi a Otto…», «f
 - **La conversazione continua**: Otto ricorda cosa vi siete detti. Per ripartire da zero, dillo:
   «nuova conversazione con Otto».
 
+## Cosa puoi chiedere
+
+Esempi di richieste a Otto:
+
+- «Chiedi a Otto come vanno gli account di TKART questa settimana»
+- «Metti nella knowledge di TKART il brief che ho in Scaricati»
+- «Fai fare a Otto un report di Qura degli ultimi 30 giorni»
+- «Cosa dice Otto sui budget di SYHO?»
+
 ## Problemi
 
 | Cosa vedi | Cosa fare |
