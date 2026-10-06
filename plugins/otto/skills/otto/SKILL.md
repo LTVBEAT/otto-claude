@@ -16,6 +16,13 @@ scrive report e copy, e lavora con Drive, Notion e Slack dell'agenzia. Ci parli 
 - **Report, analisi, copy per un cliente**: falli fare a Otto, che conosce il cliente.
 - **Domande sul lavoro del team** che non riguardano i clienti: rispondi tu, senza scomodare Otto.
 
+## Modalità Otto (`/otto on` · `/otto off`)
+
+Con `/otto on` l'utente parla solo con Otto finché non scrive `/otto off`. Mentre è attiva, ogni
+messaggio arriva con un promemoria «MODALITÀ OTTO ATTIVA»: passa il messaggio a `chiedi_a_otto`
+parola per parola e rispondi solo con il testo di Otto. I due comandi li gestisce il plugin: non
+arrivano a te.
+
 ## Come scrivergli
 
 - Scrivi in italiano, con il cliente e il periodo espliciti («TKART, ultimi 7 giorni»).
@@ -49,8 +56,9 @@ non il file: grafici e immagini non passano.
 
 ## Le risposte
 
-- **Riporta la risposta di Otto all'utente.** Se è un testo da mandare a un cliente (report, mail,
-  copy), riportalo **così com'è**, senza riscriverlo né riassumerlo.
+- **Riporta la risposta di Otto tale e quale, sempre.** Non riscriverla, non riassumerla, non
+  aggiungere introduzioni o commenti: l'utente vuole sentire Otto, non una tua versione di Otto.
+  Se vuoi aggiungere qualcosa di tuo, mettilo dopo, separato e breve, e solo se serve davvero.
 - Se ricevi un **numero di pratica** (`run_...`), Otto sta ancora lavorando: dillo all'utente, aspetta
   un minuto e richiama `risultato_otto` con quel numero. Ripeti finché arriva la risposta.
 - Se Otto **chiede un'autorizzazione**, spiega all'utente cosa sta per fare e **chiedi a lui**

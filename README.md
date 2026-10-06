@@ -21,7 +21,7 @@ Il token resta nel Portachiavi del Mac, non dovrai più inserirlo.
 > chiedi a Otto come vanno gli account di TKART questa settimana
 
 Fatto. Lo script è leggibile qui sopra, in `installa.sh`: aggiunge il catalogo, installa il plugin,
-controlla che il token funzioni e lo salva.
+accende gli aggiornamenti automatici, controlla che il token funzioni e lo salva.
 
 <details>
 <summary>Preferisci farlo a mano, da dentro Claude Code?</summary>
@@ -40,6 +40,9 @@ L'ultimo comando chiede il token.
 Scrivi normalmente a Claude. Quando la richiesta riguarda clienti, campagne o report, Claude la
 passa a Otto da solo. Puoi anche dirlo esplicitamente: «chiedi a Otto…», «fai fare a Otto…».
 
+- **Parlare solo con Otto**: scrivi `/otto on`. Da lì ogni messaggio va a Otto e la risposta è la
+  sua, tale e quale. Con `/otto off` torni a parlare con Claude. Vale per la finestra in cui lo
+  scrivi, non per le altre.
 - **Lavori lunghi** (un report): Otto ci mette qualche minuto. Claude ti avvisa e recupera la
   risposta quando è pronta.
 - **Azioni sugli account** (mettere in pausa, cambiare budget): Otto chiede il permesso e Claude
@@ -65,6 +68,13 @@ Esempi di richieste a Otto:
 | Claude non trova Otto | chiudi e riapri Claude Code; se ancora niente, rilancia il comando di installazione |
 
 ## Aggiornare
+
+Se hai installato con il comando qui sopra, Otto si aggiorna da solo: Claude Code controlla poco
+dopo l'avvio e la versione nuova parte alla sessione dopo (o subito con `/reload-plugins`).
+
+Se l'hai installato prima del 06/10/2026, accendi gli aggiornamenti automatici una volta sola: in
+Claude Code `/plugin` → scheda **Marketplaces** → `ltvbeat` → **Enable auto-update**. Oppure
+aggiorna a mano quando vuoi:
 
 ```
 claude plugin update otto@ltvbeat
