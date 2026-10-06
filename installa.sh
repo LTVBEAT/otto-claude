@@ -20,19 +20,48 @@ if [ "$(printf '%s\n%s\n' "$MINIMA" "$VERSIONE" | sort -V | head -1)" != "$MINIM
   exit 1
 fi
 
-echo "  1/3  Aggiungo il catalogo dei plugin LTV"
+echo "  1/4  Aggiungo il catalogo dei plugin LTV"
 claude plugin marketplace add LTVBEAT/otto-claude >/dev/null 2>&1 \
   || claude plugin marketplace update ltvbeat >/dev/null 2>&1
 
-echo "  2/3  Installo il plugin otto"
+echo "  2/4  Installo il plugin otto"
 if ! claude plugin install otto@ltvbeat >/dev/null 2>&1; then
   claude plugin list 2>/dev/null | grep -q "otto@ltvbeat" \
     || { echo "  Installazione non riuscita. Avvisa Max."; exit 1; }
 fi
+# Se c'era già, lo porta all'ultima versione.
+claude plugin update otto@ltvbeat >/dev/null 2>&1
 
-echo "  3/3  Incolla il tuo token di Otto (te lo dà Max) e premi Invio."
+# Il catalogo LTV non è di Anthropic, quindi parte senza aggiornamenti automatici e la CLI non ha
+# un'opzione per accenderli: si scrive autoUpdate sulla voce del catalogo nelle impostazioni.
+# osascript c'è su ogni Mac; se il file non si legge, non lo tocca.
+AUTOAGGIORNA='function run(argv) {
+  var file = argv[0];
+  var impostazioni = {};
+  if ($.NSFileManager.defaultManager.fileExistsAtPath(file)) {
+    var testo = $.NSString.stringWithContentsOfFileEncodingError(file, $.NSUTF8StringEncoding, null);
+    if (testo.isNil()) throw new Error("non leggibile");
+    impostazioni = JSON.parse(ObjC.unwrap(testo));
+  }
+  var cataloghi = impostazioni.extraKnownMarketplaces || {};
+  var ltvbeat = cataloghi.ltvbeat || { source: { source: "github", repo: "LTVBEAT/otto-claude" } };
+  ltvbeat.autoUpdate = true;
+  cataloghi.ltvbeat = ltvbeat;
+  impostazioni.extraKnownMarketplaces = cataloghi;
+  var ok = $(JSON.stringify(impostazioni, null, 2) + "\n")
+    .writeToFileAtomicallyEncodingError(file, true, $.NSUTF8StringEncoding, null);
+  if (!ok) throw new Error("non scrivibile");
+}'
+echo "  3/4  Attivo gli aggiornamenti automatici di Otto"
+if ! osascript -l JavaScript -e "$AUTOAGGIORNA" "$HOME/.claude/settings.json" >/dev/null 2>&1; then
+  echo "       Non ci sono riuscito. Fallo a mano in Claude Code: /plugin, scheda Marketplaces,"
+  echo "       ltvbeat, Enable auto-update."
+fi
+
+echo "  4/4  Incolla il tuo token di Otto (te lo dà Max) e premi Invio."
 echo "       Mentre incolli non vedi niente: è normale."
 printf "       Token: "
+TOKEN=""
 read -rs TOKEN < /dev/tty
 echo ""
 if [ -z "$TOKEN" ]; then
