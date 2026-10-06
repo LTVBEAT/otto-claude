@@ -4,20 +4,15 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
+import { OTTO_PNG } from './icona'
+
 const attiva = atom({ plugin: 'otto', key: 'attiva' } as const, false)
 
-// Nell'app desktop l'icona è il PNG dentro un SVG (provato da Max: l'app lo disegna).
+// Nell'app desktop l'icona è il PNG dentro un SVG (provato da Max: l'app lo disegna). Il PNG sta in
+// icona.ts e non si legge da assets/: nel plugin installato la lettura falliva e l'icona non c'era.
 const pngInSvg = (base64: string) =>
   `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 96 96" width="96" height="96">` +
   `<image width="96" height="96" href="data:image/png;base64,${base64}" xlink:href="data:image/png;base64,${base64}"/></svg>`
-
-async function leggiIcona($: EngineInterface) {
-  try {
-    return (await $.fs.read(`${$.plugin.root}/assets/otto.png`, { as: 'bytes' })).base64
-  } catch {
-    return null
-  }
-}
 
 async function leggiStato($: EngineInterface) {
   const casa = await $.env.get('HOME')
@@ -31,23 +26,14 @@ async function leggiStato($: EngineInterface) {
 }
 
 export const register: Register = on => {
-  // L'icona viaggia come PNG in base64: un percorso di file lo sa leggere solo il terminale.
-  let icona: string | null = null
-
   on('session.start', async ($, e, next) => {
     const esito = await next(e)
     await update($, attiva, () => false)
-    icona = await leggiIcona($)
     return esito
   })
 
   on('prompt.submit', async ($, e, next) => {
     const esito = await next(e)
-    // Nell'app desktop la mod di un plugin installato può caricarsi a sessione già avviata, senza
-    // vedere session.start: l'icona si legge anche qui, prima che la fascia si ridisegni.
-    if (!icona) {
-      icona = await leggiIcona($)
-    }
     const accesa = await leggiStato($)
     await update($, attiva, () => accesa)
     return esito
@@ -63,8 +49,8 @@ export const register: Register = on => {
     // l'icona: si sceglie come la mod di prova che funziona, terminale contro tutto il resto.
     return (
       <Box flexDirection="row" alignItems="center" gap={1}>
-        {icona && e.surface === 'terminal' && <Image source={{ png: icona }} columns={4} rows={2} alt=" " />}
-        {icona && e.surface !== 'terminal' && <Svg source={pngInSvg(icona)} width={24} height={24} alt=" " />}
+        {e.surface === 'terminal' && <Image source={{ png: OTTO_PNG }} columns={4} rows={2} alt=" " />}
+        {e.surface !== 'terminal' && <Svg source={pngInSvg(OTTO_PNG)} width={24} height={24} alt=" " />}
         <Text color="success" bold>Stai parlando con Otto</Text>
         <Text dimColor>· /otto off per tornare a Claude · /otto help</Text>
       </Box>
