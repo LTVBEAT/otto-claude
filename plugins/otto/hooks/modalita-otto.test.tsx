@@ -4,7 +4,7 @@ import { expect, test } from 'claude-code/testing'
 const token = { options: { token: 'finto' } }
 
 // La fascia com'è disegnata in modalita-otto.tsx, sempre accesa: serve a vedere cosa accetta ogni
-// superficie. L'app desktop non ha Image, e lì Otto è un Svg a blocchi.
+// superficie. L'app desktop non ha Image, e lì l'icona è un Svg.
 const fascia = {
   name: 'fascia-prova',
   register: on => {
@@ -14,8 +14,8 @@ const fascia = {
       const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="4" y="5" width="8" height="7" fill="#E8673F"/></svg>'
       return (
         <Box flexDirection="row" alignItems="center" gap={1}>
-          {e.surface === 'desktop' && <Svg source={svg} width={24} height={24} alt=" " />}
-          {e.surface !== 'desktop' && <Image source={{ png }} columns={4} rows={2} alt=" " />}
+          {e.surface !== 'terminal' && <Svg source={svg} width={24} height={24} alt=" " />}
+          {e.surface === 'terminal' && <Image source={{ png }} columns={4} rows={2} alt=" " />}
           <Text color="success" bold>Stai parlando con Otto</Text>
           <Text dimColor>· /otto off per tornare a Claude · /otto help</Text>
         </Box>
