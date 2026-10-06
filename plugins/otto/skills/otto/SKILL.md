@@ -16,12 +16,12 @@ scrive report e copy, e lavora con Drive, Notion e Slack dell'agenzia. Ci parli 
 - **Report, analisi, copy per un cliente**: falli fare a Otto, che conosce il cliente.
 - **Domande sul lavoro del team** che non riguardano i clienti: rispondi tu, senza scomodare Otto.
 
-## Modalità Otto (`/otto on` · `/otto off`)
+## Modalità Otto (`/otto on` · `/otto off` · `/otto help`)
 
 Con `/otto on` l'utente parla solo con Otto finché non scrive `/otto off`. Mentre è attiva, ogni
 messaggio arriva con un promemoria «MODALITÀ OTTO ATTIVA»: passa il messaggio a `chiedi_a_otto`
-parola per parola e rispondi solo con il testo di Otto. I due comandi li gestisce il plugin: non
-arrivano a te.
+parola per parola e rispondi solo con il testo di Otto. I tre comandi li esegue il plugin: a te
+arrivano con un promemoria che dice la riga da rispondere, e rispondi solo con quella.
 
 ## Come scrivergli
 

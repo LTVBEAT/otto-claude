@@ -43,6 +43,7 @@ passa a Otto da solo. Puoi anche dirlo esplicitamente: «chiedi a Otto…», «f
 - **Parlare solo con Otto**: scrivi `/otto on`. Da lì ogni messaggio va a Otto e la risposta è la
   sua, tale e quale. Con `/otto off` torni a parlare con Claude. Vale per la finestra in cui lo
   scrivi, non per le altre.
+- **Non ricordi i comandi?** Scrivi `/otto help`.
 - **Lavori lunghi** (un report): Otto ci mette qualche minuto. Claude ti avvisa e recupera la
   risposta quando è pronta.
 - **Azioni sugli account** (mettere in pausa, cambiare budget): Otto chiede il permesso e Claude
