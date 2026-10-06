@@ -43,12 +43,17 @@ export const register: Register = on => {
     if (!(await read($, attiva))) {
       return next(e)
     }
-    const { Box, Image, Text } = $.ui.resolve(e)
+    const { Box, Image, Svg, Text } = $.ui.resolve(e)
 
-    // Nell'app l'icona si vede; nei terminali senza grafica kitty resta uno spazio vuoto.
+    // L'app desktop non ha Image: lì l'icona va dentro un SVG. Nei terminali senza la grafica
+    // kitty l'Image resta uno spazio vuoto.
+    const svg =
+      `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28">` +
+      `<image width="28" height="28" href="data:image/png;base64,${icona}"/></svg>`
     return (
       <Box flexDirection="row" alignItems="center" gap={1}>
-        {icona && <Image source={{ png: icona }} columns={4} rows={2} alt=" " />}
+        {icona && e.surface === 'desktop' && <Svg source={svg} width={28} height={28} alt=" " />}
+        {icona && e.surface !== 'desktop' && <Image source={{ png: icona }} columns={4} rows={2} alt=" " />}
         <Text color="success" bold>Stai parlando con Otto</Text>
         <Text dimColor>· /otto off per tornare a Claude · /otto help</Text>
       </Box>
