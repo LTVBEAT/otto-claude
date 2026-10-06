@@ -11,6 +11,14 @@ const pngInSvg = (base64: string) =>
   `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 96 96" width="96" height="96">` +
   `<image width="96" height="96" href="data:image/png;base64,${base64}" xlink:href="data:image/png;base64,${base64}"/></svg>`
 
+async function leggiIcona($: EngineInterface) {
+  try {
+    return (await $.fs.read(`${$.plugin.root}/assets/otto.png`, { as: 'bytes' })).base64
+  } catch {
+    return null
+  }
+}
+
 async function leggiStato($: EngineInterface) {
   const casa = await $.env.get('HOME')
   const sessione = await $.session.id()
@@ -29,16 +37,17 @@ export const register: Register = on => {
   on('session.start', async ($, e, next) => {
     const esito = await next(e)
     await update($, attiva, () => false)
-    try {
-      icona = (await $.fs.read(`${$.plugin.root}/assets/otto.png`, { as: 'bytes' })).base64
-    } catch {
-      icona = null
-    }
+    icona = await leggiIcona($)
     return esito
   })
 
   on('prompt.submit', async ($, e, next) => {
     const esito = await next(e)
+    // Nell'app desktop la mod di un plugin installato può caricarsi a sessione già avviata, senza
+    // vedere session.start: l'icona si legge anche qui, prima che la fascia si ridisegni.
+    if (!icona) {
+      icona = await leggiIcona($)
+    }
     const accesa = await leggiStato($)
     await update($, attiva, () => accesa)
     return esito
