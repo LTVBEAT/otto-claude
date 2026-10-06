@@ -67,6 +67,8 @@ Esempi di richieste a Otto:
 | «Token mancante o non valido» | chiedi a Max un token nuovo e rilancia il comando di installazione |
 | «Otto non è raggiungibile» | riprova tra qualche minuto; se dura, avvisa Max |
 | Claude non trova Otto | chiudi e riapri Claude Code; se ancora niente, rilancia il comando di installazione |
+| Nell'app, dopo `/otto on`, non compare la fascia «Stai parlando con Otto» o manca l'icona | aggiorna l'app (menu **Claude → Check for Updates**) e apri una sessione nuova: le versioni vecchie dell'app non disegnano la fascia |
+| Nel terminale la fascia c'è ma l'icona no | normale fuori da kitty e Ghostty (per esempio in Warp): lì si vede solo il testo. Otto funziona lo stesso |
 
 ## Aggiornare
 
