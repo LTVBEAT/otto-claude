@@ -59,6 +59,7 @@ Esempi di richieste a Otto:
 - «Metti nella knowledge di TKART il brief che ho in Scaricati»
 - «Fai fare a Otto un report di Qura degli ultimi 30 giorni»
 - «Cosa dice Otto sui budget di SYHO?»
+- «Fai valutare a Otto questa creatività» (incolla l'immagine nella chat)
 
 ## Problemi
 
