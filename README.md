@@ -44,6 +44,8 @@ passa a Otto da solo. Puoi anche dirlo esplicitamente: «chiedi a Otto…», «f
   sua, tale e quale. Con `/otto off` torni a parlare con Claude. Vale per la finestra in cui lo
   scrivi, non per le altre.
 - **Non ricordi i comandi?** Scrivi `/otto help`.
+- **Qualcosa non va?** Scrivi `/otto doctor`: controlla versione, token, aggiornamenti e collegamento,
+  e dice cosa fare. Se resta un ❌, manda l'elenco a Max.
 - **Lavori lunghi** (un report): Otto ci mette qualche minuto. Claude ti avvisa e recupera la
   risposta quando è pronta.
 - **Azioni sugli account** (mettere in pausa, cambiare budget): Otto chiede il permesso e Claude
@@ -65,6 +67,7 @@ Esempi di richieste a Otto:
 
 | Cosa vedi | Cosa fare |
 |---|---|
+| Non sai cosa non va | scrivi `/otto doctor` in Claude Code e segui quello che dice |
 | «Token mancante o non valido» | chiedi a Max un token nuovo e rilancia il comando di installazione |
 | «Otto non è raggiungibile» | riprova tra qualche minuto; se dura, avvisa Max |
 | Claude non trova Otto | chiudi e riapri Claude Code; se ancora niente, rilancia il comando di installazione |
