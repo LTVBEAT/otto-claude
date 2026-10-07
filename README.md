@@ -7,21 +7,30 @@ clienti, report, copy, knowledge. È lo stesso Otto di Slack.
 
 **Ti serve:** Claude Code e il tuo **token personale di Otto**, che ti dà Max.
 
-**1.** Apri l'app **Terminale** del Mac, incolla questa riga e premi Invio:
+**1.** Incolla una riga e premi Invio.
+
+**Mac**: apri l'app **Terminale**:
 
 ```
 curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash
 ```
 
-**2.** Quando chiede il token, incollalo e premi Invio. Mentre incolli non vedi niente: è normale.
-Il token resta nel Portachiavi del Mac, non dovrai più inserirlo.
+**Windows**: apri **PowerShell** (menu Start, scrivi «PowerShell»):
+
+```
+irm https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.ps1 | iex
+```
+
+**2.** Quando chiede il token, incollalo e premi Invio. Mentre incolli non vedi niente (sul Mac) o
+vedi solo asterischi (su Windows): è normale. Il token resta salvato, non dovrai più inserirlo.
 
 **3.** Chiudi e riapri Claude Code (terminale o app) e scrivi:
 
 > chiedi a Otto come vanno gli account di TKART questa settimana
 
-Fatto. Lo script è leggibile qui sopra, in `installa.sh`: aggiunge il catalogo, installa il plugin,
-accende gli aggiornamenti automatici, controlla che il token funzioni e lo salva.
+Fatto. Gli script sono leggibili qui sopra, `installa.sh` e `installa.ps1`: aggiungono il catalogo,
+installano il plugin, accendono gli aggiornamenti automatici, controllano che il token funzioni e lo
+salvano. Su Windows, se il primo tentativo lascia il catalogo a metà, lo script lo pulisce e riprova.
 
 <details>
 <summary>Preferisci farlo a mano, da dentro Claude Code?</summary>
@@ -70,6 +79,8 @@ Esempi di richieste a Otto:
 | Claude non trova Otto | chiudi e riapri Claude Code; se ancora niente, rilancia il comando di installazione |
 | Nell'app, dopo `/otto on`, non compare la fascia «Stai parlando con Otto» o manca l'icona | aggiorna l'app (menu **Claude → Check for Updates**) e apri una sessione nuova: le versioni vecchie dell'app non disegnano la fascia |
 | `/otto on` non accende la fascia e Claude risponde da solo | controlla di avere Otto 0.4.7 o successivo (sotto, «Aggiornare»): le versioni prima riconoscevano solo `/otto on` e non `/otto:otto on`, che è quello che propone il menu dei comandi |
+| Su Windows: `Failed to move the new marketplace clone … EPERM` oppure `Plugin "otto" not found` | rilancia il comando d'installazione per Windows: pulisce il catalogo rimasto a metà e riprova. Se succede ancora, l'antivirus sta bloccando i file appena scaricati: aspetta un minuto e rilancia |
+| Su Windows: `curl : Impossibile trovare un parametro … 'fsSL'` | hai usato il comando del Mac: in PowerShell va quello con `irm` |
 | Nel terminale la fascia c'è ma l'icona no | normale fuori da kitty e Ghostty (per esempio in Warp): lì si vede solo il testo. Otto funziona lo stesso |
 
 ## Aggiornare
