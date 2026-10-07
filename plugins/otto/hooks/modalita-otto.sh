@@ -16,7 +16,7 @@ STATO="$CARTELLA/$SESSIONE"
 find "$CARTELLA" -type f -mtime +7 -delete 2>/dev/null
 
 COMANDO=$(printf '%s' "$INGRESSO" \
-  | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/otto[[:space:]]+(on|off|help)[[:space:]]*"' \
+  | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/otto(:otto)?[[:space:]]+(on|off|help)[[:space:]]*"' \
   | grep -oiE '(on|off|help)[[:space:]]*"$' | tr -d '" ' | tr 'A-Z' 'a-z')
 
 RISPONDI='L'"'"'utente ha scritto un comando del plugin Otto, già eseguito dal plugin. Non lanciare skill né subagent, non chiamare strumenti e non chiamare Otto. Rispondi esattamente con il testo qui sotto, senza aggiungere niente prima o dopo:\n\n'

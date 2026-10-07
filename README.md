@@ -68,17 +68,23 @@ Esempi di richieste a Otto:
 | «Otto non è raggiungibile» | riprova tra qualche minuto; se dura, avvisa Max |
 | Claude non trova Otto | chiudi e riapri Claude Code; se ancora niente, rilancia il comando di installazione |
 | Nell'app, dopo `/otto on`, non compare la fascia «Stai parlando con Otto» o manca l'icona | aggiorna l'app (menu **Claude → Check for Updates**) e apri una sessione nuova: le versioni vecchie dell'app non disegnano la fascia |
+| `/otto on` non accende la fascia e Claude risponde da solo | controlla di avere Otto 0.4.7 o successivo (sotto, «Aggiornare»): le versioni prima riconoscevano solo `/otto on` e non `/otto:otto on`, che è quello che propone il menu dei comandi |
 | Nel terminale la fascia c'è ma l'icona no | normale fuori da kitty e Ghostty (per esempio in Warp): lì si vede solo il testo. Otto funziona lo stesso |
 
 ## Aggiornare
 
 Se hai installato con il comando qui sopra, Otto si aggiorna da solo: Claude Code controlla poco
-dopo l'avvio e la versione nuova parte alla sessione dopo (o subito con `/reload-plugins`).
+dopo l'avvio, scarica la versione nuova e la usa dalla sessione dopo.
+
+`/reload-plugins` **non scarica niente**: ricarica la versione che hai già. Per prendere subito
+l'ultima, nel Terminale:
+
+```
+claude plugin marketplace update ltvbeat && claude plugin update otto@ltvbeat
+```
+
+poi chiudi e riapri Claude Code.
 
 Se l'hai installato prima del 06/10/2026, accendi gli aggiornamenti automatici una volta sola: in
 Claude Code `/plugin` → scheda **Marketplaces** → `ltvbeat` → **Enable auto-update**. Oppure
-aggiorna a mano quando vuoi:
-
-```
-claude plugin update otto@ltvbeat
-```
+aggiorna a mano quando vuoi, con il comando qui sopra.

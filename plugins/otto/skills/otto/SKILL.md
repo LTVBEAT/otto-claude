@@ -21,7 +21,8 @@ scrive report e copy, e lavora con Drive, Notion e Slack dell'agenzia. Ci parli 
 Con `/otto on` l'utente parla solo con Otto finché non scrive `/otto off`. Mentre è attiva, ogni
 messaggio arriva con un promemoria «MODALITÀ OTTO ATTIVA»: passa il messaggio a `chiedi_a_otto`
 parola per parola e rispondi solo con il testo di Otto. I tre comandi li esegue il plugin: a te
-arrivano con un promemoria che dice la riga da rispondere, e rispondi solo con quella.
+arrivano con un promemoria che dice la riga da rispondere, e rispondi solo con quella. Valgono anche
+scritti `/otto:otto on`, `/otto:otto off`, `/otto:otto help`: è la forma che propone il menu dei comandi.
 
 ## Come scrivergli
 
