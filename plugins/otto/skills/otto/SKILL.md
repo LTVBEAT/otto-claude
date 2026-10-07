@@ -1,6 +1,6 @@
 ---
 name: otto
-description: Usa questa skill quando l'utente vuole chiedere qualcosa a Otto, l'agente di LTV, o quando la richiesta riguarda i clienti LTV (TKART, Qura, SYHO, Scuter, Taylora, Pinex...), i loro account Meta o Google Ads, i report, le campagne, i budget o la knowledge dei clienti. Trigger anche su "chiedi a Otto", "fai fare a Otto", "senti Otto", "cosa dice Otto".
+description: Usa questa skill quando l'utente vuole chiedere qualcosa a Otto, l'agente di LTV, o dargli un file o un'immagine, o quando la richiesta riguarda i clienti LTV (TKART, Qura, SYHO, Scuter, Taylora, Pinex...), i loro account Meta o Google Ads, i report, le campagne, i budget o la knowledge dei clienti. Trigger anche su "chiedi a Otto", "fai fare a Otto", "senti Otto", "cosa dice Otto".
 ---
 
 # Lavorare con Otto
@@ -53,7 +53,22 @@ knowledge di TKART»):
    nel messaggio, sempre che non contenga dati personali (passo 2).
 
 Ammessi PDF, Word, Excel, PowerPoint, CSV e testo, fino a 25 MB. A Otto arriva il **contenuto**,
-non il file: grafici e immagini non passano.
+non il file: grafici e immagini dentro i documenti non passano.
+
+## Dare un'immagine a Otto
+
+Quando l'utente vuole che Otto guardi un'immagine («valuta questa creatività», «cosa non va in
+questa landing») o la usi come file («caricala come creatività su Meta»), si consegna come un file:
+PNG, JPG, WebP o GIF, fino a 25 MB. A Otto arriva **l'originale**.
+
+- **Immagine incollata nella chat:** nel messaggio c'è la riga `[Image: source: <percorso>]`. Quel
+  percorso è il file: usalo nel `curl` **subito**, perché il file dura quanto la sessione.
+- **Nessuna riga `source`** (per esempio nell'app desktop): chiedi all'utente di salvare
+  l'immagine o di trascinare il file nella chat, così hai un percorso. Non riscrivere l'immagine tu.
+- Stessa regola dei dati personali: niente screenshot di elenchi di contatti, lead, ordini o
+  pagamenti.
+- Il giro è lo stesso dei file (passi 3-5 sopra). Nel messaggio a `chiedi_a_otto` di' cosa deve
+  farci Otto.
 
 ## Le risposte
 
