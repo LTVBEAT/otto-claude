@@ -76,14 +76,15 @@ Esempi di richieste a Otto:
 Se hai installato con il comando qui sopra, Otto si aggiorna da solo: Claude Code controlla poco
 dopo l'avvio, scarica la versione nuova e la usa dalla sessione dopo.
 
-`/reload-plugins` **non scarica niente**: ricarica la versione che hai già. Per prendere subito
-l'ultima, nel Terminale:
+Per prendere subito l'ultima, scrivi a Claude **«aggiorna il plugin otto»** e apri una sessione
+nuova: la trovi aggiornata. `/reload-plugins` invece **non scarica niente**, ricarica la versione
+che hai già.
+
+Lo stesso a mano, dal Terminale:
 
 ```
 claude plugin marketplace update ltvbeat && claude plugin update otto@ltvbeat
 ```
-
-poi chiudi e riapri Claude Code.
 
 Se l'hai installato prima del 06/10/2026, accendi gli aggiornamenti automatici una volta sola: in
 Claude Code `/plugin` → scheda **Marketplaces** → `ltvbeat` → **Enable auto-update**. Oppure
