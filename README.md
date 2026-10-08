@@ -71,6 +71,7 @@ Esempi di richieste a Otto:
 - «Fai fare a Otto un report di Qura degli ultimi 30 giorni»
 - «Cosa dice Otto sui budget di SYHO?»
 - «Fai valutare a Otto questa creatività» (incolla l'immagine nella chat)
+- «Cosa c'è nella knowledge di Qura sull'offerta?» (Claude la legge da solo) o «Aggiorna la knowledge di SYHO con questa decisione» (ti si apre una finestra, confermi tu)
 
 ## Problemi
 
