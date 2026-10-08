@@ -28,6 +28,8 @@ senza chiedere a Otto: è questione di un attimo invece che di decine di secondi
 - **Restano a Otto**: dati delle campagne, report, azioni sugli account, e tutto quello che
   richiede Drive, Notion o Slack.
 - Quello che Otto ha scritto da poco può arrivare qui fino a un'ora dopo.
+- In **modalità Otto** (`/otto on`) vale la modalità: tutto passa a `chiedi_a_otto`, anche le
+  domande sulla knowledge.
 
 ## Scrivere nella knowledge
 
@@ -36,6 +38,9 @@ intero). Prima leggi il file, poi proponi la modifica con un `motivo` chiaro: di
 del commit, a nome della persona.
 
 - Il `motivo` è una riga sola, al massimo 200 caratteri.
+- Per riscrivere un file intero con `scrivi_nella_knowledge` serve la `versione` che dà
+  `leggi_dalla_knowledge` nell'intestazione (per un file nuovo lasciala vuota). Se risponde che il
+  file è cambiato, rileggilo e rifai la proposta.
 - Si apre una **finestra** in cui la persona vede la modifica e conferma. **Decide lei**: tu non
   puoi confermare al suo posto, e non dire che è stato scritto finché lo strumento non lo conferma.
 - Se la risposta è «non ha confermato», non riprovare da solo: chiedi alla persona cosa cambiare.
