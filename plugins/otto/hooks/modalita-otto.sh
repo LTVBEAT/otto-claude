@@ -20,6 +20,10 @@ COMANDO=$(printf '%s' "$INGRESSO" \
   | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/otto(:otto)?[[:space:]]+(on|off|help|doctor)[[:space:]]*"' \
   | grep -oiE '(on|off|help|doctor)[[:space:]]*"$' | tr -d '" ' | tr 'A-Z' 'a-z')
 
+# I comandi di Mulan non sono per Otto: con la modalità accesa non vanno passati a lui.
+printf '%s' "$INGRESSO" \
+  | grep -qiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/mulan(:mulan)?[[:space:]]+(help|doctor)[[:space:]]*"' && exit 0
+
 RISPONDI='L'"'"'utente ha scritto un comando del plugin Otto, già eseguito dal plugin. Non lanciare skill né subagent, non chiamare strumenti e non chiamare Otto. Rispondi esattamente con il testo qui sotto, senza aggiungere niente prima o dopo:\n\n'
 
 # L'oggetto «ltvbeat» di un file JSON, senza spazi: basta per cercarci dentro autoUpdate.

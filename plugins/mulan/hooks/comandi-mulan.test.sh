@@ -18,5 +18,11 @@ prova "/mulan help" "chiedi a Mulan"
 prova "/mulan on" ""
 prova "ciao" ""
 prova "/otto doctor" ""
+prova "puoi fare /mulan doctor per me" ""
+prova "/MULAN DOCTOR" "stato_mulan"
+for c in doctor help; do
+  printf '{"session_id":"s1","prompt":"/mulan %s"}' "$c" | CLAUDE_PLUGIN_DATA="$(mktemp -d)" bash "$QUI/comandi-mulan.sh" \
+    | python3 -c 'import json,sys; json.load(sys.stdin)' || { echo "FAIL: uscita di $c non è JSON valido"; ERRORI=1; }
+done
 [ $ERRORI -eq 0 ] && echo "ok"
 exit $ERRORI

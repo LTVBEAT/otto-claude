@@ -8,7 +8,14 @@
 # iex, un exit chiuderebbe la finestra di PowerShell.
 
 function Installa-Otto {
-    $Plugin = if ($env:LTV_PLUGIN) { $env:LTV_PLUGIN } else { "otto" }
+    try { Installa-Corpo } finally {
+        # La variabile non resta nella finestra: la prossima installazione riparte da Otto.
+        Remove-Item Env:LTV_PLUGIN -ErrorAction SilentlyContinue
+    }
+}
+
+function Installa-Corpo {
+    $Plugin = if ($env:LTV_PLUGIN) { $env:LTV_PLUGIN.ToLower() } else { "otto" }
     if ($Plugin -eq "otto") {
         $Nome = "Otto"; $Indirizzo = "https://otto-hermes.ltvalue.it/mcp"
         $Prova = "chiedi a Otto come vanno gli account di TKART questa settimana"
