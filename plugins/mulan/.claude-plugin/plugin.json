@@ -1,0 +1,22 @@
+{
+  "name": "mulan",
+  "version": "0.1.0",
+  "description": "Parla con Mulan, l'agente PM di Chiara, direttamente da Claude Code: call, task e Gantt dei clienti, knowledge di Chiara.",
+  "author": { "name": "LTV" },
+  "userConfig": {
+    "token": {
+      "type": "string",
+      "title": "Il tuo token di Mulan",
+      "description": "Te lo dà Max. Si incolla una volta sola e resta nel Portachiavi del Mac.",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "mcpServers": {
+    "mulan": {
+      "type": "http",
+      "url": "https://otto-hermes.ltvalue.it/mulan",
+      "headers": { "Authorization": "Bearer ${user_config.token}" }
+    }
+  }
+}

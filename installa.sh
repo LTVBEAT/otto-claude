@@ -1,13 +1,19 @@
 #!/bin/bash
-# Installa Otto in Claude Code.
+# Installa Otto (o Mulan) in Claude Code.
 #   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s mulan
 set -uo pipefail
 
-INDIRIZZO="https://otto-hermes.ltvalue.it/mcp"
+PLUGIN="${1:-otto}"
+case "$PLUGIN" in
+  otto) NOME=Otto; INDIRIZZO=https://otto-hermes.ltvalue.it/mcp; PROVA="chiedi a Otto come vanno gli account di TKART questa settimana";;
+  mulan) NOME=Mulan; INDIRIZZO=https://otto-hermes.ltvalue.it/mulan; PROVA="chiedi a Mulan le task aperte di Fibi";;
+  *) echo "Plugin sconosciuto: otto o mulan."; exit 1;;
+esac
 MINIMA="2.1.147"
 
 echo ""
-echo "  Otto per Claude Code"
+echo "  $NOME per Claude Code"
 echo "  --------------------"
 
 if ! command -v claude >/dev/null 2>&1; then
@@ -24,13 +30,13 @@ echo "  1/4  Aggiungo il catalogo dei plugin LTV"
 claude plugin marketplace add LTVBEAT/otto-claude >/dev/null 2>&1 \
   || claude plugin marketplace update ltvbeat >/dev/null 2>&1
 
-echo "  2/4  Installo il plugin otto"
-if ! claude plugin install otto@ltvbeat >/dev/null 2>&1; then
-  claude plugin list 2>/dev/null | grep -q "otto@ltvbeat" \
+echo "  2/4  Installo il plugin $PLUGIN"
+if ! claude plugin install "$PLUGIN@ltvbeat" >/dev/null 2>&1; then
+  claude plugin list 2>/dev/null | grep -q "$PLUGIN@ltvbeat" \
     || { echo "  Installazione non riuscita. Avvisa Max."; exit 1; }
 fi
 # Se c'era già, lo porta all'ultima versione.
-claude plugin update otto@ltvbeat >/dev/null 2>&1
+claude plugin update "$PLUGIN@ltvbeat" >/dev/null 2>&1
 
 # Il catalogo LTV non è di Anthropic, quindi parte senza aggiornamenti automatici e la CLI non ha
 # un'opzione per accenderli: si scrive autoUpdate sulla voce del catalogo nelle impostazioni.
@@ -52,13 +58,13 @@ AUTOAGGIORNA='function run(argv) {
     .writeToFileAtomicallyEncodingError(file, true, $.NSUTF8StringEncoding, null);
   if (!ok) throw new Error("non scrivibile");
 }'
-echo "  3/4  Attivo gli aggiornamenti automatici di Otto"
+echo "  3/4  Attivo gli aggiornamenti automatici di $NOME"
 if ! osascript -l JavaScript -e "$AUTOAGGIORNA" "$HOME/.claude/settings.json" >/dev/null 2>&1; then
   echo "       Non ci sono riuscito. Fallo a mano in Claude Code: /plugin, scheda Marketplaces,"
   echo "       ltvbeat, Enable auto-update."
 fi
 
-echo "  4/4  Incolla il tuo token di Otto (te lo dà Max) e premi Invio."
+echo "  4/4  Incolla il tuo token di $NOME (te lo dà Max) e premi Invio."
 echo "       Mentre incolli non vedi niente: è normale."
 printf "       Token: "
 TOKEN=""
@@ -77,7 +83,7 @@ if [ "$CODICE" = "401" ]; then
   exit 1
 fi
 
-printf '{"token":"%s"}' "$TOKEN" | claude plugin configure otto@ltvbeat --values-stdin >/dev/null 2>&1
+printf '{"token":"%s"}' "$TOKEN" | claude plugin configure "$PLUGIN@ltvbeat" --values-stdin >/dev/null 2>&1
 ESITO=$?
 unset TOKEN
 if [ $ESITO -ne 0 ]; then
@@ -87,11 +93,11 @@ fi
 
 echo ""
 if [ "$CODICE" = "000" ]; then
-  echo "  Token salvato, ma adesso Otto non risponde (rete?). Riprova più tardi da Claude Code."
+  echo "  Token salvato, ma adesso $NOME non risponde (rete?). Riprova più tardi da Claude Code."
 else
   echo "  Fatto! Il token è nel Portachiavi del Mac."
 fi
 echo ""
 echo "  Chiudi e riapri Claude Code (terminale o app), poi scrivi:"
-echo "     chiedi a Otto come vanno gli account di TKART questa settimana"
+echo "     $PROVA"
 echo ""

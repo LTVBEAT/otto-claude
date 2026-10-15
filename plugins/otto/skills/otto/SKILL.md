@@ -1,6 +1,6 @@
 ---
 name: otto
-description: Usa questa skill quando l'utente vuole chiedere qualcosa a Otto, l'agente di LTV, o dargli un file o un'immagine, o leggere e modificare la knowledge dei clienti, o quando la richiesta riguarda i clienti LTV (TKART, Qura, SYHO, Scuter, Taylora, Pinex...), i loro account Meta o Google Ads, i report, le campagne, i budget o la knowledge dei clienti. Trigger anche su "chiedi a Otto", "fai fare a Otto", "senti Otto", "cosa dice Otto".
+description: Usa questa skill quando l'utente vuole chiedere qualcosa a Otto, l'agente di LTV, o dargli un file o un'immagine, o leggere e modificare la knowledge dei clienti, o quando la richiesta riguarda i clienti LTV (TKART, Qura, SYHO, Scuter, Taylora, Pinex...), i loro account Meta o Google Ads, i report, le campagne, i budget o la knowledge dei clienti. NON per la knowledge di Chiara e per call, task e Gantt dei suoi clienti: quelli sono di Mulan. Trigger anche su "chiedi a Otto", "fai fare a Otto", "senti Otto", "cosa dice Otto".
 ---
 
 # Lavorare con Otto
@@ -16,6 +16,9 @@ La knowledge dei clienti si legge anche da sé, con i tre strumenti di lettura (
   Non inventarli e non stimarli tu.
 - **Report, analisi, copy per un cliente**: falli fare a Otto, che conosce il cliente.
 - **Domande sul lavoro del team** che non riguardano i clienti: rispondi tu, senza scomodare Otto.
+- **Gestione dei clienti di Chiara** (call, task, Gantt, knowledge di Chiara): è di Mulan, plugin
+  `mulan`. Se un cliente sta in tutte e due (es. Taylora) e la richiesta non dice quale, chiedi
+  all'utente: knowledge LTV (Otto) o di Chiara (Mulan)?
 
 ## La knowledge dei clienti: leggila da te
 

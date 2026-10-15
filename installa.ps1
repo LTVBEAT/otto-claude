@@ -1,5 +1,6 @@
-# Installa Otto in Claude Code, su Windows.
+# Installa Otto (o Mulan) in Claude Code, su Windows.
 #   irm https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.ps1 | iex
+#   $env:LTV_PLUGIN="mulan"; irm https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.ps1 | iex
 #
 # Gli stessi passi di installa.sh (Mac), più la pulizia di un catalogo scaricato a metà: su Windows
 # il primo «marketplace add» può fallire con EPERM sul rinomina della cartella e lasciare un catalogo
@@ -7,12 +8,22 @@
 # iex, un exit chiuderebbe la finestra di PowerShell.
 
 function Installa-Otto {
-    $Indirizzo = "https://otto-hermes.ltvalue.it/mcp"
+    $Plugin = if ($env:LTV_PLUGIN) { $env:LTV_PLUGIN } else { "otto" }
+    if ($Plugin -eq "otto") {
+        $Nome = "Otto"; $Indirizzo = "https://otto-hermes.ltvalue.it/mcp"
+        $Prova = "chiedi a Otto come vanno gli account di TKART questa settimana"
+    } elseif ($Plugin -eq "mulan") {
+        $Nome = "Mulan"; $Indirizzo = "https://otto-hermes.ltvalue.it/mulan"
+        $Prova = "chiedi a Mulan le task aperte di Fibi"
+    } else {
+        Write-Host "Plugin sconosciuto: otto o mulan."
+        return
+    }
     $Minima = [version]"2.1.147"
     $Cartella = if ($env:CLAUDE_CONFIG_DIR) { $env:CLAUDE_CONFIG_DIR } else { Join-Path $env:USERPROFILE ".claude" }
 
     Write-Host ""
-    Write-Host "  Otto per Claude Code"
+    Write-Host "  $Nome per Claude Code"
     Write-Host "  --------------------"
 
     if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
@@ -25,8 +36,8 @@ function Installa-Otto {
         return
     }
 
-    Write-Host "  1/4  Aggiungo il catalogo dei plugin LTV e installo il plugin otto"
-    if (-not (Installa-Plugin)) {
+    Write-Host "  1/4  Aggiungo il catalogo dei plugin LTV e installo il plugin $Plugin"
+    if (-not (Installa-Plugin $Plugin)) {
         Write-Host "       Primo tentativo non riuscito: pulisco il catalogo e riprovo."
         & claude plugin marketplace remove ltvbeat *> $null
         $Cataloghi = Join-Path $Cartella "plugins\marketplaces"
@@ -34,21 +45,21 @@ function Installa-Otto {
             Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
         # L'antivirus puo' tenere bloccati i file appena scaricati per qualche secondo.
         Start-Sleep -Seconds 5
-        if (-not (Installa-Plugin)) {
+        if (-not (Installa-Plugin $Plugin)) {
             Write-Host "  Installazione non riuscita. Manda a Max uno screenshot di questa finestra."
             return
         }
     }
     # Se c'era gia', lo porta all'ultima versione.
-    & claude plugin update otto@ltvbeat *> $null
+    & claude plugin update "$Plugin@ltvbeat" *> $null
 
-    Write-Host "  2/4  Attivo gli aggiornamenti automatici di Otto"
+    Write-Host "  2/4  Attivo gli aggiornamenti automatici di $Nome"
     if (-not (Accendi-Aggiornamenti (Join-Path $Cartella "settings.json"))) {
         Write-Host "       Non ci sono riuscito. Fallo a mano in Claude Code: /plugin, scheda Marketplaces,"
         Write-Host "       ltvbeat, Enable auto-update."
     }
 
-    Write-Host "  3/4  Incolla il tuo token di Otto (te lo da' Max) e premi Invio."
+    Write-Host "  3/4  Incolla il tuo token di $Nome (te lo da' Max) e premi Invio."
     Write-Host "       Mentre incolli vedi solo asterischi: e' normale."
     $Segreto = Read-Host "       Token" -AsSecureString
     $Token = ([Net.NetworkCredential]::new("", $Segreto).Password).Trim()
@@ -63,7 +74,7 @@ function Installa-Otto {
         Write-Host "  Il token non e' valido: controlla di averlo copiato tutto, oppure chiedine uno nuovo a Max."
         return
     }
-    ('{"token":"' + $Token + '"}') | & claude plugin configure otto@ltvbeat --values-stdin *> $null
+    ('{"token":"' + $Token + '"}') | & claude plugin configure "$Plugin@ltvbeat" --values-stdin *> $null
     $Esito = $LASTEXITCODE
     $Token = $null
     $Segreto = $null
@@ -74,23 +85,23 @@ function Installa-Otto {
 
     Write-Host ""
     if ($Codice -eq 0) {
-        Write-Host "  Token salvato, ma adesso Otto non risponde (rete?). Riprova piu' tardi da Claude Code."
+        Write-Host "  Token salvato, ma adesso $Nome non risponde (rete?). Riprova piu' tardi da Claude Code."
     } else {
         Write-Host "  Fatto! Il token e' salvato."
     }
     Write-Host ""
     Write-Host "  Chiudi e riapri Claude Code, poi scrivi:"
-    Write-Host "     chiedi a Otto come vanno gli account di TKART questa settimana"
+    Write-Host "     $Prova"
     Write-Host ""
 }
 
-function Installa-Plugin {
+function Installa-Plugin([string]$Plugin) {
     & claude plugin marketplace add LTVBEAT/otto-claude *> $null
     if ($LASTEXITCODE -ne 0) { & claude plugin marketplace update ltvbeat *> $null }
-    & claude plugin install otto@ltvbeat *> $null
+    & claude plugin install "$Plugin@ltvbeat" *> $null
     if ($LASTEXITCODE -eq 0) { return $true }
     # «Gia' installato» non e' un errore.
-    return [bool]((& claude plugin list 2>$null) -match "otto@ltvbeat")
+    return [bool]((& claude plugin list 2>$null) -match "$Plugin@ltvbeat")
 }
 
 # Il catalogo LTV non e' di Anthropic, quindi parte senza aggiornamenti automatici e la CLI non ha

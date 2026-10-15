@@ -73,6 +73,35 @@ Esempi di richieste a Otto:
 - «Fai valutare a Otto questa creatività» (incolla l'immagine nella chat)
 - «Cosa c'è nella knowledge di Qura sull'offerta?» (Claude la legge da solo) o «Aggiorna la knowledge di SYHO con questa decisione» (ti si apre una finestra, confermi tu)
 
+## Mulan
+
+**Mulan** è l'agente PM di Chiara: call di Fathom, task e Gantt dei clienti su Notion, scadenze e
+knowledge di Chiara. È un plugin a parte, `mulan`, dallo stesso catalogo `ltvbeat`: si può avere
+insieme a Otto o da solo. Le campagne e i report ads restano a Otto.
+
+**Installazione.** Mac, nel Terminale:
+
+```
+curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s mulan
+```
+
+Windows, in PowerShell:
+
+```
+$env:LTV_PLUGIN="mulan"; irm https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.ps1 | iex
+```
+
+Il **token di Mulan è diverso da quello di Otto**: te lo dà Max. A mano, da Claude Code:
+`/plugin install mulan@ltvbeat` e `/plugin configure mulan@ltvbeat`.
+
+Esempi:
+
+- «Chiedi a Mulan le task aperte di Fibi»
+- «Cosa dice la knowledge di Chiara su InPlace?» (Claude la legge da solo)
+- «Aggiungi alla memory di Fibi questa decisione» (si apre una finestra, confermi tu)
+
+Qualcosa non va? Scrivi `/mulan doctor`; `/mulan help` ricorda i comandi.
+
 ## Problemi
 
 | Cosa vedi | Cosa fare |

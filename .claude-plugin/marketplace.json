@@ -7,6 +7,11 @@
       "name": "otto",
       "source": "./plugins/otto",
       "description": "Parla con Otto, l'agente di LTV, direttamente da Claude Code"
+    },
+    {
+      "name": "mulan",
+      "source": "./plugins/mulan",
+      "description": "Parla con Mulan, l'agente PM di Chiara, direttamente da Claude Code"
     }
   ]
 }
