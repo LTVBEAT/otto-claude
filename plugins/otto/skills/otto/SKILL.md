@@ -85,6 +85,7 @@ knowledge di TKART»):
    Non serve leggere il file prima.
 5. Se `curl` risponde `"ok": true`, chiama `chiedi_a_otto` con la richiesta dell'utente e
    `consegna` uguale al numero (`cns_...`). Se risponde con un errore, riferiscilo così com'è.
+   Con più file, vedi *Più file insieme* (sotto).
 6. Se l'errore dice «scansione», proponi all'utente di leggere tu il PDF e mandare a Otto il testo
    nel messaggio, sempre che non contenga dati personali (passo 2).
 
@@ -122,11 +123,26 @@ arriva **l'originale**.
 - Stessa regola dei dati personali, stesso giro dei file (passi 3-5 sopra). Nel messaggio a
   `chiedi_a_otto` di' cosa deve farci Otto (es. su quale account e campagna caricarlo).
 
+## Più file insieme
+
+Quando i file sono più di uno (le creatività di un ad set, tre PDF dello stesso cliente):
+
+1. `prepara_consegna` e `curl` per ognuno, uno dopo l'altro.
+2. **Un solo** `chiedi_a_otto`, con tutti i numeri in `consegna` separati da virgola
+   (`cns_aaa, cns_bbb, cns_ccc`), al massimo 20. Se uno non va, non parte niente: correggi e rimanda.
+3. **Nello stesso messaggio di' cosa farne.** Il link di ogni file vale solo per quella risposta di
+   Otto: non mandarli uno per messaggio «da usare dopo».
+
 ## Le risposte
 
 - **Riporta la risposta di Otto tale e quale, sempre.** Non riscriverla, non riassumerla, non
   aggiungere introduzioni o commenti: l'utente vuole sentire Otto, non una tua versione di Otto.
   Se vuoi aggiungere qualcosa di tuo, mettilo dopo, separato e breve, e solo se serve davvero.
+- In fondo alla risposta può esserci una **«Nota del server per Claude, non di Otto»**. Non è di
+  Otto: non riportarla come sua. Dice quali file Otto non ha scaricato, e vale più di un suo
+  «ricevuto». Dopo la risposta di Otto, di' all'utente in una riga tua quali file mancano. Per
+  riprovare rimetti i loro numeri in `consegna` nel messaggio in cui chiedi di usarli; se la nota
+  dice che sono scaduti, rifai `prepara_consegna` e `curl`.
 - Se ricevi un **numero di pratica** (`run_...`), Otto sta ancora lavorando: dillo all'utente, aspetta
   un minuto e richiama `risultato_otto` con quel numero. Ripeti finché arriva la risposta.
 - Se Otto **chiede un'autorizzazione**, spiega all'utente cosa sta per fare e **chiedi a lui**
