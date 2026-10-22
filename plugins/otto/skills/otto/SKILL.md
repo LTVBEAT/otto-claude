@@ -1,6 +1,6 @@
 ---
 name: otto
-description: Usa questa skill quando l'utente vuole chiedere qualcosa a Otto, l'agente di LTV, o dargli un file o un'immagine, o leggere e modificare la knowledge dei clienti, o quando la richiesta riguarda i clienti LTV (TKART, Qura, SYHO, Scuter, Taylora, Pinex...), i loro account Meta o Google Ads, i report, le campagne, i budget o la knowledge dei clienti. NON per la knowledge di Chiara e per call, task e Gantt dei suoi clienti: quelli sono di Mulan. Trigger anche su "chiedi a Otto", "fai fare a Otto", "senti Otto", "cosa dice Otto".
+description: Usa questa skill quando l'utente vuole chiedere qualcosa a Otto, l'agente di LTV, o dargli un file, un'immagine o un video, o leggere e modificare la knowledge dei clienti, o quando la richiesta riguarda i clienti LTV (TKART, Qura, SYHO, Scuter, Taylora, Pinex...), i loro account Meta o Google Ads, i report, le campagne, i budget o la knowledge dei clienti. NON per la knowledge di Chiara e per call, task e Gantt dei suoi clienti: quelli sono di Mulan. Trigger anche su "chiedi a Otto", "fai fare a Otto", "senti Otto", "cosa dice Otto".
 ---
 
 # Lavorare con Otto
@@ -105,6 +105,22 @@ PNG, JPG, WebP o GIF, fino a 25 MB. A Otto arriva **l'originale**.
   pagamenti.
 - Il giro è lo stesso dei file (passi 3-5 sopra). Nel messaggio a `chiedi_a_otto` di' cosa deve
   farci Otto.
+
+## Dare un video a Otto
+
+Quando l'utente vuole che Otto usi un video come file («carica questo reel come creatività su
+Meta», «mettilo nel Drive di TKART»), si consegna come un file: MP4 o MOV, fino a 200 MB. A Otto
+arriva **l'originale**.
+
+- **Otto non guarda i video**: li carica e li usa come file, ma non sa dire cosa c'è dentro. Se
+  l'utente chiede di valutarne uno, diglielo prima di consegnarlo.
+- **Serve il percorso del file**: un video non si incolla nella chat come un'immagine. Se non hai
+  il percorso, chiedi all'utente di trascinare il file nella chat o di scriverlo.
+- **Altri formati o oltre 200 MB non passano**: chiedi all'utente di esportarlo in MP4 o di
+  comprimerlo, non convertirlo tu.
+- Un video grande ci mette anche qualche minuto a caricarsi: lancia il `curl` e aspetta la risposta.
+- Stessa regola dei dati personali, stesso giro dei file (passi 3-5 sopra). Nel messaggio a
+  `chiedi_a_otto` di' cosa deve farci Otto (es. su quale account e campagna caricarlo).
 
 ## Le risposte
 
