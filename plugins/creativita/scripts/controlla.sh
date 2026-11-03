@@ -6,6 +6,7 @@
 # Il token di Higgsfield non si chiede mai alla CLI: finirebbe a schermo.
 
 ATTESA=${CONTROLLA_ATTESA:-10}
+FIGMA_SH=${FIGMA_SH:-$(dirname "$0")/figma.sh}
 # Un comando con un tempo massimo: macOS non ha timeout, perl sì. Il comando gira come figlio di perl, che
 # allo scadere lo ferma ed esce con 124: così bash non stampa «Alarm clock».
 entro() {
@@ -37,6 +38,17 @@ riga_figma() {
   fi
 }
 
+# Il token personale per l'API di Figma: non blocca niente, senza si legge Figma con l'MCP.
+riga_token_figma() {
+  local riga
+  riga=$(entro bash "$FIGMA_SH" verifica)
+  case "$riga" in
+    ✅*) echo "$riga" ;;
+    '') echo "❌ Token Figma: l'API di Figma non risponde. Senza token il giro funziona lo stesso, con più chiamate all'MCP di Figma." ;;
+    *) echo "$riga Senza token il giro funziona lo stesso, con più chiamate all'MCP di Figma." ;;
+  esac
+}
+
 righe_higgsfield() {
   if ! command -v higgsfield >/dev/null 2>&1; then
     echo '❌ Higgsfield: CLI non installata. Nel terminale: npm i -g @higgsfield/cli'
@@ -54,6 +66,7 @@ case "${1:-configura}" in
   configura)
     riga_otto
     riga_figma
+    riga_token_figma
     righe_higgsfield
     ;;
   account)

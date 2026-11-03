@@ -26,10 +26,18 @@ case "$FINTO_FIGMA" in
   assente) echo 'otto: https://otto-hermes.ltvalue.it/mcp (HTTP) - ✔ Connected' ;;
 esac
 EOF
+cat > "$BASE/figma.sh" <<'EOF'
+#!/bin/bash
+case "${FINTO_TOKEN_FIGMA:-ok}" in
+  ok) echo '✅ Token Figma: Massimo (massimo@ltv.it)' ;;
+  assente) echo '❌ Token Figma: manca. Crealo su figma.com, poi: security add-generic-password -U -s figma-token -a "$USER" -w "$(pbpaste)"' >&2; exit 3 ;;
+esac
+EOF
 chmod +x "$BASE/bin/higgsfield" "$BASE/bin/claude"
 
 controlla() { # $1 = configura|account, poi variabili d'ambiente dei finti
-  env PATH="$BASE/bin:/usr/bin:/bin" HOME="$BASE/casa" CONTROLLA_ATTESA=2 "${@:2}" bash "$QUI/controlla.sh" "$1"
+  env PATH="$BASE/bin:/usr/bin:/bin" HOME="$BASE/casa" CONTROLLA_ATTESA=2 FIGMA_SH="$BASE/figma.sh" "${@:2}" \
+    bash "$QUI/controlla.sh" "$1"
 }
 contiene() { printf '%s' "$2" | grep -qF -- "$3" || { echo "FAIL $1: manca «$3»"; ERRORI=1; }; }
 manca() { printf '%s' "$2" | grep -qF -- "$3" && { echo "FAIL $1: non doveva esserci «$3»"; ERRORI=1; }; }
@@ -41,7 +49,16 @@ contiene "tutto a posto" "$uscita" "✅ Wiki dei clienti: plugin Otto installato
 contiene "tutto a posto" "$uscita" "✅ Figma: collegato"
 contiene "tutto a posto" "$uscita" "✅ Higgsfield: CLI installata"
 contiene "tutto a posto" "$uscita" "✅ Higgsfield: login fatto"
+contiene "tutto a posto" "$uscita" "✅ Token Figma: Massimo"
 manca "tutto a posto" "$uscita" "❌"
+
+# Token Figma assente: la riga dice come crearlo e che il giro va lo stesso; le altre restano ✅.
+uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso FINTO_TOKEN_FIGMA=assente)
+contiene "senza token Figma" "$uscita" "❌ Token Figma: manca"
+contiene "senza token Figma" "$uscita" "security add-generic-password -U -s figma-token"
+contiene "senza token Figma" "$uscita" "Senza token il giro funziona lo stesso"
+contiene "senza token Figma" "$uscita" "✅ Figma: collegato"
+contiene "senza token Figma" "$uscita" "✅ Higgsfield: login fatto"
 
 # Otto assente.
 echo '{"plugins":{}}' > "$BASE/casa/.claude/plugins/installed_plugins.json"

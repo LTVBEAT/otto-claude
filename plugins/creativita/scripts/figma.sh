@@ -4,6 +4,9 @@
 #   figma.sh struttura <file> [nodo] [profondità]     una riga per nodo: id tipo nome x y larghezza altezza genitore
 #   figma.sh schermate <file> <nodo>... [--scala N]   PNG di più nodi con una sola chiamata: id percorso
 #   figma.sh immagini <file> <nodo>                   le immagini originali sotto un nodo: id nome percorso
+#   figma.sh commenti <file> <pagina>                 i commenti da sistemare: id_frame nome_frame id autore data testo
+#   figma.sh rispondi <file> <commento> <testo>       risponde nel thread del commento
+#   figma.sh reazione <file> <commento>               mette ✅ sul commento
 # L'API non ha il tetto giornaliero dell'MCP. Le scritture (frame, testi, scene) restano all'MCP di Figma.
 # Uscite: 0 ok, 1 errore, 2 uso sbagliato, 3 token mancante o non valido, 4 limite dell'API: con 3 e 4 si usa l'MCP.
 # Il token sta nel Portachiavi (voce figma-token) e non si stampa mai: arriva a curl da stdin, non dagli argomenti.
@@ -14,7 +17,7 @@ CARTELLA=${FIGMA_CARTELLA:-${TMPDIR:-/tmp}/creativita-figma}
 ATTESA_MASSIMA=60
 ISTRUZIONI='Crealo su figma.com (Impostazioni, Sicurezza, Personal access tokens: 90 giorni; File content Read, Comments Read and write, Current user Read), copialo e poi nel terminale: security add-generic-password -U -s figma-token -a "$USER" -w "$(pbpaste)"'
 
-uso() { sed -n '2,6p' "$0" | sed 's/^# *//' >&2; exit 2; }
+uso() { sed -n '2,9p' "$0" | sed 's/^# *//' >&2; exit 2; }
 
 # chiama <metodo> <percorso> [file con il corpo JSON]: il corpo della risposta su stdout.
 # Va usata come x=$(chiama ...) || exit $?: gli exit qui dentro escono solo dalla sottoshell.
@@ -129,6 +132,54 @@ case "$comando" in
       fi
     done <<< "$trovati"
     exit $esito
+    ;;
+
+  commenti)
+    [ $# -ge 2 ] || uso
+    file=$1 pagina=$2
+    io=$(chiama GET /v1/me) || exit $?
+    tmp=$(mktemp -d)
+    # La pagina intera e i commenti vanno su file: per --argjson sarebbero troppo grandi.
+    chiama GET "/v1/files/$file/nodes?ids=$pagina" > "$tmp/pagina" || { c=$?; rm -rf "$tmp"; exit $c; }
+    chiama GET "/v1/files/$file/comments?as_md=true" > "$tmp/commenti" || { c=$?; rm -rf "$tmp"; exit $c; }
+    # Aperti e di primo livello, sui nodi di questa pagina. Si salta un thread chiuso da una risposta di chi lancia
+    # il giro che comincia con «Fatto:» o «Non fatto:»: è già sistemato e aspetta che qualcuno lo risolva.
+    jq -nr --slurpfile p "$tmp/pagina" --slurpfile c "$tmp/commenti" --arg pid "$pagina" \
+      --arg io "$(printf '%s' "$io" | jq -r .id)" '
+      ($p[0].nodes[$pid].document) as $pag
+      | ([$pag.children[]? | . as $f | .. | objects | select(has("id")) | {key: .id, value: {id: $f.id, nome: $f.name}}]
+         + [{key: $pag.id, value: {id: "-", nome: "NON ATTRIBUITO"}}] | from_entries) as $frame
+      | $c[0].comments as $tutti
+      | [$tutti[] | select((.parent_id // "") == "" and .resolved_at == null) | . as $r
+          | ([$r] + [$tutti[] | select(.parent_id == $r.id)] | sort_by(.created_at)) as $thread
+          | ($thread | last) as $ultimo
+          | select(($ultimo.parent_id // "") == "" or $ultimo.user.id != $io
+                   or ($ultimo.message | test("^(Fatto|Non fatto):") | not))
+          | ($r.client_meta.node_id // null) as $n
+          | (if $n == null then {id: "-", nome: "NON ATTRIBUITO"} else $frame[$n] end) as $f
+          | select($f != null)
+          | {f: $f, r: $r, testo: ([$thread[].message] | join(" // ") | gsub("\t"; " ") | gsub("\r?\n"; " / "))}]
+      | (map(select(.f.id != "-")) | sort_by(.f.nome, (.r.order_id | tonumber? // 0))) + map(select(.f.id == "-"))
+      | .[] | [.f.id, .f.nome, .r.id, .r.user.handle, .r.created_at, .testo] | join("\t")'
+    c=$?; rm -rf "$tmp"; exit $c
+    ;;
+
+  rispondi)
+    [ $# -ge 3 ] || uso
+    file=$1 commento=$2
+    corpo=$(mktemp)
+    jq -n --arg m "$3" --arg c "$commento" '{message: $m, comment_id: $c}' > "$corpo"
+    chiama POST "/v1/files/$file/comments" "$corpo" > /dev/null || { c=$?; rm -f "$corpo"; exit $c; }
+    rm -f "$corpo"; echo "✅ risposto a $commento"
+    ;;
+
+  reazione)
+    [ $# -ge 2 ] || uso
+    file=$1 commento=$2
+    corpo=$(mktemp)
+    echo '{"emoji":":white_check_mark:"}' > "$corpo"
+    chiama POST "/v1/files/$file/comments/$commento/reactions" "$corpo" > /dev/null || { c=$?; rm -f "$corpo"; exit $c; }
+    rm -f "$corpo"; echo "✅ reazione su $commento"
     ;;
 
   *) uso ;;

@@ -66,8 +66,13 @@ prima del successivo e alla fine dice cosa funziona e cosa manca:
   «04 Terze parti» e «Linee guida» (colori con ruoli e divieti, per esempio il viola del sito non va nelle creatività;
   logo e varianti; font). **È il brand che si usa per generare**: colori, stile ed elementi entrano nel prompt della
   scena, foto e loghi veri entrano nella composizione.
-- Le creatività stanno in una pagina per lotto, `B<n>_ <data>` (per Learnn «B6_ 26.10.2026»): un riquadro
-  «00 – Asset (foto e componenti)» e i frame `B<n>_ <data> - C<k> - 9:16` e `- 1:1`. Il giro segue questa convenzione.
+- Le creatività stanno in una pagina per brief, `B<n>_ <data>` (per Learnn «B6_ 26.10.2026»), con i frame
+  `B<n>_ <data> - C<k> - 9:16` e `- 1:1`. Il giro segue questa convenzione. Il riquadro «00 – Asset» dei primi lotti
+  non si fa più: nella pagina del brief solo creatività finite (Max, 03/11).
+- Il file ha anche la pagina **«Foto e immagini»** (Max, 03/11): a brief finito ci vanno le scene generate, una riga
+  per brief, con lo stesso `imageHash` dei frame.
+- Il brand kit cresce piano piano: gli elementi che mancano si estraggono anche dal sito del cliente e vanno in un
+  riquadro «Da verificare» del brand kit, che non si usa finché il team non lo svuota (Max, 03/11).
 - L'MCP di Figma non elenca le cartelle di un team: il link del file del cliente va scritto nella sua scheda della wiki
   di Otto; se manca, il giro lo chiede.
 - Se un cliente non ha ancora il brand kit, si prepara prima (Sezione 4), anche estraendo gli elementi dalle sue
@@ -87,7 +92,7 @@ prima del successivo e alla fine dice cosa funziona e cosa manca:
   la sezione creatività del cliente contiene istruzioni e **skill del cliente**, da usare nei momenti in cui servono
   (copy, prompt, montaggio).
 - Niente ok su proposte, prompt, costo e scene: il costo si dice («uso N crediti»), le scene si controllano con occhio
-  critico (una rigenerazione automatica su un difetto chiaro, dentro i tetti) e vanno tutte su Figma. **La persona
+  critico (una rigenerazione automatica su un difetto chiaro) e vanno tutte su Figma. **La persona
   sceglie le varianti dentro Figma** (`C<k>`, `C<k>-2`, `C<k>-3`).
 - I testi (headline, testi, CTA, logo) sono livelli su Figma; la grafica, anche con lettere o numeri come un «-40€» in
   3D, si genera su Higgsfield.
@@ -95,9 +100,8 @@ prima del successivo e alla fine dice cosa funziona e cosa manca:
 
 ## Soldi
 
-Tetti del giro: **6 crediti per ad** (tutte le sue varianti), **18 per giro**, qualità media di default; il costo si
-dice prima di partire; una sola rigenerazione automatica su un difetto chiaro. Senza un server li fa rispettare la skill: è un paletto più morbido di quello dello studio,
-accettato insieme alla scelta di non avere un server.
+Modello: GPT Image 2.5 Sunburst, qualità xhigh, 1k (2,5 crediti a scena). Nessun tetto di crediti (Max, 03/11): il
+costo si dice prima di partire.
 
 ## Obiettivi
 
@@ -121,7 +125,10 @@ accettato insieme alla scelta di non avere un server.
 ## Vincoli
 
 - Figma: posto **Full** per scrivere nel progetto condiviso. Confermato solo quello di Max; Sofia ed Elisa da verificare.
-  MCP di Figma: 200 chiamate al giorno con un posto Full.
+  MCP di Figma: 200 chiamate al giorno e 10 al minuto con un posto Full sul piano Pro. Per questo le letture passano
+  dall'API REST (`scripts/figma.sh`): nessun tetto giornaliero, 15 al minuto per file e render, 50 per i commenti. Serve
+  un token personale Figma a 90 giorni nel Portachiavi di ognuno; senza, il giro legge con l'MCP. Dettagli nel design
+  `2026-11-03-creativita-api-figma-design.md` (qui accanto) e piano in `docs/superpowers/plans/`.
 - Il font del cliente deve esistere in Figma: i Google Fonts ci sono, i proprietari vanno caricati nel team.
 - Le istruzioni e le skill dei clienti devono stare nella wiki di Otto. Per Learnn oggi sono soprattutto su GitHub:
   vanno portate nella wiki prima del pilota.
