@@ -44,6 +44,10 @@ aggiunge qui; se ne contraddice una vecchia, la vecchia si toglie.
 - **Se il messaggio sta già nel visual, niente headline né copy in overlay.** Quando il testo fa parte della scena (il
   cartello, le tessere, il vapore, il biglietto, lo schermo della console) il visual è l'ad: su Figma al massimo logo,
   CTA e Trustpilot, piccoli e messi dove **non coprono il visual principale**. La priorità è il visual. (Max, 03/11)
+- **Il testo piatto sopra la foto si mette su Figma, non si genera.** Citazioni, didascalie da meme, titoli e
+  sottotitoli in tipografia pulita appoggiati sulla scena (il «No mamma…» del bambino, «Io quando…» del pranzo) vanno
+  su Figma come livelli modificabili; nella scena si lascia lo spazio vuoto. Si genera solo il testo che sta **su un
+  oggetto** o è scritto a mano: biglietto, vapore, post-it, lavagna, schermi. (Max, 03/11)
 - **Il pulsante della CTA va disegnato bene**, come il pulsante del brand kit: pieno, proporzionato, con il testo
   centrato e leggibile. Il rettangolino con il bordo sottile del B14 era «un po' brutto». (Max, 03/11)
 
@@ -78,6 +82,10 @@ aggiunge qui; se ne contraddice una vecchia, la vecchia si toglie.
 - **Il visual e il format funzionano, il testo no:** B13 C3, il biglietto nero «Cerchiamo freelance alle prese con un
   lavoro mai fatto.», e B13 C4, il vapore «Cerchiamo marketer con tanti tool AI e nessun playbook». Si tengono e si
   propongono testi nuovi. (Max, 03/11)
+- **Testi scelti da Max per il B15 (Learnn, 03/11):** biglietto nero «Cerchiamo freelance che hanno detto "sì, lo so
+  fare" e ora devono impararlo.»; vapore sull'idea «marketer con 5 abbonamenti AI ma che fanno ancora tutto a mano»
+  (scelta sua, fra le proposte preferiva il numero dei tool contro il lavoro ancora manuale); pranzo della domenica con
+  la didascalia originale «Io quando il «tutorial da 10 minuti» diventa la mia domenica.», non la versione limata.
 - **Scartata:** B14 C1, «Caricamento: quello bravo con l'AI». (Max, 03/11)
 
 ## Per cliente
