@@ -27,7 +27,9 @@ plugin, MCP ufficiale di Figma, CLI `@higgsfield/cli`.
   automatico.
 - Prove solo da materiale vero del cliente; regole e istruzioni del cliente lette dalla wiki di Otto a ogni giro, mai
   copiate nelle skill.
-- File Figma nel progetto condiviso «Giotto» del team Beat Performance, nome `Giotto - <Cliente>`.
+- File Figma: quello del cliente nella sua cartella del team Beat Performance; pagina «Brand kit» per il brand,
+  pagine dei lotti `B<n>_ <data>` con frame `B<n>_ <data> - C<k> - 9:16` e `- 1:1`.
+- Ogni prompt di scena dice esplicitamente che si sta creando un'ad (statica per Meta).
 - Hook solo con bash, sed e grep. Testi in italiano, nei documenti `-` e mai il trattino lungo.
 - Commit su ok di Max; push, PR e unione su main le lancia Max.
 
@@ -85,29 +87,23 @@ comandi `configura` e `account` in `hooks/comandi-creativita.sh`; caso `creativi
 
 ### Sezione 3: Il giro fino alla scena
 
-**File:**
-- Crea: `plugins/creativita/skills/creativita/SKILL.md`, `plugins/creativita/agents/format-concept.md`,
-  `plugins/creativita/agents/visual-testi.md`
+**File:** `plugins/creativita/skills/creativita/SKILL.md`, `plugins/creativita/agents/format-concept.md`,
+`plugins/creativita/agents/visual-testi.md`.
 
 **Interfacce:**
-- Consuma: `cerca_nella_knowledge`, `leggi_dalla_knowledge`, `elenca_knowledge` (cliente, brand, istruzioni, skill del
-  cliente); la CLI Higgsfield; la fase della Sezione 1.
-- Produce:
-  - `format-concept`: da statica e cliente, che format è, com'è costruito, cosa vuole dire, perché funziona, e fino a 3
-    modi di riadattarlo senza rifarlo uguale.
-  - `visual-testi`: palette, composizione, elementi, gerarchia e tono dei testi, e come rifarli sul brand del cliente,
-    colori della scena compresi.
-  - Skill `creativita`: chiede il cliente se manca; chiede con il riquadro delle domande quante proposte (1, 2 o 3);
-    legge la wiki; lancia i due subagenti in parallelo; unisce in proposte (idea, prompt della scena, copy); mostra
-    costo e crediti rimasti del giro e aspetta l'ok; genera con la CLI; mostra le scene e chiede quali tenere.
-    Aggiorna la fase a ogni passo.
+- Due ingressi: statica da riadattare (cliente, numero di proposte con il riquadro delle domande, due subagenti in
+  parallelo, proposte con idea, prompt e copy) e brief pronto (testi usati così come sono, reference a Higgsfield).
+- Brand dal file Figma del cliente (pagina «Brand kit», linee guida lette sezione per sezione), tono e regole dalla
+  wiki; il link del file si cerca nella wiki, altrimenti si chiede.
+- Scena: `higgsfield generate cost` e poi `generate create` con GPT Image 2, 1k, 9:16, statica o reference come
+  `--image-references`; prompt che dice sempre «ad»; tetti 6 per proposta e 18 per giro; nessun nuovo tentativo.
 
-- [ ] **Passo 1:** scrivi skill e subagenti. Nessuna regola di un cliente dentro i file.
-- [ ] **Passo 2:** `claude plugin validate plugins/creativita` → nessun errore.
-- [ ] **Passo 3:** prova a secco su Learnn con una statica scelta da Max, fermandosi prima della CLI: proposte e
-  costo devono avere senso, e la quarta proposta o la terza in qualità alta devono essere rifiutate.
-- [ ] **Passo 4 (Max autorizza la spesa):** una scena vera in qualità media, massimo 6 crediti.
-- [ ] **Passo 5:** commit `feat(creativita): giro della creatività fino alla scena`.
+- [x] Subagenti e skill scritti; `claude plugin validate` passato; letti dal vero il brand kit e i lotti di Learnn.
+- [x] Prova vera sul brief B8 di Learnn, concept #4: brief e reference dal Google Doc, brand kit da Figma, scena con
+  GPT Image 2 e poi GPT Image 2.5 Sunburst (7 crediti), montaggio su Figma nella pagina «B8_ 27.10.2026», C4 in 9:16 e
+  1:1. Correzioni di Max: testi su Figma e grafica su Higgsfield; giro veloce con una sola domanda.
+- [ ] Altri giri di prova di Max con il giro veloce.
+- [x] Commit `feat(creativita): giro della creatività fino alla scena`.
 
 ### Sezione 4: Brand kit su Figma
 
@@ -120,7 +116,8 @@ e si chiede a Max come portarle.
 **Interfacce:**
 - Consuma: wiki di Otto (brand del cliente), `chiedi_a_otto` per le immagini delle sue migliori statiche, MCP di Figma
   (`create_new_file`, `use_figma`, `upload_assets`).
-- Produce: file `Giotto - <Cliente>` nel progetto «Giotto», pagina **Brand kit** con componenti chiamati
+- Produce, solo per i clienti che non l'hanno: la pagina **Brand kit** nel file del cliente, con la stessa struttura
+  di quella di Learnn (Asset 01-04 e Linee guida) e componenti chiamati
   `kit/<tipo>/<nome>` (tipi: `logo`, `colore`, `testo`, `elemento`, `immagine`), stili colore e stili di testo; nella
   descrizione del componente del font, il fallback da usare se il font manca.
   - `estrai-elementi`: dalle vecchie creatività propone gli elementi ricorrenti con creatività di origine e riquadro;
@@ -139,8 +136,9 @@ e si chiede a Max come portarle.
 
 **Interfacce:**
 - Consuma: scene tenute (Sezione 3), componenti `kit/...` (Sezione 4).
-- Produce: nella pagina `Giro <data> - <statica>` del file del cliente, per ogni proposta tenuta i frame `P<n> 9:16`
-  (1080×1920) e `P<n> 1:1` (1080×1080), con i livelli `scena`, `headline`, `testo`, `cta`, `logo` ed elementi come
+- Produce: una pagina nuova `B<n>_ <data>` (lotto successivo all'ultimo) nel file del cliente, con il riquadro
+  «00 – Asset (foto e componenti)» e per ogni ad tenuta i frame `B<n>_ <data> - C<k> - 9:16` (1080×1920) e `- 1:1`
+  (1080×1080), con i livelli `scena`, `headline`, `testo`, `cta`, `logo` ed elementi come
   istanze del kit. Prima di proporre, la skill guarda le pagine dei giri già fatti per non ripetersi.
 
 - [ ] **Passo 1:** scrivi il passo. Se il font manca, la skill lo dice e usa il fallback del kit.
@@ -153,7 +151,7 @@ e si chiede a Max come portarle.
 - [ ] **Passo 1:** versione del plugin in `plugin.json` (minore successiva), `README.md` con comandi e configurazione,
   `task.md` aggiornato.
 - [ ] **Passo 2 (Max):** push del ramo, PR e unione su main.
-- [ ] **Passo 3 (Max):** posti Full su Figma per chi usa la creatività e accesso al progetto «Giotto»; credenziali
+- [ ] **Passo 3 (Max):** posti Full su Figma per chi usa la creatività nel team Beat Performance; credenziali
   dell'account Higgsfield dell'agenzia date in privato.
 - [ ] **Passo 4:** Sofia o Elisa: aggiornano il plugin, `/creativita configura`, un giro da sole. Si annota cosa le ha
   fermate.

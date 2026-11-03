@@ -36,7 +36,7 @@ prima del successivo e alla fine dice cosa funziona e cosa manca:
 
 1. **Wiki dei clienti:** il plugin Otto è installato con il token e la wiki si legge.
 2. **Figma:** il plugin ufficiale di Figma è installato, il login è fatto con l'account della persona (un clic nel
-   browser) e si vede il progetto condiviso **«Giotto»** del team Beat Performance.
+   browser) e c'è un posto Full nel team **Beat Performance**, dove stanno le cartelle dei clienti.
 3. **Higgsfield:** la CLI è installata (`npm i -g @higgsfield/cli`) e il login è fatto (`higgsfield login`, nel browser).
    Tutti entrano con l'**unico account Higgsfield dell'agenzia** (Max, 03/11: un solo account, niente account
    personali né workspace separati). Cambiarlo dev'essere facile: `/creativita account`.
@@ -52,24 +52,51 @@ prima del successivo e alla fine dice cosa funziona e cosa manca:
      **sul branding del cliente**, colori della scena compresi.
 4. **Le proposte:** ognuna ha l'idea adattata, la scena da generare nei colori del cliente e i copy (headline, testi
    brevi, CTA) nel tono e con le regole del cliente lette dalla wiki di Otto.
-5. **L'immagine:** Higgsfield genera la scena di ogni proposta (GPT Image 2, 1k, senza testo, con la statica come
-   reference e il prompt che evita di rifarla uguale). Prima di spendere Claude mostra il costo e aspetta l'ok.
+5. **L'immagine:** Higgsfield genera la scena di ogni proposta (GPT Image 2, 1k; GPT Image 2.5 Sunburst su richiesta),
+   con la statica come reference e il prompt che evita di rifarla uguale. Il costo si dice, non si chiede.
 6. **Su Figma:** nel file del cliente c'è la pagina **Brand kit**. Claude compone ogni proposta tenuta in due frame,
    9:16 (1080×1920) e 1:1 (1080×1080), a livelli: scena, copy negli stili di testo del cliente, logo ed elementi del kit.
 7. **Ritocco:** il team sistema a mano su Figma ed esporta il PNG.
 
-## Il brand kit su Figma
+## Il brand kit e i file su Figma (Max, 03/11)
 
-- Un file per cliente, `Giotto - <Cliente>`, nel progetto «Giotto». Pagina **Brand kit**: logo (varianti), palette come
-  stili colore, font come stili di testo, elementi ricorrenti (bollini, icone, cornici, pattern) e immagini vere.
-- Si prepara una volta per cliente e si riusa a ogni giro.
-- Elementi: da quello che dà il cliente; altrimenti **estratti dalle sue vecchie creatività**, che Claude chiede a Otto.
-  Gli elementi estratti si mostrano in chat ed entrano nella pagina solo dopo l'ok della persona.
+- Nel team Figma **Beat Performance** c'è una cartella per cliente (Learnn, Tkart, SYHO, Pinex Capital...), più
+  «Template». Nella cartella del cliente c'è il suo file delle creatività (per Learnn «Creatività Adv - Learnn»).
+- Il file ha la pagina **«Brand kit»**, preparata con il cliente: «Asset · 01 Logo», «02 Esperti», «03 Immagini»,
+  «04 Terze parti» e «Linee guida» (colori con ruoli e divieti, per esempio il viola del sito non va nelle creatività;
+  logo e varianti; font). **È il brand che si usa per generare**: colori, stile ed elementi entrano nel prompt della
+  scena, foto e loghi veri entrano nella composizione.
+- Le creatività stanno in una pagina per lotto, `B<n>_ <data>` (per Learnn «B6_ 26.10.2026»): un riquadro
+  «00 – Asset (foto e componenti)» e i frame `B<n>_ <data> - C<k> - 9:16` e `- 1:1`. Il giro segue questa convenzione.
+- L'MCP di Figma non elenca le cartelle di un team: il link del file del cliente va scritto nella sua scheda della wiki
+  di Otto; se manca, il giro lo chiede.
+- Se un cliente non ha ancora il brand kit, si prepara prima (Sezione 4), anche estraendo gli elementi dalle sue
+  vecchie creatività, con l'ok della persona su ogni elemento.
+
+## Due ingressi (Max, 03/11)
+
+- **Statica da riadattare:** il giro completo descritto sopra.
+- **Brief pronto:** testi e reference già decisi. Niente subagenti né proposte nuove: i testi si usano come sono
+  (si segnala solo quello che va contro le regole del cliente), la reference va a Higgsfield, poi costo, scena e Figma.
+- In tutti e due i casi **ogni prompt dice esplicitamente che si sta creando un'ad** (statica per Meta, 9:16 e 1:1).
+
+## Il giro veloce (Max, 03/11, dopo la prima prova)
+
+- **Una sola domanda:** quante varianti per ogni ad (1, 2 o 3). Poi si va fino a Figma senza fermarsi.
+- Niente conferma del brand: brand kit su Figma e wiki si danno per corretti, si leggono sempre e si usano. Nella wiki
+  la sezione creatività del cliente contiene istruzioni e **skill del cliente**, da usare nei momenti in cui servono
+  (copy, prompt, montaggio).
+- Niente ok su proposte, prompt, costo e scene: il costo si dice («uso N crediti»), le scene si controllano con occhio
+  critico (una rigenerazione automatica su un difetto chiaro, dentro i tetti) e vanno tutte su Figma. **La persona
+  sceglie le varianti dentro Figma** (`C<k>`, `C<k>-2`, `C<k>-3`).
+- I testi (headline, testi, CTA, logo) sono livelli su Figma; la grafica, anche con lettere o numeri come un «-40€» in
+  3D, si genera su Higgsfield.
+- Un solo resoconto alla fine: link Figma, schermate, crediti, brand usato, difetti e scelte fatte.
 
 ## Soldi
 
-Tetti del giro: **6 crediti per proposta**, **18 per giro**, qualità media di default, costo mostrato prima, nessun
-nuovo tentativo automatico. Senza un server li fa rispettare la skill: è un paletto più morbido di quello dello studio,
+Tetti del giro: **6 crediti per ad** (tutte le sue varianti), **18 per giro**, qualità media di default; il costo si
+dice prima di partire; una sola rigenerazione automatica su un difetto chiaro. Senza un server li fa rispettare la skill: è un paletto più morbido di quello dello studio,
 accettato insieme alla scelta di non avere un server.
 
 ## Obiettivi
@@ -104,8 +131,8 @@ accettato insieme alla scelta di non avere un server.
 
 - Le vecchie creatività del cliente si chiedono a Otto (`chiedi_a_otto`), che legge gli account Meta; la persona può
   anche passarle in chat.
-- Il registro dei giri è il file Figma del cliente: una pagina per giro, `Giro <data> - <statica>`. Prima di proporre,
-  Claude guarda le pagine già fatte per non ripetersi.
+- Il registro dei giri è il file Figma del cliente: le pagine dei lotti `B<n>_ <data>`. Prima di proporre, Claude
+  guarda i lotti già fatti per non ripetersi.
 
 ## Lasciato a chi costruisce
 
