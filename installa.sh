@@ -1,14 +1,17 @@
 #!/bin/bash
-# Installa Otto (o Mulan) in Claude Code.
+# Installa Otto (o Mulan, o la creazione creatività) in Claude Code.
 #   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash
 #   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s mulan
+#   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s creativita
 set -uo pipefail
 
 PLUGIN="${1:-otto}"
 case "$PLUGIN" in
   otto) NOME=Otto; INDIRIZZO=https://otto-hermes.ltvalue.it/mcp; PROVA="chiedi a Otto come vanno gli account di TKART questa settimana";;
   mulan) NOME=Mulan; INDIRIZZO=https://otto-hermes.ltvalue.it/mulan; PROVA="chiedi a Mulan le task aperte di Fibi";;
-  *) echo "Plugin sconosciuto: otto o mulan."; exit 1;;
+  # La creazione creatività non ha un server suo né un token: dopo l'installazione si collega con /creativita configura.
+  creativita) NOME="Creazione creatività"; INDIRIZZO=""; PROVA="/creativita configura";;
+  *) echo "Plugin sconosciuto: otto, mulan o creativita."; exit 1;;
 esac
 MINIMA="2.1.147"
 
@@ -62,6 +65,15 @@ echo "  3/4  Attivo gli aggiornamenti automatici di $NOME"
 if ! osascript -l JavaScript -e "$AUTOAGGIORNA" "$HOME/.claude/settings.json" >/dev/null 2>&1; then
   echo "       Non ci sono riuscito. Fallo a mano in Claude Code: /plugin, scheda Marketplaces,"
   echo "       ltvbeat, Enable auto-update."
+fi
+
+if [ -z "$INDIRIZZO" ]; then
+  echo ""
+  echo "  Fatto! Chiudi e riapri Claude Code (terminale o app), poi scrivi:"
+  echo "     $PROVA"
+  echo "  e segui i passi: wiki dei clienti, Figma e Higgsfield."
+  echo ""
+  exit 0
 fi
 
 echo "  4/4  Incolla il tuo token di $NOME (te lo dà Max) e premi Invio."

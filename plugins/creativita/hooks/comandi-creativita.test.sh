@@ -39,6 +39,18 @@ manda "/CREATIVITA OFF" >/dev/null
 atteso "/CREATIVITA OFF" ""
 
 contiene "/creativita help" "$(manda "/creativita help")" "/creativita on"
+contiene "/creativita help" "$(manda "/creativita help")" "/creativita configura"
+
+# Configurazione e account: Claude lancia lo script dei controlli del plugin, la creazione non si accende.
+uscita=$(manda "/creativita configura")
+contiene "/creativita configura" "$uscita" "$(cd "$QUI/.." && pwd)/scripts/controlla.sh' configura"
+contiene "/creativita configura" "$uscita" "whoami"
+printf '%s' "$uscita" | json "/creativita configura"
+atteso "/creativita configura" ""
+uscita=$(manda "/creativita account")
+contiene "/creativita account" "$uscita" "scripts/controlla.sh' account"
+contiene "/creativita account" "$uscita" "higgsfield auth logout"
+printf '%s' "$uscita" | json "/creativita account"
 [ -z "$(manda "puoi fare /creativita on per me")" ] || { echo "FAIL: un comando dentro una frase non va eseguito"; ERRORI=1; }
 atteso "comando dentro una frase" ""
 

@@ -1,4 +1,4 @@
-# Installa Otto (o Mulan) in Claude Code, su Windows.
+# Installa Otto (o Mulan, o la creazione creativita') in Claude Code, su Windows.
 #   irm https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.ps1 | iex
 #   $env:LTV_PLUGIN="mulan"; irm https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.ps1 | iex
 #
@@ -22,8 +22,12 @@ function Installa-Corpo {
     } elseif ($Plugin -eq "mulan") {
         $Nome = "Mulan"; $Indirizzo = "https://otto-hermes.ltvalue.it/mulan"
         $Prova = "chiedi a Mulan le task aperte di Fibi"
+    } elseif ($Plugin -eq "creativita") {
+        # Nessun server suo e nessun token: dopo l'installazione si collega con /creativita configura.
+        $Nome = "Creazione creativita'"; $Indirizzo = ""
+        $Prova = "/creativita configura"
     } else {
-        Write-Host "Plugin sconosciuto: otto o mulan."
+        Write-Host "Plugin sconosciuto: otto, mulan o creativita."
         return
     }
     $Minima = [version]"2.1.147"
@@ -64,6 +68,15 @@ function Installa-Corpo {
     if (-not (Accendi-Aggiornamenti (Join-Path $Cartella "settings.json"))) {
         Write-Host "       Non ci sono riuscito. Fallo a mano in Claude Code: /plugin, scheda Marketplaces,"
         Write-Host "       ltvbeat, Enable auto-update."
+    }
+
+    if (-not $Indirizzo) {
+        Write-Host ""
+        Write-Host "  Fatto! Chiudi e riapri Claude Code, poi scrivi:"
+        Write-Host "     $Prova"
+        Write-Host "  e segui i passi: wiki dei clienti, Figma e Higgsfield."
+        Write-Host ""
+        return
     }
 
     Write-Host "  3/4  Incolla il tuo token di $Nome (te lo da' Max) e premi Invio."

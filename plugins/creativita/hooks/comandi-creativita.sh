@@ -1,6 +1,7 @@
 #!/bin/bash
 # Creazione creatività. «/creativita on» accende la creazione per la sessione, «/creativita off» la spegne,
-# «/creativita help» spiega i comandi. Accesa, a ogni messaggio Claude riceve le istruzioni del giro e il file
+# «/creativita help» spiega i comandi, «/creativita configura» guida i collegamenti (wiki, Figma, Higgsfield),
+# «/creativita account» dice e cambia l'account Higgsfield. Accesa, a ogni messaggio Claude riceve le istruzioni del giro e il file
 # in cui scrivere la fase, che la fascia mostra. Hook UserPromptSubmit, un file per sessione con la fase.
 # Solo bash, sed e grep: jq sui Mac del team può non esserci.
 #
@@ -22,8 +23,10 @@ find "$CARTELLA" -type f -mtime +7 -delete 2>/dev/null
 OTTO="$(dirname "$DATI")/otto-ltvbeat/modalita/$SESSIONE"
 
 COMANDO=$(printf '%s' "$INGRESSO" \
-  | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/creativita(:creativita)?[[:space:]]+(on|off|help)[[:space:]]*"' \
-  | grep -oiE '(on|off|help)[[:space:]]*"$' | tr -d '" ' | tr 'A-Z' 'a-z')
+  | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/creativita(:creativita)?[[:space:]]+(on|off|help|configura|account)[[:space:]]*"' \
+  | grep -oiE '(on|off|help|configura|account)[[:space:]]*"$' | tr -d '" ' | tr 'A-Z' 'a-z')
+# Lo script dei controlli sul computer, tra apici singoli nelle istruzioni: il percorso può avere spazi.
+CONTROLLA="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)/scripts/controlla.sh"
 
 RISPONDI='L'"'"'utente ha scritto un comando del plugin creativita, già eseguito dal plugin. Non lanciare skill né subagent e non chiamare strumenti. Rispondi esattamente con il testo qui sotto, senza aggiungere niente prima o dopo:\n\n'
 
@@ -42,7 +45,13 @@ case "$COMANDO" in
     CONTESTO="${RISPONDI}"'Creazione creatività spenta: torni a parlare con Claude normalmente.'
     ;;
   help)
-    CONTESTO="${RISPONDI}"'**Creazione creatività**: riadatti una statica per un cliente, nel suo brand, e la ritrovi su Figma a livelli.\n\n**I comandi**\n- `/creativita on` accendi la creazione: la fascia sopra il prompt mostra la fase del giro\n- `/creativita off` torni a parlare con Claude normalmente\n- `/creativita help` questo aiuto'
+    CONTESTO="${RISPONDI}"'**Creazione creatività**: riadatti una statica per un cliente, nel suo brand, e la ritrovi su Figma a livelli.\n\n**I comandi**\n- `/creativita on` accendi la creazione: la fascia sopra il prompt mostra la fase del giro\n- `/creativita off` torni a parlare con Claude normalmente\n- `/creativita configura` controlla e guida i collegamenti: wiki dei clienti, Figma, Higgsfield\n- `/creativita account` con quale account Higgsfield sei collegato, e come cambiarlo\n- `/creativita help` questo aiuto'
+    ;;
+  configura)
+    CONTESTO='L'"'"'utente ha scritto /creativita configura, la configurazione guidata della creazione creatività. Non lanciare skill né subagent.\n1. Lancia con Bash: bash '"'"''"$CONTROLLA"''"'"' configura\n2. Se la riga della wiki è ✅, chiama lo strumento elenca_knowledge senza cartella: se risponde aggiungi «✅ Wiki dei clienti: si legge», se manca o dà errore «❌ Wiki dei clienti: manca il token. In Claude Code scrivi /plugin configure otto@ltvbeat e incolla il token che ti ha dato Max».\n3. Se la riga di Figma non è ❌, chiama lo strumento whoami del server Figma (mcp.figma.com) e guarda il piano «Beat Performance», il team dei file dei clienti: se lì il posto è Full aggiungi «✅ Figma: <email>, posto Full in Beat Performance», se è un altro posto o il piano manca «❌ Figma: <email> non ha un posto Full in Beat Performance, che serve per scrivere nei file del team: chiedilo a Max». Se whoami non risponde, «❌ Figma: manca il login. In Claude Code scrivi /mcp, scegli figma e fai Authenticate».\n4. Rispondi solo con **Configurazione creatività** e le righe nell'"'"'ordine, così come sono. Se c'"'"'è almeno un ❌, chiudi con l'"'"'azione del primo ❌ e la riga: Quando hai fatto, scrivi di nuovo /creativita configura. Se sono tutte ✅: Tutto pronto: scrivi /creativita on per cominciare.'
+    ;;
+  account)
+    CONTESTO='L'"'"'utente ha scritto /creativita account. Non lanciare skill né subagent.\n1. Lancia con Bash: bash '"'"''"$CONTROLLA"''"'"' account\n2. Riporta in poche righe account, crediti e workspace Higgsfield.\n3. Spiega come cambiarlo, comandi da scrivere nel terminale: higgsfield auth logout e poi higgsfield auth login (si apre il browser). Il team entra sempre con l'"'"'unico account Higgsfield dell'"'"'agenzia. Login e logout non li lanci tu: li fa la persona.'
     ;;
   *)
     [ -f "$STATO" ] || exit 0

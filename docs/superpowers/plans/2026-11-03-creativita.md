@@ -61,32 +61,27 @@ plugin, MCP ufficiale di Figma, CLI `@higgsfield/cli`.
 - [x] `bash plugins/creativita/hooks/comandi-creativita.test.sh` → ok; `claude plugin test plugins/creativita` → 6 su 6;
   `claude plugin validate` del plugin e del marketplace → passati; test di Otto e Mulan invariati e verdi.
 - [ ] Prova a vista in una sessione nel terminale con `claude --plugin-dir <copia>/plugins/creativita`.
-- [ ] Commit `feat(creativita): plugin con comandi e fascia della creazione` (su ok di Max).
+- [x] Commit `feat(creativita): plugin con comandi e fascia della creazione`.
 
-### Sezione 2: Configurazione guidata e cambio di account
+### Sezione 2: Configurazione guidata e cambio di account - fatta il 03/11
 
-**File:**
-- Modifica: `plugins/creativita/hooks/comandi-creativita.sh` (controlli locali di `configura` e `account`),
-  `installa.sh`, `installa.ps1` (passo facoltativo «creatività»)
-- Crea: `plugins/creativita/skills/creativita-configura/SKILL.md`
-- Test: `plugins/creativita/hooks/comandi-creativita.test.sh`
+**File:** `plugins/creativita/scripts/controlla.sh` (controlli sul computer) e il suo test `controlla.test.sh`;
+comandi `configura` e `account` in `hooks/comandi-creativita.sh`; caso `creativita` in `installa.sh` e `installa.ps1`
+(nessun passo del token). Niente skill a parte: le istruzioni le passa l'hook, come per `/otto doctor`.
 
 **Interfacce:**
-- Consuma: il plugin Otto installato con il token (per la wiki), `whoami` dell'MCP di Figma, la CLI Higgsfield.
-- Produce: elenco con ✅/❌ come `/otto doctor`, nell'ordine wiki, Figma (plugin, login, progetto «Giotto»),
-  Higgsfield (CLI, login, account). Per ogni ❌ una sola azione da fare, poi si ricontrolla.
-  `/creativita account` mostra l'account Higgsfield attivo e, se la persona vuole cambiarlo, fa `higgsfield logout` e
-  `higgsfield login`.
+- `controlla.sh configura`: righe ✅/❌ per plugin Otto (wiki), Figma (`claude mcp list`, server `mcp.figma.com`),
+  CLI Higgsfield e login (`higgsfield workspace list`), ognuna con l'unica azione da fare. Ogni comando ha un tempo
+  massimo di 10 secondi. Il token di Higgsfield non si chiede mai alla CLI.
+- Poi Claude, con gli strumenti: `elenca_knowledge` per la wiki e `whoami` di Figma, che deve dare un posto **Full nel
+  piano «Beat Performance»**.
+- `controlla.sh account`: `higgsfield account status` e `workspace status`. Login, logout e cambio di workspace li fa la
+  persona nel terminale.
 
-- [ ] **Passo 1: test che falliscono** (bash, con `higgsfield` e `claude` finti nel PATH): `senza CLI Higgsfield dice
-  di installarla con npm i -g @higgsfield/cli`; `CLI senza login dice di lanciare higgsfield login`; `con tutto a posto
-  tutte le righe sono ✅`.
-- [ ] **Passo 2:** test → FAIL.
-- [ ] **Passo 3:** implementa i controlli locali nell'hook e la skill per i controlli che servono l'MCP (Figma,
-  wiki). Verifica sulla documentazione della CLI quali comandi danno login e saldo; non indovinare i nomi.
-- [ ] **Passo 4:** test → PASS; `claude plugin validate plugins/creativita`.
-- [ ] **Passo 5:** prova sul Mac di Max: `/creativita configura` fino a tutto ✅, poi `/creativita account`.
-- [ ] **Passo 6:** commit `feat(creativita): configurazione guidata della creatività`.
+- [x] Test che falliscono, poi script, comandi e installazione; test bash verdi, plugin e catalogo validati, sintassi
+  PowerShell controllata.
+- [x] Prova vera sul Mac di Max: wiki ✅, Figma ✅ (Full in Beat Performance), CLI Higgsfield ✅, login Higgsfield ❌.
+- [x] Commit `feat(creativita): configurazione guidata e account Higgsfield`.
 
 ### Sezione 3: Il giro fino alla scena
 

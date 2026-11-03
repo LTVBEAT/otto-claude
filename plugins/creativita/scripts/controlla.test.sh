@@ -1,0 +1,81 @@
+#!/bin/bash
+# Prova i controlli della configurazione: bash plugins/creativita/scripts/controlla.test.sh
+# Higgsfield e Claude Code sono finti, nel PATH; la casa è una cartella vuota.
+set -u
+QUI=$(cd "$(dirname "$0")" && pwd)
+BASE=$(mktemp -d)
+ERRORI=0
+
+mkdir -p "$BASE/bin" "$BASE/casa/.claude/plugins"
+cat > "$BASE/bin/higgsfield" <<'EOF'
+#!/bin/bash
+case "$FINTO_HF:$*" in
+  nologin:workspace\ list*) echo 'Error: higgsfield: request failed (no response received)'; echo 'Hint: Run: hf auth login'; exit 2 ;;
+  nologin:*) echo 'Hint: Run: hf auth login'; exit 2 ;;
+  ok:workspace\ list*) echo 'LTV Beat  ws_123'; exit 0 ;;
+  ok:account\ status*) echo 'Email: team@ltvalue.it'; echo 'Credits: 420'; exit 0 ;;
+  ok:workspace\ status*) echo 'Workspace: LTV Beat (ws_123)'; exit 0 ;;
+  lento:*) sleep 30 ;;
+esac
+EOF
+cat > "$BASE/bin/claude" <<'EOF'
+#!/bin/bash
+case "$FINTO_FIGMA" in
+  connesso) echo 'plugin:figma:figma: https://mcp.figma.com/mcp (HTTP) - ✔ Connected' ;;
+  login) echo 'plugin:figma:figma: https://mcp.figma.com/mcp (HTTP) - ! Needs authentication' ;;
+  assente) echo 'otto: https://otto-hermes.ltvalue.it/mcp (HTTP) - ✔ Connected' ;;
+esac
+EOF
+chmod +x "$BASE/bin/higgsfield" "$BASE/bin/claude"
+
+controlla() { # $1 = configura|account, poi variabili d'ambiente dei finti
+  env PATH="$BASE/bin:/usr/bin:/bin" HOME="$BASE/casa" CONTROLLA_ATTESA=2 "${@:2}" bash "$QUI/controlla.sh" "$1"
+}
+contiene() { printf '%s' "$2" | grep -qF -- "$3" || { echo "FAIL $1: manca «$3»"; ERRORI=1; }; }
+manca() { printf '%s' "$2" | grep -qF -- "$3" && { echo "FAIL $1: non doveva esserci «$3»"; ERRORI=1; }; }
+
+# Tutto a posto.
+echo '{"plugins":{"otto@ltvbeat":[{}]}}' > "$BASE/casa/.claude/plugins/installed_plugins.json"
+uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso)
+contiene "tutto a posto" "$uscita" "✅ Wiki dei clienti: plugin Otto installato"
+contiene "tutto a posto" "$uscita" "✅ Figma: collegato"
+contiene "tutto a posto" "$uscita" "✅ Higgsfield: CLI installata"
+contiene "tutto a posto" "$uscita" "✅ Higgsfield: login fatto"
+manca "tutto a posto" "$uscita" "❌"
+
+# Otto assente.
+echo '{"plugins":{}}' > "$BASE/casa/.claude/plugins/installed_plugins.json"
+uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso)
+contiene "senza Otto" "$uscita" "❌ Wiki dei clienti"
+contiene "senza Otto" "$uscita" "LTVBEAT/otto-claude/main/installa.sh"
+echo '{"plugins":{"otto@ltvbeat":[{}]}}' > "$BASE/casa/.claude/plugins/installed_plugins.json"
+
+# Figma: senza login e assente.
+contiene "Figma senza login" "$(controlla configura FINTO_HF=ok FINTO_FIGMA=login)" "❌ Figma: manca il login"
+contiene "Figma assente" "$(controlla configura FINTO_HF=ok FINTO_FIGMA=assente)" "claude plugin install figma@claude-plugins-official"
+
+# Higgsfield: CLI assente, login non fatto, CLI che non risponde.
+rm "$BASE/bin/higgsfield.salvato" 2>/dev/null; mv "$BASE/bin/higgsfield" "$BASE/bin/higgsfield.salvato"
+uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso)
+contiene "senza CLI" "$uscita" "❌ Higgsfield: CLI non installata"
+contiene "senza CLI" "$uscita" "npm i -g @higgsfield/cli"
+mv "$BASE/bin/higgsfield.salvato" "$BASE/bin/higgsfield"
+uscita=$(controlla configura FINTO_HF=nologin FINTO_FIGMA=connesso)
+contiene "senza login" "$uscita" "❌ Higgsfield: login non fatto"
+contiene "senza login" "$uscita" "higgsfield auth login"
+inizio=$(date +%s); uscita=$(controlla configura FINTO_HF=lento FINTO_FIGMA=connesso); fine=$(date +%s)
+[ $((fine - inizio)) -lt 10 ] || { echo "FAIL CLI lenta: il controllo non si ferma da solo"; ERRORI=1; }
+contiene "CLI lenta" "$uscita" "❌ Higgsfield: login non fatto"
+
+# Account: mostra email, crediti e workspace; senza login dice come entrare.
+uscita=$(controlla account FINTO_HF=ok)
+contiene "account" "$uscita" "team@ltvalue.it"
+contiene "account" "$uscita" "Workspace: LTV Beat"
+contiene "account senza login" "$(controlla account FINTO_HF=nologin)" "higgsfield auth login"
+
+# Mai il token a schermo: lo script non chiama auth token.
+grep -q "auth token" "$QUI/controlla.sh" && { echo "FAIL: lo script chiama auth token"; ERRORI=1; }
+
+rm -rf "$BASE"
+[ $ERRORI -eq 0 ] && echo "ok"
+exit $ERRORI

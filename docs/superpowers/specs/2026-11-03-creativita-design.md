@@ -38,8 +38,8 @@ prima del successivo e alla fine dice cosa funziona e cosa manca:
 2. **Figma:** il plugin ufficiale di Figma è installato, il login è fatto con l'account della persona (un clic nel
    browser) e si vede il progetto condiviso **«Giotto»** del team Beat Performance.
 3. **Higgsfield:** la CLI è installata (`npm i -g @higgsfield/cli`) e il login è fatto (`higgsfield login`, nel browser).
-   Tutti entrano con l'**account Higgsfield dell'agenzia**; eventualmente uno a parte per i team leader. Cambiarlo
-   dev'essere facile: `/creativita account` (Max, 03/11).
+   Tutti entrano con l'**unico account Higgsfield dell'agenzia** (Max, 03/11: un solo account, niente account
+   personali né workspace separati). Cambiarlo dev'essere facile: `/creativita account`.
 
 ## Il giro di una creatività (parole di Max)
 
