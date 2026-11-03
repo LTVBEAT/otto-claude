@@ -180,7 +180,10 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
 3. **Due frame per ogni variante**, 1080×1920 e 1080×1080: `B<n>_ <data> - C<k> - 9:16` e `- 1:1` per la prima,
    `C<k>-2`, `C<k>-3` per le altre (la convenzione già usata nei lotti). Fondo nero, contenuto tagliato. Dentro:
    - `Scena`: rettangolo largo 1080 con l'immagine (`imageHash`, FILL). Nel 1:1 spostalo in verticale perché restino
-     in quadro soggetto e grafica.
+     in quadro soggetto e grafica. Non allungarlo oltre l'altezza dell'immagine (1080×1930 per un 9:16 a 1k): con FILL
+     l'immagine si ingrandisce e taglia i lati (03/11: console, biglietto e tessere tagliati). Se il visual non entra
+     nella zona sicura, si rigenera la scena più compatta, non si sposta il rettangolo lasciando un buco in fondo.
+   - Logo, CTA e Trustpilot vanno dove la scena è libera, anche in alto sotto il logo: mai sopra il visual principale.
    - I testi come livelli, nel font del brand kit (se manca in Figma, il sostituto indicato dal brand kit) e nei suoi
      colori, nello spazio lasciato libero dalla scena.
    - Il logo come **istanza del componente del brand kit** (per Learnn «Logo Learnn / Bianco»), non come testo.
