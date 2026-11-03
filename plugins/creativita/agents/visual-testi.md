@@ -28,6 +28,7 @@ Il tuo pezzo è **visual e testi**, non il concept: di quello si occupa un altro
 
 - Se il brand kit non dice una cosa (un colore, un font), dillo: non inventare il brand.
 - Le istruzioni e le skill del cliente che ricevi si seguono alla lettera: i copy non si scrivono «a sentimento».
+- Il feedback del team (`feedback.md`) vince su brand kit, regole e reference: seguilo riga per riga.
 - **Con un brief** che ha già una parte dei testi: quelli restano così come sono; scrivi solo i pezzi che mancano,
   coerenti con quelli dati.
 - Testi brevi, leggibili in 9:16 e 1:1, nessuna promessa che il materiale vero non sostiene.

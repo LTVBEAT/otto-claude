@@ -1,6 +1,6 @@
 ---
 name: creativita
-description: Crea ad statiche per un cliente LTV/Beat, nel suo brand kit su Figma, con le scene generate su Higgsfield e montate su Figma. Usala quando la persona passa una statica da riadattare per un cliente, o un brief già pronto con testi e reference da realizzare, e quando la creazione creatività è accesa (/creativita on) e arriva una statica o un brief. Anche per sistemare i commenti lasciati dal team sui frame di un lotto («sistema i commenti del B10»).
+description: Crea ad statiche per un cliente LTV/Beat, nel suo brand kit su Figma, con le scene generate su Higgsfield e montate su Figma. Usala quando la persona passa una statica da riadattare per un cliente, o un brief già pronto con testi e reference da realizzare, e quando la creazione creatività è accesa (/creativita on) e arriva una statica o un brief. Anche per sistemare i commenti lasciati dal team sui frame di un lotto («sistema i commenti del B10»), quando la persona dà un feedback sulle creatività fatte, e quando chiede quali indicazioni o feedback hai sulle creatività.
 ---
 
 # Creazione creatività: il giro
@@ -16,6 +16,21 @@ Si producono **ad** statiche nel brand del cliente: scena su Higgsfield, montagg
 **Il giro è il più veloce possibile** (Max, 03/11). Si fa **una sola domanda**, quante varianti per ad, poi si va fino
 a Figma senza fermarsi: niente conferma del brand, delle proposte, dei prompt, del costo o delle scene. La persona
 sceglie dentro Figma.
+
+## Il feedback
+
+Il file `${CLAUDE_PLUGIN_ROOT}/feedback.md` raccoglie le indicazioni che Max e il team hanno dato guardando le
+creatività (Max, 03/11). È la memoria del plugin:
+
+- **Si legge a ogni giro**, al passo 2, e si segue: nei prompt, nei copy, nel montaggio. Vince su brand kit, wiki e
+  reference quando li contraddice, e nel resoconto si scrive dove ha deciso lui.
+- **Si passa intero ai subagenti** del passo 3, insieme alle regole del cliente.
+- **Quando la persona dà un feedback** sulle creatività (anche a voce, dentro un messaggio su altro), lo scrivi subito
+  in `feedback.md`: una riga per indicazione, nella sezione «Per tutti i clienti» se vale in generale o sotto il
+  cliente se è solo sua, con chi l'ha data e la data. Se ne contraddice una vecchia, togli la vecchia. Poi dici in una
+  riga cosa hai salvato. Il file resta solo se finisce nel repo del plugin (`otto-claude`, `plugins/creativita/`): se
+  stai lavorando su una copia installata, avvisa la persona che va portato lì.
+- **Quando la persona chiede quali indicazioni hai**, mostrale il contenuto di `feedback.md`, diviso per sezione.
 
 ## La fase nella fascia
 
@@ -59,7 +74,7 @@ L'MCP di Figma ha un tetto (200 chiamate al giorno con un posto Full); l'API RES
 ### 2. Il brand: Figma e wiki
 
 Si dà per scontato che brand kit su Figma e wiki del cliente siano corretti: si leggono **sempre**, si usano e non si
-chiede conferma.
+chiede conferma. Insieme si legge `feedback.md` (vedi «Il feedback»), che vince su tutti e due.
 
 - **Brand kit su Figma.** Il link del file: cerca `figma.com/design` nella cartella `clienti/<slug>` della wiki. Se non
   c'è, chiedi il link del file del cliente nella sua cartella del team Beat Performance, e a fine giro suggerisci di
@@ -92,8 +107,8 @@ Meta (9:16 e 1:1) e passa: il percorso della statica (con un brief, la sua refer
 cliente, il riassunto del brand kit (palette con ruoli e divieti, font, logo, elementi e foto), il materiale vero e il
 numero di varianti.
 
-Le istruzioni e le skill del cliente su creatività, copy, tono e visual (quelle trovate al passo 2) si passano **con il
-testo intero**, non riassunte: i subagenti hanno solo Read e la wiki non la leggono da soli. Se un file è molto lungo,
+Le istruzioni e le skill del cliente su creatività, copy, tono e visual (quelle trovate al passo 2) e `feedback.md` si
+passano **con il testo intero**, non riassunte: i subagenti hanno solo Read e la wiki non la leggono da soli. Se un file è molto lungo,
 taglia solo le parti che non riguardano le ad statiche, e nel resoconto scrivi cosa hai passato.
 
 ### 4. Le varianti
@@ -159,7 +174,9 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
 2. **Nella pagina solo creatività finite e modificabili** (Max, 03/11): niente riquadro degli asset, niente prove,
    niente frame di servizio. La scena si carica direttamente nel rettangolo `Scena` del frame: crea prima il frame con
    il rettangolo vuoto, poi `upload_assets` puntando a quel rettangolo (`nodeIds`) e invia con curl in multipart; la
-   risposta dà l'`imageHash`, che si riusa per il rettangolo `Scena` dell'altro formato.
+   risposta dà l'`imageHash`, che si riusa per il rettangolo `Scena` dell'altro formato. Controlla `placedOnNodeId` in
+   ogni risposta: il 03/11, con sette `nodeIds` in una chiamata, le scene sono finite slittate di un frame e la prima
+   si è persa. Con più scene, una chiamata `upload_assets` per scena, oppure verifica e correggi subito i riempimenti.
 3. **Due frame per ogni variante**, 1080×1920 e 1080×1080: `B<n>_ <data> - C<k> - 9:16` e `- 1:1` per la prima,
    `C<k>-2`, `C<k>-3` per le altre (la convenzione già usata nei lotti). Fondo nero, contenuto tagliato. Dentro:
    - `Scena`: rettangolo largo 1080 con l'immagine (`imageHash`, FILL). Nel 1:1 spostalo in verticale perché restino
@@ -241,7 +258,7 @@ ambiguo, una domanda sola su quello, e intanto sistemi gli altri.
 ## Regole
 
 - Si creano sempre **ad**: ogni prompt di scena lo dice esplicitamente, e anche le richieste ai subagenti.
-- Nessuna regola di un cliente sta in questa skill: si leggono a ogni giro da Figma e dalla wiki.
+- Nessuna regola di un cliente sta in questa skill: si leggono a ogni giro da Figma, dalla wiki e da `feedback.md`.
 - Prove (testimonianze, numeri, screenshot, volti di clienti o studenti) solo da materiale vero, mai generate.
 - Il token di Higgsfield non si chiede mai alla CLI. Il token di Figma lo legge solo `figma.sh`, dal Portachiavi: non
   si stampa e non si cerca in altri modi.
