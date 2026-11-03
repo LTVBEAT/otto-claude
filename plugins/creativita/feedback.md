@@ -8,10 +8,17 @@ aggiunge qui; se ne contraddice una vecchia, la vecchia si toglie.
 ## Per tutti i clienti
 
 ### Colori
-- **Il colore d'accento del cliente si usa, nelle scene e nella grafica, dove possibile**: l'oggetto acceso, la console,
-  il post-it, lo schermo, un gadget. Non si toglie per prudenza. (Max, 03/11)
+- **Il colore d'accento del cliente si usa, ma come accento**: su un elemento (l'oggetto acceso, la console, il post-it,
+  un gadget), non su tutta la scena. La base resta il colore principale del brand. Né assente (primo giro del B12) né
+  dappertutto (secondo giro: «un po' troppo viola»). Si leggono nel brand kit quale colore è principale e quale è
+  d'accento, e si rispettano i ruoli. (Max, 03/11)
 - **Non tutto nero.** Il fondo nero di un brand vale per le grafiche costruite, non obbliga a scene buie: si possono fare
   scene di vita reale, con luce vera e i colori del cliente. (Max, 03/11)
+
+### Brand
+- **Il cliente si deve riconoscere a colpo d'occhio.** Seguire il format non basta: la creatività deve sembrare del
+  cliente, con la sua palette nei ruoli giusti, i suoi elementi e il suo prodotto. Nel secondo giro del B12 il format
+  era rispettato ma c'era «poco Learnn». Il primo giro, più nel brand, aveva stupito di più. (Max, 03/11)
 
 ### Pubblico
 - **Il pubblico è quello del cliente, non quello della reference.** Età, mestiere o situazione scritti nella reference
@@ -41,8 +48,8 @@ aggiunge qui; se ne contraddice una vecchia, la vecchia si toglie.
 ## Per cliente
 
 ### Learnn
-- **Il viola di Learnn si usa** come accento (è nei loro colori): per esempio la console viola trasparente della
-  reference resta viola. Vale anche se la pagina «Brand kit» su Figma dice «niente viola nelle creatività»: quella riga
+- **Il viola di Learnn si usa come accento**, su un elemento (per esempio la console viola trasparente della reference
+  resta viola). La base resta nera e bianca. Vale anche se la pagina «Brand kit» su Figma dice «niente viola nelle creatività»: quella riga
   va aggiornata. Codici nella wiki: `#8c52ff` (acceso), `#5a2ba6` e `#2a1155` (scuri) per le grafiche, `#7945E3` nei
   token di prodotto. (Max, 03/11)
 - Learnn non ha un pubblico per età: niente «over 30», «over 40». (Max, 03/11)
