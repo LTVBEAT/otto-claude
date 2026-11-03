@@ -7,6 +7,11 @@ aggiunge qui; se ne contraddice una vecchia, la vecchia si toglie.
 
 ## Per tutti i clienti
 
+### Processo
+- **Prima il brainstorming dei due subagenti, poi la generazione, sempre.** Testi, idee e scene passano da
+  `format-concept` e `visual-testi` prima di Higgsfield, anche quando la persona ha già dato un'idea per un'ad: la sua
+  idea entra nel brief dei subagenti, non li sostituisce. (Max, 03/11)
+
 ### Colori
 - **Il colore d'accento del cliente si usa, ma come accento**: su un elemento (l'oggetto acceso, la console, il post-it,
   un gadget), non su tutta la scena. La base resta il colore principale del brand. Né assente (primo giro del B12) né
