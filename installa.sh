@@ -16,8 +16,29 @@ echo ""
 echo "  $NOME per Claude Code"
 echo "  --------------------"
 
+# Claude Code può esserci senza essere nel PATH: l'installer ufficiale lo mette in ~/.local/bin, e chi
+# usa solo l'app desktop ne ha una copia in Application Support. Se non c'è da nessuna parte, lo installa.
 if ! command -v claude >/dev/null 2>&1; then
-  echo "  Non trovo Claude Code su questo Mac. Installalo da https://claude.com/code e rilancia."
+  APP=$(ls -d "$HOME"/Library/Application\ Support/Claude/claude-code/*/*/claude.app/Contents/MacOS/claude 2>/dev/null | sort -V | tail -1)
+  if [ -x "$HOME/.local/bin/claude" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+  elif [ -n "$APP" ]; then
+    PATH="$(dirname "$APP"):$PATH"
+  else
+    echo "  Claude Code non c'è su questo Mac: lo installo con l'installer di Anthropic (un minuto)."
+    curl -fsSL https://claude.ai/install.sh </dev/null | bash >/dev/null 2>&1
+    PATH="$HOME/.local/bin:$PATH"
+    command -v claude >/dev/null 2>&1 \
+      || { echo "  Non sono riuscito a installare Claude Code. Avvisa Max."; exit 1; }
+  fi
+fi
+
+# Il catalogo si scarica con git, che su un Mac nuovo non funziona finché non ci sono gli Strumenti da
+# riga di comando di Apple: senza, il catalogo non arriva e l'installazione si ferma al passo 2.
+if ! git --version >/dev/null 2>&1; then
+  xcode-select --install >/dev/null 2>&1
+  echo "  Manca git, che serve a scaricare i plugin. Si è aperta una finestra di Apple: clicca"
+  echo "  Installa, aspetta che finisca (qualche minuto) e poi rilancia questo stesso comando."
   exit 1
 fi
 VERSIONE=$(claude --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
@@ -27,13 +48,21 @@ if [ "$(printf '%s\n%s\n' "$MINIMA" "$VERSIONE" | sort -V | head -1)" != "$MINIM
 fi
 
 echo "  1/4  Aggiungo il catalogo dei plugin LTV"
-claude plugin marketplace add LTVBEAT/otto-claude >/dev/null 2>&1 \
-  || claude plugin marketplace update ltvbeat >/dev/null 2>&1
+# Se qualcosa va storto, l'errore vero si mostra: «Avvisa Max» da solo non dice cosa guardare.
+mostra_errore() {
+  echo "  $1 Manda a Max queste righe:"
+  printf '%s\n' "$2" | grep -v '^[[:space:]]*$' | tail -4 | cut -c1-200 | sed 's/^/     /'
+}
+# Se c'era già, «add» fallisce e basta aggiornarlo; l'errore da mostrare resta quello di «add».
+if ! ERRORE=$(claude plugin marketplace add LTVBEAT/otto-claude 2>&1); then
+  claude plugin marketplace update ltvbeat >/dev/null 2>&1 \
+    || { mostra_errore "Non riesco a scaricare il catalogo dei plugin." "$ERRORE"; exit 1; }
+fi
 
 echo "  2/4  Installo il plugin $PLUGIN"
-if ! claude plugin install "$PLUGIN@ltvbeat" >/dev/null 2>&1; then
+if ! ERRORE=$(claude plugin install "$PLUGIN@ltvbeat" 2>&1); then
   claude plugin list 2>/dev/null | grep -q "$PLUGIN@ltvbeat" \
-    || { echo "  Installazione non riuscita. Avvisa Max."; exit 1; }
+    || { mostra_errore "Installazione non riuscita." "$ERRORE"; exit 1; }
 fi
 # Se c'era già, lo porta all'ultima versione.
 claude plugin update "$PLUGIN@ltvbeat" >/dev/null 2>&1
