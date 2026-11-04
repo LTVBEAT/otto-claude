@@ -147,5 +147,9 @@ Quando i file sono più di uno (le creatività di un ad set, tre PDF dello stess
   un minuto e richiama `risultato_otto` con quel numero. Ripeti finché arriva la risposta.
 - Se Otto **chiede un'autorizzazione**, spiega all'utente cosa sta per fare e **chiedi a lui**
   sì o no. Poi usa `autorizza_otto`. Non autorizzare mai da solo.
+- Se Otto **fa una domanda o chiede una conferma** (anche se parla di pulsanti, di popup o di
+  Slack), da qui non ci sono pulsanti: fai la stessa domanda all'utente e rimanda a Otto la sua
+  risposta parola per parola con `chiedi_a_otto`. Non rispondere mai al suo posto. Se in fondo c'è
+  una «Nota del server per Claude» sui pulsanti, vale la stessa regola.
 - Se Otto non è raggiungibile o risponde con un errore, dillo all'utente così com'è. Se il token non
   funziona, l'utente deve chiedere a Max un token nuovo.
