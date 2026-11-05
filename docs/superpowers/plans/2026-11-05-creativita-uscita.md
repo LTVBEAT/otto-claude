@@ -176,17 +176,17 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
 
 ---
 
-### Sezione 6: La scheda di Learnn nella wiki
+### Sezione 6: La scheda di Learnn nella wiki - fatta il 05/11 (scritta da Otto su Slack, commit af5d168 della wiki)
 
 Si scrive nella wiki, non nel repo: nessun commit.
 
-- [ ] **Passo 1:** leggi `clienti/learnn/brand.md`, `creativita-repo-learnn.md`, `scheda.md`, `safe-zone-creative-video.md`
+- [x] **Passo 1:** leggi `clienti/learnn/brand.md`, `creativita-repo-learnn.md`, `scheda.md`, `safe-zone-creative-video.md`
   e le regole di Learnn tolte dalla skill nella Sezione 4 (`git show` del commit). Il file Figma è
   `LRhzTaDLREM1sSKAJKGoMV` («Creatività Adv - Learnn»), brand kit nella pagina `3:2`.
-- [ ] **Passo 2:** scrivi la scheda sul modello di `scheda-modello.md` e mostrala a Max in chat.
-- [ ] **Passo 3:** con il suo ok, `scrivi_nella_knowledge` su `clienti/learnn/creativita.md` (la conferma la dà lui
+- [x] **Passo 2:** scrivi la scheda sul modello di `scheda-modello.md` e mostrala a Max in chat.
+- [x] **Passo 3:** con il suo ok, `scrivi_nella_knowledge` su `clienti/learnn/creativita.md` (la conferma la dà lui
   nella finestra).
-- [ ] **Passo 4:** `leggi_dalla_knowledge clienti/learnn/creativita.md` → c'è, con il link Figma; `bash
+- [x] **Passo 4:** `leggi_dalla_knowledge clienti/learnn/creativita.md` → c'è, con il link Figma; `bash
   plugins/creativita/scripts/figma.sh struttura LRhzTaDLREM1sSKAJKGoMV "" 1` → c'è la pagina «Brand kit».
 
 ---
