@@ -3,7 +3,7 @@
 #   figma.sh verifica                                 il token c'è e funziona, con quale account
 #   figma.sh struttura <file> [nodo] [profondità]     una riga per nodo: id tipo nome x y larghezza altezza genitore
 #   figma.sh schermate <file> <nodo>... [--scala N]   PNG di più nodi con una sola chiamata: id percorso
-#   figma.sh immagini <file> <nodo>                   le immagini originali sotto un nodo: id nome percorso
+#   figma.sh immagini <file> <nodo>                   le immagini sotto un nodo (o nel riquadro sopra): id nome percorso
 #   figma.sh commenti <file> <pagina>                 i commenti da sistemare: id_frame nome_frame id autore data testo
 #   figma.sh rispondi <file> <commento> <testo>       risponde nel thread del commento
 #   figma.sh reazione <file> <commento>               mette ✅ sul commento
@@ -107,13 +107,32 @@ case "$comando" in
   immagini)
     [ $# -ge 2 ] || uso
     file=$1 nodo=$2
-    json=$(chiama GET "/v1/files/$file/nodes?ids=$nodo") || exit $?
-    # id, nome e imageRef di ogni nodo sotto $nodo che ha un riempimento immagine.
-    trovati=$(printf '%s' "$json" | jq -r --arg id "$nodo" '
-      [.nodes[$id].document | .. | objects | select(.fills? | type == "array") | . as $n
+    # id, nome e imageRef di ogni nodo sotto il nodo $id che ha un riempimento immagine.
+    IMMAGINI='.nodes[$id].document | [.. | objects | select(.fills? | type == "array") | . as $n
         | .fills[] | select(.type == "IMAGE" and .imageRef) | [$n.id, ($n.name | gsub("[\t\n]"; " ")), .imageRef]]
-      | unique_by(.[0]) | .[] | join("\t")')
-    [ -n "$trovati" ] || { echo "Nessuna immagine sotto $nodo"; exit 0; }
+      | unique_by(.[0]) | .[] | join("\t")'
+    json=$(chiama GET "/v1/files/$file/nodes?ids=$nodo") || exit $?
+    trovati=$(printf '%s' "$json" | jq -r --arg id "$nodo" "$IMMAGINI")
+    if [ -z "$trovati" ]; then
+      # Nel brand kit il nome dell'asset è un testo nella didascalia e l'immagine sta nel riquadro accanto: si risale
+      # di tre livelli al massimo (catena da ?ids=, poi una chiamata sola) e si prende il riquadro più vicino.
+      catena=$(chiama GET "/v1/files/$file?ids=$nodo") || exit $?
+      antenati=$(printf '%s' "$catena" | jq -r --arg id "$nodo" '
+        . as $r | first(paths(objects | select(.id? == $id))) as $p
+        | [range(0; $p | length) as $i | $r | getpath($p[:$i]) | objects | select(.id and .type)
+           | select(.type != "DOCUMENT" and .type != "CANVAS" and .id != $id) | .id]
+        | reverse | .[:3] | join(",")')
+      [ -n "$antenati" ] || { echo "Nessuna immagine sotto $nodo né nei riquadri sopra"; exit 0; }
+      json=$(chiama GET "/v1/files/$file/nodes?ids=$antenati") || exit $?
+      for a in ${antenati//,/ }; do
+        trovati=$(printf '%s' "$json" | jq -r --arg id "$a" "$IMMAGINI")
+        if [ -n "$trovati" ]; then
+          echo "$nodo non ha immagini: uso il riquadro sopra, $a ($(printf '%s' "$json" | jq -r --arg id "$a" '.nodes[$id].document.name'))"
+          break
+        fi
+      done
+      [ -n "$trovati" ] || { echo "Nessuna immagine sotto $nodo né nei riquadri sopra"; exit 0; }
+    fi
     riempimenti=$(chiama GET "/v1/files/$file/images") || exit $?
     mkdir -p "$CARTELLA/$file"
     esito=0

@@ -53,6 +53,12 @@ else
     */v1/files/LRhz\?depth=*) cp "$R/file.json" "$uscita" ;;
     */v1/files/LRhz/nodes\?ids=53:671*) cp "$R/pagina.json" "$uscita" ;;
     */v1/files/LRhz/nodes\?ids=5:1*) cp "$R/asset.json" "$uscita" ;;
+    */v1/files/LRhz\?ids=5:9) cp "$R/catena.json" "$uscita" ;;
+    */v1/files/LRhz\?ids=5:99) cp "$R/catena-vuota.json" "$uscita" ;;
+    */v1/files/LRhz/nodes\?ids=5:9) cp "$R/didascalia.json" "$uscita" ;;
+    */v1/files/LRhz/nodes\?ids=5:99) cp "$R/didascalia-vuota.json" "$uscita" ;;
+    */v1/files/LRhz/nodes\?ids=5:8,5:7,5:6) cp "$R/antenati.json" "$uscita" ;;
+    */v1/files/LRhz/nodes\?ids=5:98) cp "$R/antenati-vuoti.json" "$uscita" ;;
     */v1/files/LRhz/images) cp "$R/riempimenti.json" "$uscita" ;;
     */v1/files/LRhz/comments\?as_md=true) cp "$R/commenti.json" "$uscita" ;;
     */v1/files/LRhz/comments) echo '{"id":"r1"}' > "$uscita" ;;
@@ -82,6 +88,32 @@ cat > "$BASE/risposte/asset.json" <<'EOF'
   {"id":"5:4","name":"Schermata app","type":"FRAME","fills":[],"children":[
     {"id":"5:5","name":"Schermo","type":"RECTANGLE","fills":[{"type":"IMAGE","imageRef":"bbb"}]}]}]}}}}
 EOF
+# Brand kit vero: il nome dell'asset è un testo nella didascalia, l'immagine sta nel riquadro accanto dello stesso
+# «Figure». L'API, con ?ids=, dà solo la catena dal documento al nodo.
+cat > "$BASE/risposte/catena.json" <<'EOF'
+{"document":{"id":"0:0","type":"DOCUMENT","children":[{"id":"3:2","type":"CANVAS","name":"Brand kit","children":[
+  {"id":"5:6","type":"FRAME","name":"Container","children":[{"id":"5:7","type":"FRAME","name":"Figure","children":[
+    {"id":"5:8","type":"FRAME","name":"Figcaption","children":[{"id":"5:9","type":"TEXT","name":"foto-aula.png"}]}]}]}]}]}}
+EOF
+echo '{"nodes":{"5:9":{"document":{"id":"5:9","name":"foto-aula.png","type":"TEXT","fills":[{"type":"SOLID"}]}}}}' \
+  > "$BASE/risposte/didascalia.json"
+cat > "$BASE/risposte/antenati.json" <<'EOF'
+{"nodes":{
+ "5:8":{"document":{"id":"5:8","name":"Figcaption","type":"FRAME","children":[{"id":"5:9","name":"foto-aula.png","type":"TEXT"}]}},
+ "5:7":{"document":{"id":"5:7","name":"Figure","type":"FRAME","children":[
+   {"id":"5:10","name":"Image","type":"FRAME","fills":[{"type":"IMAGE","imageRef":"aaa"}]},
+   {"id":"5:8","name":"Figcaption","type":"FRAME","children":[{"id":"5:9","name":"foto-aula.png","type":"TEXT"}]}]}},
+ "5:6":{"document":{"id":"5:6","name":"Container","type":"FRAME","children":[
+   {"id":"5:10","name":"Image","type":"FRAME","fills":[{"type":"IMAGE","imageRef":"aaa"}]},
+   {"id":"5:11","name":"Image","type":"FRAME","fills":[{"type":"IMAGE","imageRef":"bbb"}]}]}}}}
+EOF
+cat > "$BASE/risposte/catena-vuota.json" <<'EOF'
+{"document":{"id":"0:0","type":"DOCUMENT","children":[{"id":"3:2","type":"CANVAS","name":"Brand kit","children":[
+  {"id":"5:98","type":"FRAME","name":"Note","children":[{"id":"5:99","type":"TEXT","name":"una nota"}]}]}]}}
+EOF
+echo '{"nodes":{"5:99":{"document":{"id":"5:99","name":"una nota","type":"TEXT"}}}}' > "$BASE/risposte/didascalia-vuota.json"
+echo '{"nodes":{"5:98":{"document":{"id":"5:98","name":"Note","type":"FRAME","children":[{"id":"5:99","type":"TEXT"}]}}}}' \
+  > "$BASE/risposte/antenati-vuoti.json"
 echo '{"meta":{"images":{"aaa":"https://cdn.finto/aaa","bbb":"https://cdn.finto/bbb","ccc":"https://cdn.finto/ccc"}}}' \
   > "$BASE/risposte/riempimenti.json"
 # Commenti: u1 è chi lancia il giro (Massimo, come /v1/me), u2 una collega.
@@ -177,6 +209,17 @@ contiene "immagini" "$uscita" "5:2${TAB}Foto aula${TAB}$BASE/img/LRhz/5-2-immagi
 contiene "immagini" "$uscita" "5:5${TAB}Schermo${TAB}$BASE/img/LRhz/5-5-immagine.png"
 manca "immagini" "$uscita" "ccc"
 manca "immagini" "$uscita" "Didascalia"
+
+# immagini sul nome di un asset: risale al riquadro più vicino che ha un'immagine, non al contenitore di tutte.
+uscita=$(figma immagini LRhz 5:9); c=$?
+codice "immagini dal nome" $c 0
+contiene "immagini dal nome" "$uscita" "5:9 non ha immagini: uso il riquadro sopra, 5:7 (Figure)"
+contiene "immagini dal nome" "$uscita" "5:10${TAB}Image${TAB}$BASE/img/LRhz/5-10-immagine.png"
+manca "immagini dal nome, troppo in alto" "$uscita" "5:11"
+contiene "immagini dal nome, una chiamata per gli antenati" "$(cat "$BASE/argomenti")" "nodes?ids=5:8,5:7,5:6"
+uscita=$(figma immagini LRhz 5:99); c=$?
+codice "immagini da nessuna parte" $c 0
+contiene "immagini da nessuna parte" "$uscita" "Nessuna immagine sotto 5:99 né nei riquadri sopra"
 
 # Limiti dell'API: un'attesa breve si fa, una lunga no.
 uscita=$(figma FINTO_FIGMA=429 verifica); c=$?

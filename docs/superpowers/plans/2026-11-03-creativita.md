@@ -1,5 +1,7 @@
 # Plugin creativita - piano di lavoro
 
+> **Le sezioni 3-6 sono sostituite dal piano del 05/11** (`2026-11-05-creativita-uscita.md`, qui accanto).
+
 > **Per chi esegue:** skill obbligatoria superpowers:subagent-driven-development (consigliata) o
 > superpowers:executing-plans; per hook e fascia anche la skill `plugin-authoring`. **Una sezione alla volta:** finita
 > una sezione ci si ferma, si dice a Max cosa è fatto e cosa è verificato, e si passa alla successiva solo con il suo ok.
@@ -155,3 +157,19 @@ e si chiede a Max come portarle.
   dell'account Higgsfield dell'agenzia date in privato.
 - [ ] **Passo 4:** Sofia o Elisa: aggiornano il plugin, `/creativita configura`, un giro da sole. Si annota cosa le ha
   fermate.
+
+### Sezione 7: Correzioni dal giro B15 - fatta il 05/11
+
+Dai problemi del resoconto B15 di Learnn (03/11). Il sesto, il `corsi.md` di Learnn, è della wiki e resta in `task.md`.
+La composizione su Figma della Sezione 5 è fatta nei giri B13-B15; resta aperta la sola Sezione 4 (brand kit).
+
+- [x] Skill: la persona può scegliere i testi, e intanto partono le scene che non dipendono dalla scelta.
+- [x] Skill: citazioni e didascalie da meme (testo piatto sopra la foto) su Figma, mai nella scena.
+- [x] Skill: ripiego quando non c'è spazio per CTA e Trustpilot (stringere, card scura del kit, rigenerare) e pulsante
+  scuro sulle scene chiare.
+- [x] `figma.sh immagini` sul nome di un asset risale al riquadro più vicino con l'immagine: test, poi prova vera sul
+  badge HolonIQ del brand kit di Learnn.
+- [x] `scene.sh` (costo e genera, 4 insieme, rilancio sul limite, NSFW ed errori detti), con `scene.test.sh`; prova
+  vera di `costo`, nessuna generazione.
+- [x] Quattro suite bash, `claude plugin test` (6 su 6) e `claude plugin validate` verdi.
+- [x] Commit `fix(creativita): correzioni dal giro B15`.

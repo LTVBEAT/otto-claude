@@ -17,6 +17,12 @@ Si producono **ad** statiche nel brand del cliente: scena su Higgsfield, montagg
 a Figma senza fermarsi: niente conferma del brand, delle proposte, dei prompt, del costo o delle scene. La persona
 sceglie dentro Figma.
 
+**Eccezione, i testi scelti dalla persona** (Max, 03/11, B15): se chiede di scegliere lei i testi («proponimi i
+testi», «i testi li decido io»), al passo 4 le proponi due o tre testi per ogni ad che ne ha bisogno, con il riquadro
+delle domande, e **intanto generi le scene che non dipendono dalla scelta**: quelle senza testo nella scena, e quelle
+delle ad con il testo già deciso. Le scene con il testo dentro (un biglietto, un post-it, il vapore) partono dopo la
+risposta. I testi su Figma non bloccano niente: si montano quando arriva la scelta.
+
 ## Il feedback
 
 Il file `${CLAUDE_PLUGIN_ROOT}/feedback.md` raccoglie le indicazioni che Max e il team hanno dato guardando le
@@ -49,7 +55,7 @@ L'MCP di Figma ha un tetto (200 chiamate al giorno con un posto Full); l'API RES
   |---|---|---|
   | pagine, frame, posizioni | `struttura <file> [nodo] [profondità]` | `get_metadata` |
   | vedere sezioni o frame | `schermate <file> <nodo>... [--scala N]`, **tutti i nodi in una chiamata** | `get_screenshot` |
-  | foto e schermate originali | `immagini <file> <nodo>` | esportarle a mano |
+  | foto e schermate originali | `immagini <file> <nodo>`, anche sul nome dell'asset: risale da solo al riquadro dell'immagine | esportarle a mano |
   | commenti da sistemare | `commenti <file> <pagina>`, `rispondi`, `reazione` | (l'MCP non li legge) |
 
   `struttura` stampa `id tipo nome x y larghezza altezza genitore`; `schermate` e `immagini` scaricano in una cartella
@@ -127,6 +133,10 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
     inclinati, in prospettiva, su un oggetto; anche la grafica con lettere o numeri, come un «-40€» in 3D. Nel prompt
     il testo esatto tra virgolette e «spell it exactly», poi si controlla lettera per lettera.
   - **Su Figma solo la tipografia pulita:** headline, sottotitoli, testi brevi, CTA, disclaimer, logo.
+  - **Il testo piatto sopra la foto va su Figma, mai nella scena** (Max, 03/11, B15): citazioni, didascalie da meme,
+    titoli e frasi in sovrimpressione, anche se nella reference sembrano parte dell'immagine. Nel prompt si lascia la
+    zona vuota e si scrive «no text». Si genera solo il testo che sta **su un oggetto** della scena. Nel dubbio, va su
+    Figma: un testo generato per errore costa una scena rifatta.
 - **Il format non si cambia.** Il protagonista della reference resta: se è un pupazzo resta un pupazzo, non diventa
   una persona. Se è un personaggio famoso protetto, se ne fa uno **originale dello stesso tipo** e lo si dice nel
   resoconto.
@@ -143,10 +153,17 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
 
 - Modello (Max, 03/11): **GPT Image 2.5 Sunburst**, `gpt_image_2_5 --variant sunburst --quality xhigh --resolution 1k
   --aspect_ratio 9:16`. La statica o la reference del brief va come prima `--image-references`.
-- **Il costo si dice, non si chiede:** `higgsfield generate cost`, poi una riga «uso N crediti» e si parte. Nessun
-  tetto di crediti (Max, 03/11).
-- `higgsfield generate create ... --wait`; scarica l'immagine in una cartella temporanea. Più scene si possono lanciare
-  insieme, **al massimo 4** (il piano pro rifiuta la quinta con `rate_limit_reached`, senza spendere: si rilancia).
+- **Le scene si lanciano con lo script** `bash "${CLAUDE_PLUGIN_ROOT}/scripts/scene.sh"`, non con comandi scritti a
+  mano. In una cartella temporanea del giro, per ogni scena `<nome>.txt` con il prompt e, se servono, `<nome>.ref` con
+  le reference, un percorso per riga, prima la statica o la reference del brief. Nome della scena = nome dell'ad
+  (`c1`, `c1-2`...).
+  - `scene.sh costo <cartella>`: i crediti di tutte le scene. **Il costo si dice, non si chiede:** una riga «uso N
+    crediti» e si parte. Nessun tetto di crediti (Max, 03/11).
+  - `scene.sh genera <cartella> [nome...]`: lancia quelle senza PNG (o solo quelle nominate, per rifarle), al massimo 4
+    insieme, rilancia da solo i rifiuti per `rate_limit_reached` (non spendono), scarica in `<nome>.png` e stampa una
+    riga `nome<TAB>percorso`, oppure `NSFW` o `ERRORE <motivo>`. Mettilo in background se le scene sono più di due.
+  - Lo script rifiuta un prompt che non comincia con «Paid social static ad».
+  - Per una sola scena in 1:1 (rara: il 1:1 si ricava dal 9:16 su Figma) `--formato 1:1`.
 - Un'ad fatta solo di testo su fondo pieno (un messaggio, un titolo su nero) **non si genera**: si fa tutta su Figma.
 - **Controlla ogni scena con occhio critico:** numeri e lettere della grafica (un «4» che sembra un «7», una «€»
   deformata), colori rispetto al brand, mani e volti, oggetti non richiesti. Se c'è un difetto chiaro, **una**
@@ -184,6 +201,17 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
      l'immagine si ingrandisce e taglia i lati (03/11: console, biglietto e tessere tagliati). Se il visual non entra
      nella zona sicura, si rigenera la scena più compatta, non si sposta il rettangolo lasciando un buco in fondo.
    - Logo, CTA e Trustpilot vanno dove la scena è libera, anche in alto sotto il logo: mai sopra il visual principale.
+   - **Se non c'è spazio libero per CTA e Trustpilot** (Max, 03/11, B15), in quest'ordine:
+     1. stringili: CTA più corta (per Learnn «Inizia gratis»), Trustpilot più piccolo, in fila invece che uno sotto
+        l'altro;
+     2. mettili insieme in una **card** nel colore scuro del brand kit (per Learnn l'antracite), angoli come i
+        pulsanti del kit, sopra la parte meno importante della scena: mai su volti, prodotto, schermi o testo della
+        scena;
+     3. se nemmeno la card entra senza coprire il visual, la scena si rigenera con più spazio libero.
+     Scrivi nel resoconto quale ripiego hai usato.
+   - **Il pulsante della CTA si legge sempre**: su una scena chiara, se il brand kit ha solo il pulsante chiaro, usa la
+     stessa forma piena nel colore scuro del kit (per Learnn nero pieno con testo bianco), e nel resoconto proponi di
+     aggiungere quella variante al brand kit.
    - I testi come livelli, nel font del brand kit (se manca in Figma, il sostituto indicato dal brand kit) e nei suoi
      colori, nello spazio lasciato libero dalla scena.
    - Il logo come **istanza del componente del brand kit** (per Learnn «Logo Learnn / Bianco»), non come testo.
@@ -248,7 +276,7 @@ ambiguo, una domanda sola su quello, e intanto sistemi gli altri.
      un colore, il logo) vanno anche sull'altro formato della stessa variante; quelle di **posizione o misura** solo sul
      frame commentato. Mai sulle altre varianti (`C1` non tocca `C1-2`). Nel dubbio solo il frame commentato, e la
      risposta lo dice.
-   - **scena da cambiare:** nuova scena su Higgsfield con il prompt corretto, costo detto prima («uso N crediti»), poi
+   - **scena da cambiare:** nuova scena con `scene.sh` e il prompt corretto, costo detto prima («uso N crediti»), poi
      `upload_assets` nel rettangolo `Scena` dei due formati, e la nuova scena anche in «Foto e immagini».
    - Le regole del cliente valgono anche qui: una correzione che le viola non si fa.
 3. Una sola `figma.sh schermate` su tutti i frame toccati, e controllo con occhio critico.
