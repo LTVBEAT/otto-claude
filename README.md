@@ -104,6 +104,35 @@ Esempi:
 
 Qualcosa non va? Scrivi `/mulan doctor`; `/mulan help` ricorda i comandi.
 
+## Creazione creatività
+
+Il plugin `creativita` fa ad statiche per Meta (9:16 e 1:1) nel brand del cliente: genera le scene su Higgsfield e
+monta le ad a livelli nel file Figma del cliente, pronte da ritoccare. Per ora c'è Learnn; un cliente è pronto quando
+ha la scheda `clienti/<cliente>/creativita.md` nella wiki e la pagina «Brand kit» su Figma. Otto non lavora nel giro:
+Claude legge solo la wiki, quindi serve anche il plugin Otto installato. **Solo su Mac.**
+
+**Installazione**, nel Terminale:
+
+```
+curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s creativita
+```
+
+Poi in Claude Code scrivi `/creativita configura`: controlla un passo alla volta wiki, Figma (serve un posto Full nel
+team Beat Performance) e Higgsfield. Per Higgsfield si entra con email e password dell'account dell'agenzia:
+**chiedile a Max**. `/creativita account` dice con quale account sei collegato e come cambiarlo.
+
+**Come si usa.** `/creativita on`, poi:
+
+- incolla una statica e di' per quale cliente riadattarla;
+- oppure dai un brief come preferisci: testi in chat, immagini incollate o il link al Google Doc (le immagini dentro il
+  Doc vanno incollate in chat);
+- per correggere un'ad già fatta scrivilo in chat: «nella C2 il titolo più grande». Cambia solo quella ad;
+- un'indicazione che vale sempre («mai testo sopra la foto») il plugin la ricorda per te, anche dopo gli
+  aggiornamenti. Se non è chiaro, ti chiede se vale solo lì o sempre. I feedback per tutto il team li sceglie Max.
+
+Correzioni e feedback si danno solo in chat, non con i commenti su Figma. `/creativita off` spegne, `/creativita help`
+ricorda i comandi.
+
 ## Problemi
 
 | Cosa vedi | Cosa fare |
