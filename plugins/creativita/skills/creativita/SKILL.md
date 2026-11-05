@@ -25,18 +25,28 @@ risposta. I testi su Figma non bloccano niente: si montano quando arriva la scel
 
 ## Il feedback
 
-Il file `${CLAUDE_PLUGIN_ROOT}/feedback.md` raccoglie le indicazioni che Max e il team hanno dato guardando le
-creatività (Max, 03/11). È la memoria del plugin:
+I feedback sono le indicazioni date guardando le creatività che valgono **sempre**, per i giri futuri. Stanno in due
+posti, e li dà tutti e due `bash ${CLAUDE_PLUGIN_ROOT}/scripts/feedback.sh mostra`:
 
-- **Si legge a ogni giro**, al passo 2, e si segue: nei prompt, nei copy, nel montaggio. Vince su brand kit, wiki e
-  reference quando li contraddice, e nel resoconto si scrive dove ha deciso lui.
-- **Si passa intero ai subagenti** del passo 3, insieme alle regole del cliente.
-- **Quando la persona dà un feedback** sulle creatività (anche a voce, dentro un messaggio su altro), lo scrivi subito
-  in `feedback.md`: una riga per indicazione, nella sezione «Per tutti i clienti» se vale in generale o sotto il
-  cliente se è solo sua, con chi l'ha data e la data. Se ne contraddice una vecchia, togli la vecchia. Poi dici in una
-  riga cosa hai salvato. Il file resta solo se finisce nel repo del plugin (`otto-claude`, `plugins/creativita/`): se
-  stai lavorando su una copia installata, avvisa la persona che va portato lì.
-- **Quando la persona chiede quali indicazioni hai**, mostrale il contenuto di `feedback.md`, diviso per sezione.
+- **Feedback del team:** il `feedback.md` del plugin, scelto da Max e uguale per tutti. Lo cambia solo Max, a mano:
+  **tu non ci scrivi mai**, nemmeno se te lo chiedono (rispondi che i feedback per tutti li sceglie Max).
+- **I feedback della persona:** il suo file, sul suo computer, che resta quando il plugin si aggiorna.
+
+Come si usano:
+
+- **Si leggono a ogni giro**, al passo 2, con `feedback.sh mostra`, e si seguono: nei prompt, nei copy, nel
+  montaggio. Vincono su brand kit, wiki e reference quando li contraddicono. Se quelli della persona contraddicono
+  quelli del team, per lei vincono i suoi. Nel resoconto scrivi dove hanno deciso loro.
+- **Si passano interi ai subagenti** del passo 3 (tutta l'uscita di `mostra`), insieme alle regole del cliente.
+- **Quando la persona dà un'indicazione** sulle creatività (anche dentro un messaggio su altro): se è chiaro che vale
+  solo per l'ad o il lotto di adesso è una correzione, e si sistema e basta. Se è chiaro che vale sempre, salvala.
+  Se non è chiaro, chiedi in una riga: «Vale solo qui o sempre?».
+- **Per salvarla:** `feedback.sh aggiungi tutti "<testo> (<nome>, <gg/mm>)"` se vale per ogni cliente, oppure
+  `feedback.sh aggiungi <Cliente> "<testo> (<nome>, <gg/mm>)"` se vale per un cliente solo. Una riga per
+  indicazione, scritta chiara come una regola. Poi di' in una riga cosa hai salvato. Se contraddice una riga vecchia
+  della persona, togli la vecchia con Edit nel file che dà `feedback.sh percorso`.
+- **Quando la persona chiede quali indicazioni hai**, mostrale l'uscita di `feedback.sh mostra`: prima quelle del
+  team, poi le sue.
 
 ## La fase nella fascia
 
@@ -80,7 +90,7 @@ L'MCP di Figma ha un tetto (200 chiamate al giorno con un posto Full); l'API RES
 ### 2. Il brand: Figma e wiki
 
 Si dà per scontato che brand kit su Figma e wiki del cliente siano corretti: si leggono **sempre**, si usano e non si
-chiede conferma. Insieme si legge `feedback.md` (vedi «Il feedback»), che vince su tutti e due.
+chiede conferma. Insieme si leggono i feedback con `feedback.sh mostra` (vedi «Il feedback»), che vincono su tutti e due.
 
 - **Brand kit su Figma.** Il link del file: cerca `figma.com/design` nella cartella `clienti/<slug>` della wiki. Se non
   c'è, chiedi il link del file del cliente nella sua cartella del team Beat Performance, e a fine giro suggerisci di
@@ -113,7 +123,7 @@ Meta (9:16 e 1:1) e passa: il percorso della statica (con un brief, la sua refer
 cliente, il riassunto del brand kit (palette con ruoli e divieti, font, logo, elementi e foto), il materiale vero e il
 numero di varianti.
 
-Le istruzioni e le skill del cliente su creatività, copy, tono e visual (quelle trovate al passo 2) e `feedback.md` si
+Le istruzioni e le skill del cliente su creatività, copy, tono e visual (quelle trovate al passo 2) e i feedback (l'uscita di `feedback.sh mostra`) si
 passano **con il testo intero**, non riassunte: i subagenti hanno solo Read e la wiki non la leggono da soli. Se un file è molto lungo,
 taglia solo le parti che non riguardano le ad statiche, e nel resoconto scrivi cosa hai passato.
 
@@ -289,7 +299,7 @@ ambiguo, una domanda sola su quello, e intanto sistemi gli altri.
 ## Regole
 
 - Si creano sempre **ad**: ogni prompt di scena lo dice esplicitamente, e anche le richieste ai subagenti.
-- Nessuna regola di un cliente sta in questa skill: si leggono a ogni giro da Figma, dalla wiki e da `feedback.md`.
+- Nessuna regola di un cliente sta in questa skill: si leggono a ogni giro da Figma, dalla wiki e dai feedback.
 - Prove (testimonianze, numeri, screenshot, volti di clienti o studenti) solo da materiale vero, mai generate.
 - Il token di Higgsfield non si chiede mai alla CLI. Il token di Figma lo legge solo `figma.sh`, dal Portachiavi: non
   si stampa e non si cerca in altri modi.

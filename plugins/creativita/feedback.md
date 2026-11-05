@@ -1,9 +1,11 @@
 # Feedback sulle creatività
 
-Le indicazioni che Max e il team hanno dato guardando le creatività fatte con il plugin. Si leggono **a ogni giro**,
-si passano intere ai subagenti e **vincono** su brand kit, wiki e reference quando li contraddicono: sono la parola
-più recente di chi decide. Una riga per indicazione, con chi l'ha data e quando. Quando ne arriva una nuova si
-aggiunge qui; se ne contraddice una vecchia, la vecchia si toglie.
+Il feedback del team: le indicazioni che Max ha scelto per tutti, guardando le creatività fatte con il plugin. Si
+leggono **a ogni giro**, si passano intere ai subagenti e **vincono** su brand kit, wiki e reference quando li
+contraddicono. Una riga per indicazione, con chi l'ha data e quando.
+
+**Si cambia solo a mano, quando Max sceglie un feedback per tutti: Claude non ci scrive.** I feedback di ognuno
+stanno sul suo computer (`scripts/feedback.sh`). Se una riga nuova contraddice una vecchia, la vecchia si toglie.
 
 ## Per tutti i clienti
 

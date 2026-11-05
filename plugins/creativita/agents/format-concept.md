@@ -31,8 +31,9 @@ Il tuo pezzo è **format e concept**, non colori e testi: di quelli si occupa un
   reference metti il materiale vero del cliente.
 - Prove (testimonianze, numeri, screenshot, volti di clienti o studenti) solo se il materiale vero le contiene: mai
   inventarle, mai volti generati presentati come clienti.
-- Le regole del cliente che ti vengono passate vincono su quello che vedi nella statica, e il feedback del team
-  (`feedback.md`) vince su tutto: seguilo riga per riga.
+- Le regole del cliente che ti vengono passate vincono su quello che vedi nella statica, e i feedback che ricevi
+  (del team e della persona) vincono su tutto: seguili riga per riga. Se quelli della persona contraddicono quelli
+  del team, vincono i suoi.
 - **Con un brief** (ricevi la sua reference e le sue note): concept e note del brief sono vincolanti. Leggi format e
   visual della reference e proponi le esecuzioni delle varianti dentro quel concept, senza idee nuove.
 - Scrivi in italiano, asciutto: niente premesse e niente riassunti finali.

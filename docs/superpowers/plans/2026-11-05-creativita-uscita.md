@@ -59,7 +59,7 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
 
 ---
 
-### Sezione 2: I feedback in due memorie
+### Sezione 2: I feedback in due memorie - fatta il 05/11
 
 **Files:**
 - Create: `plugins/creativita/scripts/feedback.sh`, `plugins/creativita/scripts/feedback.test.sh`
@@ -74,7 +74,7 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
 - Cartella: `${CLAUDE_PLUGIN_DATA:-$HOME/.claude/plugins/data/creativita-ltvbeat}` (la stessa dell'hook), file
   `feedback-personale.md`. Il file del team è `$(dirname "$0")/../feedback.md`.
 
-- [ ] **Passo 1: test che falliscono** in `feedback.test.sh`, sullo stile di `scene.test.sh` (`HOME` e
+- [x] **Passo 1: test che falliscono** in `feedback.test.sh`, sullo stile di `scene.test.sh` (`HOME` e
   `CLAUDE_PLUGIN_DATA` in una cartella temporanea):
   - `feedback percorso fuori dal plugin`: il percorso stampato comincia con la cartella dati e non con `plugins/creativita`.
   - `percorso senza CLAUDE_PLUGIN_DATA`: con la variabile vuota il file è in `$HOME/.claude/plugins/data/creativita-ltvbeat/`.
@@ -83,10 +83,10 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
   - `mostra`: `## Feedback del team` viene prima di `## I tuoi feedback`, e ci sono tutte e due le righe aggiunte.
   - `mostra senza file personale`: sotto `## I tuoi feedback` c'è `Nessuno.`
   - `uso sbagliato`: `feedback.sh boh` e `feedback.sh aggiungi tutti` (senza testo) escono con 2.
-- [ ] **Passo 2:** `bash plugins/creativita/scripts/feedback.test.sh` → FAIL, lo script non esiste.
-- [ ] **Passo 3:** scrivi `feedback.sh` (testa d'uso nelle righe 2-9 come gli altri script, `uso()` uguale).
-- [ ] **Passo 4:** di nuovo il test → `ok`.
-- [ ] **Passo 5: la skill.** Riscrivi «Il feedback» così:
+- [x] **Passo 2:** `bash plugins/creativita/scripts/feedback.test.sh` → FAIL, lo script non esiste.
+- [x] **Passo 3:** scrivi `feedback.sh` (testa d'uso nelle righe 2-9 come gli altri script, `uso()` uguale).
+- [x] **Passo 4:** di nuovo il test → `ok`.
+- [x] **Passo 5: la skill.** Riscrivi «Il feedback» così:
   - al passo 2 si lancia `feedback.sh mostra` e si segue; l'uscita intera va ai subagenti del passo 3;
   - vincono su brand kit, wiki e reference; tra i due, per la persona vince il suo, e il resoconto lo dice;
   - quando la persona dà un'indicazione e non è chiaro se vale solo lì o sempre, chiedi in una riga «Vale solo qui o
@@ -95,8 +95,8 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
   - non si scrive mai nel `feedback.md` del plugin; «quali indicazioni hai?» → `feedback.sh mostra`.
   Nella testa di `feedback.md` del plugin: «Si cambia solo a mano, quando Max sceglie un feedback per tutti: Claude non
   ci scrive».
-- [ ] **Passo 6:** `grep -n 'Il file resta solo se finisce nel repo' plugins/creativita/skills/creativita/SKILL.md` → niente.
-- [ ] **Passo 7:** commit, con l'ok di Max: `feat(creativita): feedback personali fuori dal plugin`.
+- [x] **Passo 6:** `grep -n 'Il file resta solo se finisce nel repo' plugins/creativita/skills/creativita/SKILL.md` → niente.
+- [x] **Passo 7:** commit, con l'ok di Max: `feat(creativita): feedback personali fuori dal plugin`.
 
 ---
 
