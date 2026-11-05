@@ -126,7 +126,7 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
 
 ---
 
-### Sezione 4: La scheda del cliente come punto d'ingresso
+### Sezione 4: La scheda del cliente come punto d'ingresso - fatta il 05/11
 
 **Files:**
 - Create: `plugins/creativita/scheda-modello.md`
@@ -139,17 +139,17 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
   versione piccola, componente del logo, colore della card di ripiego, safe zone se diversa da quella di Meta),
   **Quando non ci stanno**.
 
-- [ ] **Passo 1:** scrivi `scheda-modello.md` con i campi qui sopra, ognuno con una riga che dice cosa ci va. È il
+- [x] **Passo 1:** scrivi `scheda-modello.md` con i campi qui sopra, ognuno con una riga che dice cosa ci va. È il
   modello per i clienti nuovi.
-- [ ] **Passo 2: passo 2 della skill.** Si comincia da `leggi_dalla_knowledge clienti/<slug>/creativita.md`. Se manca
+- [x] **Passo 2: passo 2 della skill.** Si comincia da `leggi_dalla_knowledge clienti/<slug>/creativita.md`. Se manca
   la scheda, se manca il link Figma o se nel file non c'è la pagina del brand kit, il giro si ferma: «<Cliente> non è
   ancora pronto per il plugin: manca <cosa>. Il modello della scheda è in scheda-modello.md del plugin». Togli la
   ricerca di `figma.com/design` nella cartella e la richiesta del link.
-- [ ] **Passo 3: regole di Learnn fuori.** Nei passi 4 e 6 CTA, Trustpilot, logo, card e safe zone si leggono da
+- [x] **Passo 3: regole di Learnn fuori.** Nei passi 4 e 6 CTA, Trustpilot, logo, card e safe zone si leggono da
   «Elementi fissi dell'ad» della scheda; resta la regola generale (dove vanno, il ripiego in tre passi). Gli esempi
   «per Learnn» diventano generici.
-- [ ] **Passo 4:** `grep -c -i 'learnn\|trustpilot\|antracite' plugins/creativita/skills/creativita/SKILL.md` → `0`.
-- [ ] **Passo 5:** commit, con l'ok di Max: `feat(creativita): la scheda del cliente come punto d'ingresso`.
+- [x] **Passo 4:** `grep -c -i 'learnn\|trustpilot\|antracite' plugins/creativita/skills/creativita/SKILL.md` → `0`.
+- [x] **Passo 5:** commit, con l'ok di Max: `feat(creativita): la scheda del cliente come punto d'ingresso`.
 
 ---
 

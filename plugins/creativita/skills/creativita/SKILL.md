@@ -91,11 +91,15 @@ L'MCP di Figma ha un tetto (200 chiamate al giorno con un posto Full); l'API RES
 Si dà per scontato che brand kit su Figma e wiki del cliente siano corretti: si leggono **sempre**, si usano e non si
 chiede conferma. Insieme si leggono i feedback con `feedback.sh mostra` (vedi «Il feedback»), che vincono su tutti e due.
 
-- **Brand kit su Figma.** Il link del file: cerca `figma.com/design` nella cartella `clienti/<slug>` della wiki. Se non
-  c'è, chiedi il link del file del cliente nella sua cartella del team Beat Performance, e a fine giro suggerisci di
-  scriverlo nella scheda del cliente. Le pagine del file con `figma.sh struttura <file> "" 1`, quella del brand kit con
-  `figma.sh struttura <file> <pagina> 1`. Il brand kit è la pagina **«Brand kit»**: «Asset · 01 Logo», «02 Esperti»,
-  «03 Immagini», «04 Terze parti» e «Linee guida». Le linee guida si guardano sezione per sezione, tutte con **una**
+- **Prima la scheda del cliente** (Max, 05/11): `leggi_dalla_knowledge` su `clienti/<slug>/creativita.md`. È il punto
+  d'ingresso fisso: dice dove sono il file Figma, i materiali, le linee guida, le regole del copy, le skill del cliente
+  e gli **elementi fissi dell'ad** (CTA, prove, logo, card di ripiego, safe zone), che userai ai passi 4 e 6.
+- **Se il cliente non è pronto, il giro si ferma.** Manca la scheda, nella scheda manca il link Figma, oppure nel file
+  non c'è la pagina «Brand kit»: di' «<Cliente> non è ancora pronto per il plugin: manca <cosa>. Il modello della
+  scheda è in `${CLAUDE_PLUGIN_ROOT}/scheda-modello.md`» e non andare avanti. Non chiedere il link in chat.
+- **Brand kit su Figma.** Il file è quello della scheda. Le pagine del file con `figma.sh struttura <file> "" 1`, quella
+  del brand kit con `figma.sh struttura <file> <pagina> 1`. Il brand kit è la pagina **«Brand kit»**, di solito con
+  «Asset · 01 Logo», «02 Esperti», «03 Immagini», «04 Terze parti» e «Linee guida». Le linee guida si guardano sezione per sezione, tutte con **una**
   `figma.sh schermate` sui nodi delle sezioni. Ne ricavi palette con codici e ruoli, divieti, font, varianti del logo,
   foto ed elementi disponibili. Le foto e le schermate del prodotto da usare come reference della scena si scaricano
   con `figma.sh immagini <file> <nodo>` (per esempio sul nodo «Asset · 03 Immagini»).
@@ -104,14 +108,13 @@ chiede conferma. Insieme si leggono i feedback con `feedback.sh mostra` (vedi «
   mettilo nella pagina «Brand kit», in un riquadro **«Da verificare»** (crealo se manca), con l'indirizzo della pagina
   da cui viene. Quello che sta in «Da verificare» **non si usa** nei giri: il team lo guarda e lo sposta nella sezione
   giusta. Nel resoconto scrivi cosa hai aggiunto.
-- **Wiki, sezione creatività del cliente.** Nella cartella del cliente ci sono le istruzioni e le **skill del
-  cliente** per le creatività (per Learnn, per esempio, i file sulle creatività e la knowledge portata da GitHub):
-  trovale con `elenca_knowledge` e `cerca_nella_knowledge`, leggile e **seguile nei momenti in cui servono**: regole dei
+- **Wiki, istruzioni e skill del cliente.** Sono i file che la scheda elenca (se serve, cercane altri con
+  `elenca_knowledge` e `cerca_nella_knowledge` nella cartella del cliente): leggili e **seguili nei momenti in cui
+  servono**: regole dei
   testi quando scrivi i copy, regole visive quando scrivi i prompt, regole di formato quando monti su Figma.
 - Il brand kit su Figma vince sul visual, la wiki su tono e testi. Se si contraddicono, scegli la regola più recente e
   scrivilo nel resoconto.
 - Nel resoconto finale scrivi in due righe il brand usato: colori con codici, font, elementi.
-- Se il cliente non ha un brand kit su Figma, dillo e fermati: si prepara prima.
 
 ### 3. Due analisi in parallelo (ogni ad senza copy)
 
@@ -150,7 +153,7 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
   una persona. Se è un personaggio famoso protetto, se ne fa uno **originale dello stesso tipo** e lo si dice nel
   resoconto.
 - **Materiale vero del cliente al posto degli oggetti generici:** se la reference ha un prodotto o un regalo, al suo
-  posto va qualcosa del cliente (per Learnn, un telefono con un corso), non un oggetto qualsiasi.
+  posto va qualcosa del cliente (un telefono con il suo prodotto, un suo corso), non un oggetto qualsiasi.
 - **Copy:** headline, testi brevi e CTA, nel tono e con le regole del cliente, con il font del brand kit. Uno per
   variante, uguali fra 9:16 e 1:1. Prima di Figma **controlla ogni testo contro le regole e le skill del cliente**
   (lunghezze, parole vietate, tono, promesse che il materiale vero non sostiene) e correggi quello che non torna; nel
@@ -209,21 +212,23 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
      in quadro soggetto e grafica. Non allungarlo oltre l'altezza dell'immagine (1080×1930 per un 9:16 a 1k): con FILL
      l'immagine si ingrandisce e taglia i lati (03/11: console, biglietto e tessere tagliati). Se il visual non entra
      nella zona sicura, si rigenera la scena più compatta, non si sposta il rettangolo lasciando un buco in fondo.
-   - Logo, CTA e Trustpilot vanno dove la scena è libera, anche in alto sotto il logo: mai sopra il visual principale.
-   - **Se non c'è spazio libero per CTA e Trustpilot** (Max, 03/11, B15), in quest'ordine:
-     1. stringili: CTA più corta (per Learnn «Inizia gratis»), Trustpilot più piccolo, in fila invece che uno sotto
-        l'altro;
-     2. mettili insieme in una **card** nel colore scuro del brand kit (per Learnn l'antracite), angoli come i
-        pulsanti del kit, sopra la parte meno importante della scena: mai su volti, prodotto, schermi o testo della
-        scena;
+   - Gli **elementi fissi dell'ad** sono quelli della scheda del cliente: CTA, prove accanto alla CTA (come un
+     bollino di recensioni), logo. Vanno dove la scena è libera, anche in alto sotto il logo: mai sopra il visual
+     principale.
+   - **Se non c'è spazio libero per CTA e prove** (Max, 03/11, B15), prima quello che dice la scheda in «Quando non ci
+     stanno», poi in quest'ordine:
+     1. stringili: la CTA corta e le prove nella versione piccola della scheda, in fila invece che uno sotto l'altro;
+     2. mettili insieme in una **card** nel colore di ripiego della scheda (se manca, il colore scuro del brand kit),
+        angoli come i pulsanti del kit, sopra la parte meno importante della scena: mai su volti, prodotto, schermi o
+        testo della scena;
      3. se nemmeno la card entra senza coprire il visual, la scena si rigenera con più spazio libero.
      Scrivi nel resoconto quale ripiego hai usato.
    - **Il pulsante della CTA si legge sempre**: su una scena chiara, se il brand kit ha solo il pulsante chiaro, usa la
-     stessa forma piena nel colore scuro del kit (per Learnn nero pieno con testo bianco), e nel resoconto proponi di
-     aggiungere quella variante al brand kit.
+     forma e il colore che la scheda indica per le scene chiare (se mancano, la stessa forma piena nel colore scuro
+     del kit, con il testo chiaro), e nel resoconto proponi di aggiungere quella variante al brand kit.
    - I testi come livelli, nel font del brand kit (se manca in Figma, il sostituto indicato dal brand kit) e nei suoi
      colori, nello spazio lasciato libero dalla scena.
-   - Il logo come **istanza del componente del brand kit** (per Learnn «Logo Learnn / Bianco»), non come testo.
+   - Il logo come **istanza del componente del brand kit** indicato nella scheda, non come testo.
    - Le istanze (logo, schermate dell'app) si scalano con `rescale()`, non con `resize()`: `resize` cambia il riquadro
      ma non il contenuto, e la schermata esce tagliata.
    - Un blocco di testi in auto layout va lasciato crescere (`primaryAxisSizingMode = "AUTO"`): dopo un `resize`
@@ -231,8 +236,9 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
    - Le ad con più ad nello stesso lotto vanno in righe come nei lotti già fatti: 9:16 a x 4200 e 1:1 a x 5400,
      una riga ogni 2100 px per concept (C1 a y 0, C2 a y 2100...). In una pagina che ha già delle ad, la prima riga
      nuova va 2100 px sotto l'ultima.
-   - **Safe zone del cliente**, se la wiki la indica (per Learnn, 9:16: area utile x 65-1015, y 269-1248): testi, logo,
-     CTA e soggetti essenziali dentro; lo sfondo può andare al vivo.
+   - **Safe zone:** quella della scheda, se ne indica una; se no quella di Meta per il 9:16, area utile x 65-1015,
+     y 269-1248 (liberi il 14% in alto, il 35% in basso e il 6% ai lati). Testi, logo, CTA e soggetti
+     essenziali dentro; lo sfondo può andare al vivo.
 4. Guarda i frame con **una** `figma.sh schermate` su tutti i frame del giro: testi tagliati, sovrapposti alla grafica o
    fuori dalla zona sicura si correggono subito.
 5. **Le scene in «Foto e immagini»**, a brief finito: se la pagina non c'è, creala. Una riga per brief, la più recente
