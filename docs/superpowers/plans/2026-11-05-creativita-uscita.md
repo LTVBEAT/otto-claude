@@ -100,19 +100,19 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
 
 ---
 
-### Sezione 3: Correzioni in chat, via i commenti di Figma
+### Sezione 3: Correzioni in chat, via i commenti di Figma - fatta il 05/11
 
 **Files:**
 - Modify: `plugins/creativita/scripts/figma.sh` (righe 2-9 e 156-201, `ISTRUZIONI`), `plugins/creativita/scripts/figma.test.sh` (rotta e fixture dei commenti, test righe 233-255)
 - Modify: `plugins/creativita/skills/creativita/SKILL.md` (descrizione, tabella delle letture, «Il giro delle correzioni»)
 
-- [ ] **Passo 1: test che fallisce** in `figma.test.sh`: `figma commenti LRhz 53:671` esce con 2 (comando che non esiste
+- [x] **Passo 1: test che fallisce** in `figma.test.sh`: `figma commenti LRhz 53:671` esce con 2 (comando che non esiste
   più). Togli i test, la rotta e le fixture di `commenti`, `rispondi` e `reazione`.
-- [ ] **Passo 2:** `bash plugins/creativita/scripts/figma.test.sh` → FAIL su `commenti` (oggi esce con 0).
-- [ ] **Passo 3:** togli da `figma.sh` i tre comandi e le loro righe d'uso; in `ISTRUZIONI` i permessi del token
+- [x] **Passo 2:** `bash plugins/creativita/scripts/figma.test.sh` → FAIL su `commenti` (oggi esce con 0).
+- [x] **Passo 3:** togli da `figma.sh` i tre comandi e le loro righe d'uso; in `ISTRUZIONI` i permessi del token
   diventano «File content Read, Current user Read».
-- [ ] **Passo 4:** di nuovo il test → `ok`.
-- [ ] **Passo 5: la skill.** Togli «Il giro delle correzioni», la riga dei commenti nella tabella e i commenti dalla
+- [x] **Passo 4:** di nuovo il test → `ok`.
+- [x] **Passo 5: la skill.** Togli «Il giro delle correzioni», la riga dei commenti nella tabella e i commenti dalla
   descrizione. Al loro posto «Le correzioni in chat»:
   - la persona nomina l'ad (`C2`, `C2-2`, «la 1:1 della C3»); se il nome non basta a capire quale, chiedilo;
   - `C2` senza formato vuol dire i due frame di `C2` (9:16 e 1:1), mai `C2-2` o `C2-3` né le altre ad del lotto;
@@ -121,8 +121,8 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
   - se non è chiaro se vale solo lì o sempre, la domanda della Sezione 2;
   - chiusura: frame toccati con link e crediti usati.
   Nella descrizione: «quando la persona chiede di correggere un'ad già fatta».
-- [ ] **Passo 6:** `grep -n -i 'commenti\|rispondi\|reazione' plugins/creativita/skills/creativita/SKILL.md plugins/creativita/scripts/figma.sh` → niente.
-- [ ] **Passo 7:** commit, con l'ok di Max: `feat(creativita): correzioni in chat, via i commenti di Figma`.
+- [x] **Passo 6:** `grep -n -i 'commenti\|rispondi\|reazione' plugins/creativita/skills/creativita/SKILL.md plugins/creativita/scripts/figma.sh` → niente.
+- [x] **Passo 7:** commit, con l'ok di Max: `feat(creativita): correzioni in chat, via i commenti di Figma`.
 
 ---
 

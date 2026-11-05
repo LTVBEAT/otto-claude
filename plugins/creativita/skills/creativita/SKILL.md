@@ -1,6 +1,6 @@
 ---
 name: creativita
-description: Crea ad statiche per un cliente LTV/Beat, nel suo brand kit su Figma, con le scene generate su Higgsfield e montate su Figma. Usala quando la persona passa una statica da riadattare per un cliente, o un brief già pronto con testi e reference da realizzare, e quando la creazione creatività è accesa (/creativita on) e arriva una statica o un brief. Anche per sistemare i commenti lasciati dal team sui frame di un lotto («sistema i commenti del B10»), quando la persona dà un feedback sulle creatività fatte, e quando chiede quali indicazioni o feedback hai sulle creatività.
+description: Crea ad statiche per un cliente LTV/Beat, nel suo brand kit su Figma, con le scene generate su Higgsfield e montate su Figma. Usala quando la persona passa una statica da riadattare per un cliente, o un brief già pronto con testi e reference da realizzare, e quando la creazione creatività è accesa (/creativita on) e arriva una statica o un brief. Anche quando la persona chiede di correggere un'ad già fatta («nella C2 il titolo più grande»), quando dà un feedback sulle creatività fatte, e quando chiede quali indicazioni o feedback hai sulle creatività.
 ---
 
 # Creazione creatività: il giro
@@ -29,7 +29,7 @@ I feedback sono le indicazioni date guardando le creatività che valgono **sempr
 posti, e li dà tutti e due `bash ${CLAUDE_PLUGIN_ROOT}/scripts/feedback.sh mostra`:
 
 - **Feedback del team:** il `feedback.md` del plugin, scelto da Max e uguale per tutti. Lo cambia solo Max, a mano:
-  **tu non ci scrivi mai**, nemmeno se te lo chiedono (rispondi che i feedback per tutti li sceglie Max).
+  **tu non ci scrivi mai**, nemmeno se te lo chiedono (di' che i feedback per tutti li sceglie Max).
 - **I feedback della persona:** il suo file, sul suo computer, che resta quando il plugin si aggiorna.
 
 Come si usano:
@@ -66,7 +66,6 @@ L'MCP di Figma ha un tetto (200 chiamate al giorno con un posto Full); l'API RES
   | pagine, frame, posizioni | `struttura <file> [nodo] [profondità]` | `get_metadata` |
   | vedere sezioni o frame | `schermate <file> <nodo>... [--scala N]`, **tutti i nodi in una chiamata** | `get_screenshot` |
   | foto e schermate originali | `immagini <file> <nodo>`, anche sul nome dell'asset: risale da solo al riquadro dell'immagine | esportarle a mano |
-  | commenti da sistemare | `commenti <file> <pagina>`, `rispondi`, `reazione` | (l'MCP non li legge) |
 
   `struttura` stampa `id tipo nome x y larghezza altezza genitore`; `schermate` e `immagini` scaricano in una cartella
   temporanea e stampano i percorsi, che poi leggi con Read.
@@ -271,30 +270,28 @@ La persona passa un brief già pronto: testi (headline, testi, CTA) e una o più
      scrivono con le regole e le skill del cliente.
 5. Da qui come i passi 4, 5, 6 e 7 (per le ad con i testi, del passo 4 solo la scena).
 
-## Il giro delle correzioni
+## Le correzioni in chat
 
-Parte quando la persona chiede di sistemare i commenti di un lotto («sistema i commenti del B10», un link a una pagina
-con «correggi»). Non parte da solo durante un giro di creazione. Nessuna domanda se i commenti sono chiari; se uno è
-ambiguo, una domanda sola su quello, e intanto sistemi gli altri.
+Correzioni e feedback si danno **solo in chat**, mai come commenti su Figma (Max, 05/11). Una correzione vale per l'ad
+di adesso e non si ricorda; se non è chiaro se vale solo lì o sempre, chiedi «Vale solo qui o sempre?» (vedi «Il
+feedback»). Parte quando la persona chiede di cambiare un'ad già fatta, anche nel mezzo di un giro.
 
-1. `figma.sh commenti <file> <pagina>`: una riga per commento da sistemare, con frame, autore, data e il thread intero
-   (`radice // risposta // ...`). Lo script salta i risolti, quelli di altre pagine e i thread già chiusi da una
-   risposta tua che comincia con «Fatto:» o «Non fatto:». Le righe `NON ATTRIBUITO` non sono legate a un frame: leggile
-   e, se dicono di quale ad parlano, trattale come le altre.
-2. Per ogni frame, le correzioni raggruppate:
-   - **testi, colori, posizioni, logo:** con `use_figma` sul frame commentato. Le correzioni di **contenuto** (un testo,
-     un colore, il logo) vanno anche sull'altro formato della stessa variante; quelle di **posizione o misura** solo sul
-     frame commentato. Mai sulle altre varianti (`C1` non tocca `C1-2`). Nel dubbio solo il frame commentato, e la
-     risposta lo dice.
-   - **scena da cambiare:** nuova scena con `scene.sh` e il prompt corretto, costo detto prima («uso N crediti»), poi
-     `upload_assets` nel rettangolo `Scena` dei due formati, e la nuova scena anche in «Foto e immagini».
-   - Le regole del cliente valgono anche qui: una correzione che le viola non si fa.
-3. Una sola `figma.sh schermate` su tutti i frame toccati, e controllo con occhio critico.
-4. Su ogni commento: `figma.sh rispondi <file> <commento> "Fatto: <cosa è cambiato>"` e `figma.sh reazione <file>
-   <commento>` (✅). Se non si può fare: `"Non fatto: <motivo>"`, senza ✅. Le risposte cominciano **sempre** con
-   «Fatto:» o «Non fatto:»: è così che il giro dopo le salta. I commenti non si risolvono (l'API non lo permette): li
-   risolve il team su Figma.
-5. Resoconto: frame toccati con link, commenti sistemati, commenti lasciati con il motivo, crediti usati.
+1. **Quale ad.** La persona la nomina: `C2`, `C2-2`, «la 1:1 della C3», o la descrive. Trova i frame con
+   `figma.sh struttura` sulla pagina del lotto (il lotto è quello del giro, o quello che dice la persona). Se il nome
+   non basta a capire quale, chiedilo; le altre correzioni intanto si fanno.
+2. **Quali frame.**
+   - Senza formato (`C2`): i due frame di `C2`, 9:16 e 1:1.
+   - Con il formato (`la 1:1 della C2`): le correzioni di **contenuto** (un testo, un colore, il logo) vanno anche
+     sull'altro formato della stessa ad; quelle di **posizione o misura** solo sul frame nominato.
+   - **Mai sulle altre varianti** (`C2` non tocca `C2-2` né `C2-3`) né sulle altre ad del lotto.
+3. **Come.**
+   - Testi, colori, posizioni, logo: con `use_figma` sui frame scelti.
+   - Scena da cambiare: prompt corretto nella cartella del giro, costo detto prima («uso N crediti»), `scene.sh genera
+     <cartella> <nome>`, poi `upload_assets` nel rettangolo `Scena` dei due formati, e la nuova scena anche in «Foto e
+     immagini».
+   - Le regole del cliente e i feedback valgono anche qui: una correzione che li viola non si fa, e dici perché.
+4. Una sola `figma.sh schermate` su tutti i frame toccati, e controllo con occhio critico.
+5. In chiusura: frame toccati con link, quello che non hai fatto con il motivo, crediti usati.
 
 ## Regole
 

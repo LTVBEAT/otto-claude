@@ -60,9 +60,6 @@ else
     */v1/files/LRhz/nodes\?ids=5:8,5:7,5:6) cp "$R/antenati.json" "$uscita" ;;
     */v1/files/LRhz/nodes\?ids=5:98) cp "$R/antenati-vuoti.json" "$uscita" ;;
     */v1/files/LRhz/images) cp "$R/riempimenti.json" "$uscita" ;;
-    */v1/files/LRhz/comments\?as_md=true) cp "$R/commenti.json" "$uscita" ;;
-    */v1/files/LRhz/comments) echo '{"id":"r1"}' > "$uscita" ;;
-    */v1/files/LRhz/comments/*/reactions) echo '{"status":200,"error":false}' > "$uscita" ;;
     */v1/images/LRhz\?*)
       ids=$(printf '%s' "$indirizzo" | sed -E 's/.*ids=([^&]*).*/\1/')
       printf '%s' "$ids" | tr ',' '\n' | jq -R --arg nullo "${FINTO_NULLO:-}" -s \
@@ -116,37 +113,6 @@ echo '{"nodes":{"5:98":{"document":{"id":"5:98","name":"Note","type":"FRAME","ch
   > "$BASE/risposte/antenati-vuoti.json"
 echo '{"meta":{"images":{"aaa":"https://cdn.finto/aaa","bbb":"https://cdn.finto/bbb","ccc":"https://cdn.finto/ccc"}}}' \
   > "$BASE/risposte/riempimenti.json"
-# Commenti: u1 è chi lancia il giro (Massimo, come /v1/me), u2 una collega.
-cat > "$BASE/risposte/commenti.json" <<'EOF'
-{"comments":[
- {"id":"c1","parent_id":"","order_id":"1","message":"Alza il titolo","created_at":"2026-11-03T10:00:00Z","resolved_at":null,
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":{"node_id":"53:700","node_offset":{"x":10,"y":10}}},
- {"id":"c2","parent_id":"","order_id":"2","message":"Logo più piccolo\nGrazie","created_at":"2026-11-03T10:01:00Z","resolved_at":null,
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":{"node_id":"53:702","node_offset":{"x":5,"y":5}}},
- {"id":"c3","parent_id":"","order_id":"3","message":"Già risolto","created_at":"2026-11-03T10:02:00Z","resolved_at":"2026-11-03T11:00:00Z",
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":{"node_id":"53:700","node_offset":{"x":1,"y":1}}},
- {"id":"c4","parent_id":"","order_id":"4","message":"Colore sbagliato","created_at":"2026-11-03T10:03:00Z","resolved_at":null,
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":{"node_id":"53:700","node_offset":{"x":1,"y":1}}},
- {"id":"c4r","parent_id":"c4","message":"Fatto: colore cambiato","created_at":"2026-11-03T12:00:00Z","resolved_at":null,
-  "user":{"id":"u1","handle":"Massimo"},"client_meta":null},
- {"id":"c5","parent_id":"","order_id":"5","message":"Testo della CTA","created_at":"2026-11-03T10:04:00Z","resolved_at":null,
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":{"node_id":"53:701","node_offset":{"x":1,"y":1}}},
- {"id":"c5r","parent_id":"c5","message":"Fatto: CTA cambiata","created_at":"2026-11-03T12:01:00Z","resolved_at":null,
-  "user":{"id":"u1","handle":"Massimo"},"client_meta":null},
- {"id":"c5r2","parent_id":"c5","message":"Ancora troppo lunga","created_at":"2026-11-03T13:00:00Z","resolved_at":null,
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":null},
- {"id":"c6","parent_id":"","order_id":"6","message":"Sposta il bollino","created_at":"2026-11-03T10:05:00Z","resolved_at":null,
-  "user":{"id":"u1","handle":"Massimo"},"client_meta":{"node_id":"53:700","node_offset":{"x":1,"y":1}}},
- {"id":"c7","parent_id":"","order_id":"7","message":"Va bene così?","created_at":"2026-11-03T10:06:00Z","resolved_at":null,
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":{"node_id":"53:700","node_offset":{"x":1,"y":1}}},
- {"id":"c7r","parent_id":"c7","message":"Guardo dopo","created_at":"2026-11-03T12:02:00Z","resolved_at":null,
-  "user":{"id":"u1","handle":"Massimo"},"client_meta":null},
- {"id":"c8","parent_id":"","order_id":"8","message":"Commento generale","created_at":"2026-11-03T10:07:00Z","resolved_at":null,
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":{"x":100,"y":100}},
- {"id":"c9","parent_id":"","order_id":"9","message":"Su un'altra pagina","created_at":"2026-11-03T10:08:00Z","resolved_at":null,
-  "user":{"id":"u2","handle":"Sofia"},"client_meta":{"node_id":"99:1","node_offset":{"x":1,"y":1}}}]}
-EOF
-
 figma() { # variabili dei finti (NOME=valore), poi gli argomenti di figma.sh
   local vari=()
   while [ $# -gt 0 ] && [[ "$1" == *=* ]]; do vari+=("$1"); shift; done
@@ -230,33 +196,10 @@ codice "429 lungo" $c 4
 [ $((fine - inizio)) -lt 5 ] || { echo "FAIL 429 lungo: ha aspettato"; ERRORI=1; }
 [ "$(grep -c '/v1/me' "$BASE/argomenti")" = 1 ] || { echo "FAIL 429 lungo: ha riprovato"; ERRORI=1; }
 
-# commenti: quelli aperti della pagina, attribuiti al frame del lotto.
-uscita=$(figma commenti LRhz 53:671); c=$?
-codice "commenti" $c 0
-contiene "commento sul frame" "$uscita" "53:700${TAB}B10_ 3.11.2026 - C1 - 9:16${TAB}c1${TAB}Sofia${TAB}2026-11-03T10:00:00Z${TAB}Alza il titolo"
-contiene "commento su un testo nel frame" "$uscita" "53:701${TAB}B10_ 3.11.2026 - C1 - 1:1${TAB}c2${TAB}Sofia"
-contiene "a capo nel testo" "$uscita" "Logo più piccolo / Grazie"
-manca "risolto" "$uscita" "Già risolto"
-manca "risposta come riga" "$uscita" "${TAB}c4r${TAB}"
-manca "già sistemato" "$uscita" "Colore sbagliato"
-contiene "riaperto da una collega" "$uscita" "Testo della CTA // Fatto: CTA cambiata // Ancora troppo lunga"
-contiene "scritto da chi lancia il giro" "$uscita" "Sposta il bollino"
-contiene "risposta senza Fatto" "$uscita" "Va bene così? // Guardo dopo"
-manca "altra pagina" "$uscita" "Su un'altra pagina"
-[ "$(printf '%s\n' "$uscita" | tail -1)" = "-${TAB}NON ATTRIBUITO${TAB}c8${TAB}Sofia${TAB}2026-11-03T10:07:00Z${TAB}Commento generale" ] ||
-  { echo "FAIL commenti: l'ultima riga non è quella non attribuita"; ERRORI=1; }
-
-# rispondi e reazione: corpo JSON giusto anche con virgolette e accenti.
-uscita=$(figma rispondi LRhz c1 'Fatto: titolo "alzato" di 40 px, è ok'); c=$?
-codice "rispondi" $c 0; contiene "rispondi" "$uscita" "✅ risposto a c1"
-jq -e '.comment_id == "c1" and .message == "Fatto: titolo \"alzato\" di 40 px, è ok"' "$BASE/corpo" >/dev/null ||
-  { echo "FAIL rispondi: corpo sbagliato"; ERRORI=1; }
-contiene "rispondi, POST" "$(cat "$BASE/argomenti")" "-X POST"
-uscita=$(figma reazione LRhz c1); c=$?
-codice "reazione" $c 0; contiene "reazione" "$uscita" "✅ reazione su c1"
-jq -e '. == {"emoji": ":white_check_mark:"}' "$BASE/corpo" >/dev/null || { echo "FAIL reazione: corpo sbagliato"; ERRORI=1; }
-contiene "reazione, indirizzo" "$(cat "$BASE/argomenti")" "/v1/files/LRhz/comments/c1/reactions"
-figma rispondi LRhz c1 >/dev/null; codice "rispondi senza testo" $? 2
+# I commenti di Figma non si usano più: correzioni e feedback si danno in chat (Max, 05/11).
+for comando in commenti rispondi reazione; do
+  figma $comando LRhz 53:671 testo >/dev/null; codice "$comando non c'è più" $? 2
+done
 
 # Uso sbagliato.
 figma boh >/dev/null; codice "uso sbagliato" $? 2
