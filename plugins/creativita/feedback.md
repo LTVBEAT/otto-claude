@@ -33,8 +33,7 @@ stanno sul suo computer (`scripts/feedback.sh`). Se una riga nuova contraddice u
   c'era sempre lo stesso corso. Si usa solo materiale vero: corsi che esistono, con il loro esperto vero (foto dal brand
   kit), verificati nella wiki. Il resto dello schermo segue la UI vera del prodotto. (Max, 03/11)
 - **Quello che si vede sullo schermo è coerente con il tema dell'ad.** Se la creatività parla di AI, il corso (o la
-  pagina, il prodotto) sullo schermo è di AI; se parla di social, è di social; e così per ogni tema. Per Learnn: il
-  corso mostrato è sempre del tema di cui parla l'ad. (Max, 03/11)
+  pagina, il prodotto) sullo schermo è di AI; se parla di social, è di social; e così per ogni tema. (Max, 03/11)
 - **Gli oggetti e i dispositivi sono di oggi**, salvo che il format chieda un'epoca: computer, telefoni e scrivanie
   moderni. Nel bambino del B14 il PC anni 2000 andava sostituito con uno attuale. (Max, 03/11)
 
@@ -45,7 +44,7 @@ stanno sul suo computer (`scripts/feedback.sh`). Se una riga nuova contraddice u
 ### Testo in overlay
 - **Se il messaggio sta già nel visual, niente headline né copy in overlay.** Quando il testo fa parte della scena (il
   cartello, le tessere, il vapore, il biglietto, lo schermo della console) il visual è l'ad: su Figma al massimo logo,
-  CTA e Trustpilot, piccoli e messi dove **non coprono il visual principale**. La priorità è il visual. (Max, 03/11)
+  CTA e prove della scheda del cliente, piccoli e messi dove **non coprono il visual principale**. La priorità è il visual. (Max, 03/11)
 - **Il testo piatto sopra la foto si mette su Figma, non si genera.** Citazioni, didascalie da meme, titoli e
   sottotitoli in tipografia pulita appoggiati sulla scena (il «No mamma…» del bambino, «Io quando…» del pranzo) vanno
   su Figma come livelli modificabili; nella scena si lascia lo spazio vuoto. Si genera solo il testo che sta **su un
@@ -73,6 +72,22 @@ stanno sul suo computer (`scripts/feedback.sh`). Se una riga nuova contraddice u
 - La chiamata al pubblico scritta dentro un oggetto della scena: lo schermo di una console, un biglietto della
   lotteria, il vapore di un caffè, le tessere dello Scrabble. Testo in italiano generato nella scena, corto. (Max, 03/11,
   lotto B12 di Learnn)
+
+## Per cliente
+
+### Learnn
+- **Il viola di Learnn si usa come accento**, su un elemento (per esempio la console viola trasparente della reference
+  resta viola). La base resta nera e bianca. Vale anche se la pagina «Brand kit» su Figma dice «niente viola nelle creatività»: quella riga
+  va aggiornata. Codici nella wiki: `#8c52ff` (acceso), `#5a2ba6` e `#2a1155` (scuri) per le grafiche, `#7945E3` nei
+  token di prodotto. (Max, 03/11)
+- Learnn non ha un pubblico per età: niente «over 30», «over 40». (Max, 03/11)
+- **Non sempre Social Media Strategy.** Le schermate del brand kit (componenti «App Learnn / Mobile» e «Desktop» nel
+  riquadro asset del B6) mostrano solo quel corso con Marta Vannelli: negli schermi si alternano altri corsi veri,
+  meglio quelli AI che Learnn spinge (Claude, AI per il lavoro, agenti AI), con l'esperto vero preso da «Asset · 02
+  Esperti». (Max, 03/11)
+- Il corso mostrato sullo schermo è sempre del tema di cui parla l'ad. (Max, 03/11)
+
+#### Cosa ha funzionato in Learnn
 - **Approvate da Max (Learnn, 03/11):**
   - B13 C2, indovinello «Indovina chi sono» su fondo nero, soluzione «LEARN_» con l'ultima casella viola e il
     cartellino del prezzo;
@@ -89,16 +104,3 @@ stanno sul suo computer (`scripts/feedback.sh`). Se una riga nuova contraddice u
   (scelta sua, fra le proposte preferiva il numero dei tool contro il lavoro ancora manuale); pranzo della domenica con
   la didascalia originale «Io quando il «tutorial da 10 minuti» diventa la mia domenica.», non la versione limata.
 - **Scartata:** B14 C1, «Caricamento: quello bravo con l'AI». (Max, 03/11)
-
-## Per cliente
-
-### Learnn
-- **Il viola di Learnn si usa come accento**, su un elemento (per esempio la console viola trasparente della reference
-  resta viola). La base resta nera e bianca. Vale anche se la pagina «Brand kit» su Figma dice «niente viola nelle creatività»: quella riga
-  va aggiornata. Codici nella wiki: `#8c52ff` (acceso), `#5a2ba6` e `#2a1155` (scuri) per le grafiche, `#7945E3` nei
-  token di prodotto. (Max, 03/11)
-- Learnn non ha un pubblico per età: niente «over 30», «over 40». (Max, 03/11)
-- **Non sempre Social Media Strategy.** Le schermate del brand kit (componenti «App Learnn / Mobile» e «Desktop» nel
-  riquadro asset del B6) mostrano solo quel corso con Marta Vannelli: negli schermi si alternano altri corsi veri,
-  meglio quelli AI che Learnn spinge (Claude, AI per il lavoro, agenti AI), con l'esperto vero preso da «Asset · 02
-  Esperti». (Max, 03/11)

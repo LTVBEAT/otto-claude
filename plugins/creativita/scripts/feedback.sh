@@ -14,19 +14,16 @@ TEAM=${FEEDBACK_TEAM:-$(dirname "$0")/../feedback.md}
 
 uso() { sed -n '2,8p' "$0" | sed 's/^# *//' >&2; exit 2; }
 
+TESTA='# I tuoi feedback sulle creatività
+
+Le indicazioni che hai dato e che valgono sempre. Valgono solo per te: per tutto il team li sceglie Max.'
+
 crea() {
   [ -f "$PERSONALE" ] && return
-  mkdir -p "$DATI"
-  cat > "$PERSONALE" <<'EOF'
-# I tuoi feedback sulle creatività
-
-Le indicazioni che hai dato e che valgono sempre. Valgono solo per te: per tutto il team li sceglie Max.
-
-## Per tutti i clienti
-
-## Per cliente
-EOF
+  mkdir -p "$DATI" 2>/dev/null && printf '%s\n\n## Per tutti i clienti\n\n## Per cliente\n' "$TESTA" > "$PERSONALE"
 }
+
+non_salvato() { echo "❌ Non salvato: non riesco a scrivere in $DATI" >&2; exit 1; }
 
 case "${1:-}" in
   mostra)
@@ -40,34 +37,62 @@ case "${1:-}" in
     ;;
 
   percorso)
-    crea
+    crea || non_salvato
     echo "$PERSONALE"
     ;;
 
   aggiungi)
-    [ $# -ge 3 ] && [ -n "$2" ] && [ -n "$3" ] || uso
-    dove=$2 testo=$3
-    crea
-    # Si legge tutto il file, si trova la fine della sezione giusta (prima della prossima intestazione, saltando le
-    # righe vuote) e la riga nuova va lì. Un cliente nuovo va in fondo, sotto «## Per cliente».
-    awk -v dove="$dove" -v riga="- $testo" '
-      { r[NR] = $0 }
-      END {
-        cerca = (tolower(dove) == "tutti") ? "## Per tutti i clienti" : "### " dove
-        inizio = 0
-        for (i = 1; i <= NR; i++) if (tolower(r[i]) == tolower(cerca)) { inizio = i; break }
-        if (inizio == 0) {
-          for (i = 1; i <= NR; i++) print r[i]
-          if (r[NR] != "") print ""
-          print cerca; print riga
-          exit
+    [ $# -ge 3 ] && [ -n "$2" ] || uso
+    # Tutto quello che segue il cliente è il testo (anche senza virgolette), su una riga sola.
+    dove=$(printf '%s' "$2" | sed 's/[[:space:]]*$//')
+    testo=$(printf '%s' "${*:3}" | tr '\n\r\t' '   ' | sed 's/^ *//; s/ *$//')
+    [ -n "$testo" ] || uso
+    crea || non_salvato
+    tmp=$(mktemp "$DATI/.feedback.XXXXXX" 2>/dev/null) || non_salvato
+    # Il file si rifà intero, sempre nella stessa forma: la testa, «## Per tutti i clienti» con le sue righe,
+    # «## Per cliente» con un «### Cliente» per cliente. Così una sezione tolta a mano torna, e un cliente non finisce
+    # mai sotto «tutti». I valori passano dall'ambiente: awk non interpreta le barre rovesciate.
+    if DOVE="$dove" RIGA="- $testo" TESTA="$TESTA" awk '
+      function pulita(s) { sub(/[ \t]+$/, "", s); return s }
+      BEGIN { stato = "testa"; nc = 0; nt = 0; ntesta = 0 }
+      {
+        l = pulita($0)
+        if (l == "## Per tutti i clienti") { stato = "tutti"; next }
+        if (l == "## Per cliente") { stato = "cliente"; cur = 0; next }
+        if (l ~ /^### /) {
+          nome = pulita(substr(l, 5)); k = tolower(nome)
+          if (!(k in idx)) { idx[k] = ++nc; nomi[nc] = nome; n[nc] = 0 }
+          cur = idx[k]; stato = "cliente"; next
         }
-        fine = NR
-        for (i = inizio + 1; i <= NR; i++) if (r[i] ~ /^#/) { fine = i - 1; break }
-        while (fine > inizio && r[fine] == "") fine--
-        for (i = 1; i <= NR; i++) { print r[i]; if (i == fine) print riga }
-      }' "$PERSONALE" > "$PERSONALE.tmp" && mv "$PERSONALE.tmp" "$PERSONALE"
-    echo "✅ Salvato: $testo"
+        if (stato == "testa") { testa[++ntesta] = $0; next }
+        if (l == "") next
+        if (stato == "tutti") tutti[++nt] = l
+        else if (cur) voci[cur, ++n[cur]] = l
+        else tutti[++nt] = l
+      }
+      END {
+        riga = ENVIRON["RIGA"]; dove = ENVIRON["DOVE"]
+        if (tolower(dove) == "tutti") tutti[++nt] = riga
+        else {
+          k = tolower(dove)
+          if (!(k in idx)) { idx[k] = ++nc; nomi[nc] = dove; n[nc] = 0 }
+          c = idx[k]; voci[c, ++n[c]] = riga
+        }
+        while (ntesta > 0 && testa[ntesta] ~ /^[ \t]*$/) ntesta--
+        if (ntesta == 0) print ENVIRON["TESTA"]
+        else for (i = 1; i <= ntesta; i++) print testa[i]
+        print ""; print "## Per tutti i clienti"
+        for (i = 1; i <= nt; i++) print tutti[i]
+        print ""; print "## Per cliente"
+        for (c = 1; c <= nc; c++) {
+          print ""; print "### " nomi[c]
+          for (i = 1; i <= n[c]; i++) print voci[c, i]
+        }
+      }' "$PERSONALE" > "$tmp" && mv "$tmp" "$PERSONALE"; then
+      echo "✅ Salvato: $testo"
+    else
+      rm -f "$tmp"; non_salvato
+    fi
     ;;
 
   *) uso ;;

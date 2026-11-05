@@ -42,8 +42,9 @@ Come si usano:
   solo per l'ad o il lotto di adesso è una correzione, e si sistema e basta. Se è chiaro che vale sempre, salvala.
   Se non è chiaro, chiedi in una riga: «Vale solo qui o sempre?».
 - **Per salvarla:** `feedback.sh aggiungi tutti "<testo> (<nome>, <gg/mm>)"` se vale per ogni cliente, oppure
-  `feedback.sh aggiungi <Cliente> "<testo> (<nome>, <gg/mm>)"` se vale per un cliente solo. Una riga per
-  indicazione, scritta chiara come una regola. Poi di' in una riga cosa hai salvato. Se contraddice una riga vecchia
+  `feedback.sh aggiungi <Cliente> "<testo> (<nome>, <gg/mm>)"` se vale per un cliente solo. Il cliente con il nome
+  del titolo della sua scheda (per esempio «Creatività - Acme» → `Acme`). Il nome è quello della persona: se non lo
+  sai, chiedilo la prima volta, non inventarlo. Una riga per indicazione, scritta chiara come una regola. Poi di' in una riga cosa hai salvato. Se contraddice una riga vecchia
   della persona, togli la vecchia con Edit nel file che dà `feedback.sh percorso`.
 - **Quando la persona chiede quali indicazioni hai**, mostrale l'uscita di `feedback.sh mostra`: prima quelle del
   team, poi le sue.
@@ -84,6 +85,8 @@ L'MCP di Figma ha un tetto (200 chiamate al giorno con un posto Full); l'API RES
   `clienti`).
 - Il materiale vero (il corso, il prodotto, il servizio): se non lo dice, scegli quello più adatto dalla wiki e
   scrivilo nel resoconto finale.
+- Prima della domanda leggi la scheda del cliente (passo 2): se il cliente non è pronto ti fermi lì, senza chiedere
+  niente.
 - **L'unica domanda:** con il riquadro delle domande (AskUserQuestion), quante varianti per ogni ad: 1, 2 o 3.
 
 ### 2. Il brand: Figma e wiki
@@ -285,19 +288,25 @@ di adesso e non si ricorda; se non è chiaro se vale solo lì o sempre, chiedi �
 feedback»). Parte quando la persona chiede di cambiare un'ad già fatta, anche nel mezzo di un giro.
 
 1. **Quale ad.** La persona la nomina: `C2`, `C2-2`, «la 1:1 della C3», o la descrive. Trova i frame con
-   `figma.sh struttura` sulla pagina del lotto (il lotto è quello del giro, o quello che dice la persona). Se il nome
-   non basta a capire quale, chiedilo; le altre correzioni intanto si fanno.
+   `figma.sh struttura` sulla pagina del lotto (il lotto è quello del giro, o quello che dice la persona). Il nome del
+   frame deve finire esattamente con `- C2 - 9:16` o `- C2 - 1:1`: `C2` non è `C2-2` né `C12`. Se il nome non basta a
+   capire quale, chiedilo; le altre correzioni intanto si fanno.
 2. **Quali frame.**
    - Senza formato (`C2`): i due frame di `C2`, 9:16 e 1:1.
    - Con il formato (`la 1:1 della C2`): le correzioni di **contenuto** (un testo, un colore, il logo) vanno anche
      sull'altro formato della stessa ad; quelle di **posizione o misura** solo sul frame nominato.
-   - **Mai sulle altre varianti** (`C2` non tocca `C2-2` né `C2-3`) né sulle altre ad del lotto.
+   - **Solo le ad che la persona nomina:** `C2` non tocca `C2-2`, `C2-3` né le altre ad del lotto. Se dice tutto il
+     lotto («in tutto il B15 il logo più piccolo»), tutte le ad del lotto.
 3. **Come.**
    - Testi, colori, posizioni, logo: con `use_figma` sui frame scelti.
    - Scena da cambiare: prompt corretto nella cartella del giro, costo detto prima («uso N crediti»), `scene.sh genera
      <cartella> <nome>`, poi `upload_assets` nel rettangolo `Scena` dei due formati, e la nuova scena anche in «Foto e
      immagini».
-   - Le regole del cliente e i feedback valgono anche qui: una correzione che li viola non si fa, e dici perché.
+   - Se la correzione va contro un **feedback**, chiedi «Vale solo qui o sempre?». Solo qui: la fai. Sempre: la fai
+     e aggiorni il feedback della persona (quelli del team non si toccano, li cambia Max).
+   - Se va contro le **regole del cliente** o inventa prove (testimonianze, numeri, volti), la fai solo se la persona
+     conferma dopo che le hai detto quale regola viola, e la segnali nel resoconto. Le prove inventate non si fanno
+     mai.
 4. Una sola `figma.sh schermate` su tutti i frame toccati, e controllo con occhio critico.
 5. In chiusura: frame toccati con link, quello che non hai fatto con il motivo, crediti usati.
 

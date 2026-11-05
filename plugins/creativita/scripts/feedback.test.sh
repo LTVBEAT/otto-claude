@@ -10,6 +10,7 @@ printf '# Feedback sulle creatività\n\n## Per tutti i clienti\n- riga del team\
 
 fb() { env HOME="$BASE/casa" CLAUDE_PLUGIN_DATA="$DATI" FEEDBACK_TEAM="$BASE/team.md" bash "$QUI/feedback.sh" "$@" 2>&1; }
 contiene() { printf '%s' "$2" | grep -qF -- "$3" || { echo "FAIL $1: manca «$3»"; ERRORI=1; }; }
+TAB=$(printf '\t')
 codice() { [ "$2" = "$3" ] || { echo "FAIL $1: codice $2, atteso $3"; ERRORI=1; }; }
 
 # mostra senza file personale: c'è il team, e per la persona «Nessuno.».
@@ -55,6 +56,62 @@ miei=$(printf '%s\n' "$uscita" | grep -n '^## I tuoi feedback' | cut -d: -f1)
 [ -n "$team" ] && [ -n "$miei" ] && [ "$team" -lt "$miei" ] || { echo "FAIL mostra: ordine delle sezioni"; ERRORI=1; }
 contiene "mostra" "$uscita" "- mai testo sopra la foto (Sofia, 05/11)"
 contiene "mostra" "$uscita" "- riga del team"
+
+# Barre rovesciate: si salvano così come sono, awk non le interpreta.
+fb aggiungi tutti 'percorso C:\nuovo\tx' >/dev/null
+grep -qxF -- '- percorso C:\nuovo\tx' "$percorso" || { echo "FAIL barre rovesciate: riga cambiata"; ERRORI=1; }
+
+# Testo su più righe: diventa una riga sola, e si salva.
+uscita=$(fb aggiungi tutti "$(printf 'riga uno\nriga due')"); c=$?
+codice "più righe" $c 0
+grep -qxF -- '- riga uno riga due' "$percorso" || { echo "FAIL più righe: non è una riga sola"; ERRORI=1; }
+
+# Testo senza virgolette: tutte le parole, non solo la prima.
+fb aggiungi tutti mai testo sopra >/dev/null
+grep -qxF -- '- mai testo sopra' "$percorso" || { echo "FAIL senza virgolette: salvata solo una parola"; ERRORI=1; }
+
+# Spazio in fondo al nome del cliente: sempre la stessa intestazione.
+fb aggiungi "Learnn " "spazio in fondo" >/dev/null
+[ "$(grep -c '^### ' "$percorso")" = 1 ] || { echo "FAIL spazio in fondo: due intestazioni"; ERRORI=1; }
+
+# sezioni() <file>: le righe «sezione<TAB>voce» nell'ordine del file, per controllare dove sta ogni riga.
+sezioni() { awk '/^## /{s=$0; c=""} /^### /{c=$0} /^- /{print s "\t" c "\t" $0}' "$1"; }
+
+# File vuoto: le due sezioni tornano nell'ordine giusto, e il cliente non finisce sotto «tutti».
+: > "$percorso"
+fb aggiungi Learnn "b" >/dev/null; fb aggiungi tutti "a" >/dev/null
+s=$(sezioni "$percorso")
+contiene "file vuoto" "$s" "## Per tutti i clienti${TAB}${TAB}- a"
+contiene "file vuoto" "$s" "## Per cliente${TAB}### Learnn${TAB}- b"
+[ "$(grep -n '^## Per tutti i clienti' "$percorso" | cut -d: -f1)" -lt "$(grep -n '^## Per cliente' "$percorso" | cut -d: -f1)" ] \
+  || { echo "FAIL file vuoto: sezioni in ordine sbagliato"; ERRORI=1; }
+
+# Sezione «Per tutti» tolta a mano: torna prima di «Per cliente», e un cliente nuovo va sotto «Per cliente».
+printf '# I tuoi feedback\n\n## Per cliente\n\n### Learnn\n- x\n' > "$percorso"
+fb aggiungi tutti "a" >/dev/null; fb aggiungi Acme "c" >/dev/null
+s=$(sezioni "$percorso")
+contiene "sezione mancante" "$s" "## Per tutti i clienti${TAB}${TAB}- a"
+contiene "sezione mancante" "$s" "## Per cliente${TAB}### Acme${TAB}- c"
+contiene "sezione mancante" "$s" "## Per cliente${TAB}### Learnn${TAB}- x"
+
+# Un cliente scritto sotto «Per tutti» da una versione vecchia del file torna sotto «Per cliente».
+printf '## Per tutti i clienti\n- a\n### Learnn\n- b\n' > "$percorso"
+fb aggiungi tutti "z" >/dev/null
+contiene "cliente sotto tutti" "$(sezioni "$percorso")" "## Per cliente${TAB}### Learnn${TAB}- b"
+
+# Se non si può scrivere: errore, uscita 1, niente «Salvato».
+touch "$BASE/un-file"
+uscita=$(env HOME="$BASE/casa" CLAUDE_PLUGIN_DATA="$BASE/un-file/dati" FEEDBACK_TEAM="$BASE/team.md" \
+  bash "$QUI/feedback.sh" aggiungi tutti "non va" 2>&1); c=$?
+codice "non scrivibile" $c 1
+printf '%s' "$uscita" | grep -qF "Salvato" && { echo "FAIL non scrivibile: dice Salvato"; ERRORI=1; }
+
+# Aggiornamento del plugin: la cartella del plugin si sostituisce, il feedback resta.
+mkdir -p "$BASE/plugin-vecchio/scripts" "$BASE/plugin-nuovo/scripts"
+cp "$QUI/feedback.sh" "$BASE/plugin-vecchio/scripts/"; cp "$QUI/feedback.sh" "$BASE/plugin-nuovo/scripts/"
+env HOME="$BASE/casa2" CLAUDE_PLUGIN_DATA= bash "$BASE/plugin-vecchio/scripts/feedback.sh" aggiungi tutti "resta" >/dev/null
+rm -rf "$BASE/plugin-vecchio"
+contiene "dopo l'aggiornamento" "$(env HOME="$BASE/casa2" CLAUDE_PLUGIN_DATA= bash "$BASE/plugin-nuovo/scripts/feedback.sh" mostra)" "- resta"
 
 # Uso sbagliato.
 fb boh >/dev/null; codice "uso sbagliato" $? 2

@@ -196,11 +196,11 @@ Si scrive nella wiki, non nel repo: nessun commit.
 **Files:**
 - Modify: `plugins/creativita/.claude-plugin/plugin.json` (`version` 0.1.0 → 0.2.0), `README.md` (sezione creativita)
 
-- [ ] **Passo 1:** versione 0.2.0; nel README una sezione corta: come si installa (`installa.sh ... | bash -s creativita`),
+- [x] **Passo 1:** versione 0.2.0; nel README una sezione corta: come si installa (`installa.sh ... | bash -s creativita`),
   `/creativita configura`, password di Higgsfield da chiedere a Max, come si dà un brief, correzioni e feedback in chat.
-- [ ] **Passo 2:** tutte le suite (`comandi-creativita`, `controlla`, `figma`, `scene`, `feedback`) → cinque `ok`;
+- [x] **Passo 2:** tutte le suite (`comandi-creativita`, `controlla`, `figma`, `scene`, `feedback`) → cinque `ok`;
   `claude plugin validate plugins/creativita` → nessun errore.
-- [ ] **Passo 3:** revisione finale di tutto il ramo da un revisore nuovo, sul modello più capace; si sistemano
+- [x] **Passo 3:** revisione finale di tutto il ramo da un revisore nuovo, sul modello più capace; si sistemano
   Critical e Important.
 - [ ] **Passo 4:** commit, con l'ok di Max: `feat(creativita): versione 0.2.0 per il team`. Push e PR li lancia Max,
   poi il merge su main: da lì l'aggiornamento automatico arriva a tutti.
