@@ -136,8 +136,8 @@ costo si dice prima di partire.
 
 ## Scelte mie, da controllare
 
-- Le vecchie creatività del cliente si chiedono a Otto (`chiedi_a_otto`), che legge gli account Meta; la persona può
-  anche passarle in chat.
+- ~~Le vecchie creatività del cliente si chiedono a Otto (`chiedi_a_otto`), che legge gli account Meta; la persona può
+  anche passarle in chat.~~ Tolta il 05/11: Otto non fa niente nel giro (spec `2026-11-05-creativita-design.md`).
 - Il registro dei giri è il file Figma del cliente: le pagine dei lotti `B<n>_ <data>`. Prima di proporre, Claude
   guarda i lotti già fatti per non ripetersi.
 

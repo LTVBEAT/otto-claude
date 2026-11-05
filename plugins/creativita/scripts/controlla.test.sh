@@ -80,6 +80,7 @@ mv "$BASE/bin/higgsfield.salvato" "$BASE/bin/higgsfield"
 uscita=$(controlla configura FINTO_HF=nologin FINTO_FIGMA=connesso)
 contiene "senza login" "$uscita" "❌ Higgsfield: login non fatto"
 contiene "senza login" "$uscita" "higgsfield auth login"
+contiene "senza login, password da Max" "$uscita" "email e password dell'account dell'agenzia: chiedile a Max"
 inizio=$(date +%s); uscita=$(controlla configura FINTO_HF=lento FINTO_FIGMA=connesso); fine=$(date +%s)
 [ $((fine - inizio)) -lt 10 ] || { echo "FAIL CLI lenta: il controllo non si ferma da solo"; ERRORI=1; }
 contiene "CLI lenta" "$uscita" "❌ Higgsfield: login non fatto"
@@ -89,6 +90,7 @@ uscita=$(controlla account FINTO_HF=ok)
 contiene "account" "$uscita" "team@ltvalue.it"
 contiene "account" "$uscita" "Workspace: LTV Beat"
 contiene "account senza login" "$(controlla account FINTO_HF=nologin)" "higgsfield auth login"
+contiene "account senza login, password da Max" "$(controlla account FINTO_HF=nologin)" "email e password dell'account dell'agenzia: chiedile a Max"
 
 # Mai il token a schermo: lo script non chiama auth token.
 grep -q "auth token" "$QUI/controlla.sh" && { echo "FAIL: lo script chiama auth token"; ERRORI=1; }

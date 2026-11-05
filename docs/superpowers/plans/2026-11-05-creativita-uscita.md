@@ -153,7 +153,7 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
 
 ---
 
-### Sezione 5: Brief come si vuole, Higgsfield con la password condivisa
+### Sezione 5: Brief come si vuole, Higgsfield con la password condivisa - fatta il 05/11
 
 **Files:**
 - Modify: `plugins/creativita/skills/creativita/SKILL.md` («Ingresso dal brief»)
@@ -161,18 +161,18 @@ Le correzioni del 05/11 sono fatte e verificate ma non committate (vedi Sezione 
 - Modify: `plugins/creativita/hooks/comandi-creativita.sh` (testo di `account`)
 - Modify: `docs/superpowers/specs/2026-11-03-creativita-design.md` («Scelte mie»: `chiedi_a_otto` tolta il 05/11)
 
-- [ ] **Passo 1: test che fallisce** in `controlla.test.sh`: senza login la riga di Higgsfield contiene
+- [x] **Passo 1: test che fallisce** in `controlla.test.sh`: senza login la riga di Higgsfield contiene
   «email e password dell'account dell'agenzia: chiedile a Max».
-- [ ] **Passo 2:** `bash plugins/creativita/scripts/controlla.test.sh` → FAIL su quel testo.
-- [ ] **Passo 3:** cambia il testo in `righe_higgsfield` e nel ramo `account` di `controlla.sh`; nell'hook, il testo
+- [x] **Passo 2:** `bash plugins/creativita/scripts/controlla.test.sh` → FAIL su quel testo.
+- [x] **Passo 3:** cambia il testo in `righe_higgsfield` e nel ramo `account` di `controlla.sh`; nell'hook, il testo
   di `/creativita account` dice lo stesso.
-- [ ] **Passo 4:** `controlla.test.sh` e `comandi-creativita.test.sh` → `ok`.
-- [ ] **Passo 5: la skill.** «Ingresso dal brief»: il brief arriva come la persona preferisce (testo in chat, immagini
+- [x] **Passo 4:** `controlla.test.sh` e `comandi-creativita.test.sh` → `ok`.
+- [x] **Passo 5: la skill.** «Ingresso dal brief»: il brief arriva come la persona preferisce (testo in chat, immagini
   incollate, link al Doc). Dal Doc il testo si legge con il connettore Google Drive della persona; le immagini dentro
   il Doc non arrivano: chiedi di incollarle in chat, e il file sta nella riga `[Image: source: <percorso>]` come per
   la statica. Togli Composio e l'account di Max.
-- [ ] **Passo 6:** `grep -n -i 'composio\|massimo.cardini' plugins/creativita/skills/creativita/SKILL.md` → niente.
-- [ ] **Passo 7:** commit, con l'ok di Max: `feat(creativita): brief senza Composio, password Higgsfield da Max`.
+- [x] **Passo 6:** `grep -n -i 'composio\|massimo.cardini' plugins/creativita/skills/creativita/SKILL.md` → niente.
+- [x] **Passo 7:** commit, con l'ok di Max: `feat(creativita): brief senza Composio, password Higgsfield da Max`.
 
 ---
 

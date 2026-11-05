@@ -58,7 +58,7 @@ righe_higgsfield() {
   if entro higgsfield workspace list >/dev/null; then
     echo '✅ Higgsfield: login fatto'
   else
-    echo '❌ Higgsfield: login non fatto. Nel terminale: higgsfield auth login (si apre il browser: entra con l'"'"'account dell'"'"'agenzia)'
+    echo '❌ Higgsfield: login non fatto. Nel terminale: higgsfield auth login (si apre il browser: entra con email e password dell'"'"'account dell'"'"'agenzia: chiedile a Max)'
   fi
 }
 
@@ -73,7 +73,7 @@ case "${1:-configura}" in
     if ! command -v higgsfield >/dev/null 2>&1; then
       echo 'CLI di Higgsfield non installata. Nel terminale: npm i -g @higgsfield/cli'
     elif ! entro higgsfield workspace list >/dev/null; then
-      echo 'Nessun account collegato. Nel terminale: higgsfield auth login'
+      echo 'Nessun account collegato. Nel terminale: higgsfield auth login (si apre il browser: entra con email e password dell'"'"'account dell'"'"'agenzia: chiedile a Max)'
     else
       entro higgsfield account status
       entro higgsfield workspace status

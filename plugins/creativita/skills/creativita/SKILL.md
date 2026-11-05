@@ -256,14 +256,16 @@ Figma.
 ## Ingresso dal brief
 
 La persona passa un brief già pronto: testi (headline, testi, CTA) e una o più reference, a volte già divise in più ad.
+Il brief arriva **come la persona preferisce** (Max, 05/11): testi scritti in chat, immagini incollate, link al Google
+Doc, o un misto.
 
 1. Leggi il brief: quali ad, per ognuna testi e reference. Se manca il cliente, chiedilo insieme alle varianti.
-   - I brief del team sono Google Doc con una scheda per lotto (`B<n>_ <data>`) e le concept numerate. Il testo si
-     legge con il connettore di Google Drive. Le reference sono immagini dentro il Doc e la lettura del testo non le
-     porta: si prendono con Composio, `GOOGLEDOCS_GET_DOCUMENT_BY_ID` con `includeTabsContent` e l'account
-     massimo.cardini@ltvalue.it. Nella scheda giusta, l'immagine che segue «Concept Static Image #<n>» è un
-     `inlineObjectElement`, e il suo `imageProperties.contentUri` si scarica con curl. L'indirizzo scade in pochi
-     minuti: se curl fallisce, rileggi il Doc per averne uno nuovo.
+   - **Immagini incollate:** il file di ognuna è nella riga `[Image: source: <percorso>]` del messaggio, come per la
+     statica. Se non è chiaro a quale ad va un'immagine, chiedilo.
+   - **Google Doc:** i brief del team hanno una scheda per lotto (`B<n>_ <data>`) e le concept numerate, ognuna con la
+     sua «Concept Static Image #<n>». Il testo si legge con il connettore Google Drive della persona. Le immagini
+     dentro il Doc quel connettore non le porta: chiedi di incollarle in chat, una per concept, dicendo quali
+     servono. Se il connettore Drive non c'è o non apre il Doc, chiedi di incollare anche i testi.
    - Il lotto del brief è anche il nome della pagina Figma in cui vanno le ad (`B<n>_ <data>`).
 2. L'unica domanda: quante varianti per ogni ad (1, 2 o 3).
 3. Brand come al passo 2.
