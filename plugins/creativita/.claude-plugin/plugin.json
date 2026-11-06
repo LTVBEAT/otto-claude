@@ -1,6 +1,6 @@
 {
   "name": "creativita",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Creazione creatività: riadatta una statica per un cliente, nel suo brand, e la porta su Figma a livelli.",
   "author": { "name": "LTV" },
   "types": "./types/index.d.ts"

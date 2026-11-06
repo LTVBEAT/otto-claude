@@ -49,7 +49,8 @@ manca() { printf '%s' "$2" | grep -qF -- "$3" && { echo "FAIL $1: non doveva ess
 echo '{"plugins":{"otto@ltvbeat":[{}]}}' > "$BASE/casa/.claude/plugins/installed_plugins.json"
 uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso)
 contiene "tutto a posto" "$uscita" "✅ Wiki dei clienti: plugin Otto installato"
-contiene "tutto a posto" "$uscita" "✅ Figma: collegato"
+# Figma non lo giudica lo script: il terminale non vede i connettori della sessione (Max, 06/11). Lo fa Claude.
+manca "Figma, non dallo script" "$uscita" "✅ Figma:"
 contiene "tutto a posto" "$uscita" "✅ Higgsfield: CLI installata"
 contiene "tutto a posto" "$uscita" "✅ Higgsfield: login fatto"
 contiene "account Higgsfield" "$uscita" "con team@ltvalue.it"
@@ -63,7 +64,6 @@ uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso FINTO_TOKEN_FIGMA=
 contiene "senza token Figma" "$uscita" "❌ Token Figma: manca"
 contiene "senza token Figma" "$uscita" "security add-generic-password -U -s figma-token"
 contiene "senza token Figma" "$uscita" "Senza token il giro funziona lo stesso"
-contiene "senza token Figma" "$uscita" "✅ Figma: collegato"
 contiene "senza token Figma" "$uscita" "✅ Higgsfield: login fatto"
 
 # Otto assente.
@@ -73,9 +73,8 @@ contiene "senza Otto" "$uscita" "❌ Wiki dei clienti"
 contiene "senza Otto" "$uscita" "LTVBEAT/otto-claude/main/installa.sh"
 echo '{"plugins":{"otto@ltvbeat":[{}]}}' > "$BASE/casa/.claude/plugins/installed_plugins.json"
 
-# Figma: senza login e assente.
-contiene "Figma senza login" "$(controlla configura FINTO_HF=ok FINTO_FIGMA=login)" "❌ Figma: manca il login"
-contiene "Figma assente" "$(controlla configura FINTO_HF=ok FINTO_FIGMA=assente)" "claude plugin install figma@claude-plugins-official"
+# Il terminale dice «Needs authentication» ma nella sessione Figma può funzionare: lo script non dice ❌.
+manca "Figma, terminale senza login" "$(controlla configura FINTO_HF=ok FINTO_FIGMA=login)" "❌ Figma:"
 
 # Higgsfield: CLI assente, login non fatto, CLI che non risponde.
 rm "$BASE/bin/higgsfield.salvato" 2>/dev/null; mv "$BASE/bin/higgsfield" "$BASE/bin/higgsfield.salvato"
