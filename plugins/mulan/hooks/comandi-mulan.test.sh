@@ -15,6 +15,9 @@ prova() { # $1 prompt, $2 testo atteso nell'uscita ("" = uscita vuota)
 prova "/mulan doctor" "stato_mulan"
 prova "/mulan:mulan doctor" "stato_mulan"
 prova "/mulan help" "chiedi a Mulan"
+prova "/mulan help" "Claude scrive subito"
+printf '{"session_id":"s1","prompt":"/mulan help"}' | CLAUDE_PLUGIN_DATA="$(mktemp -d)" bash "$QUI/comandi-mulan.sh" \
+  | grep -qi "finestra" && { echo "FAIL «/mulan help»: parla ancora della finestra"; ERRORI=1; }
 prova "/mulan on" ""
 prova "ciao" ""
 prova "/otto doctor" ""

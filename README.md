@@ -73,7 +73,7 @@ Esempi di richieste a Otto:
 - «Fai valutare a Otto questa creatività» (incolla l'immagine nella chat)
 - «Carica su Meta questo reel per TKART» (trascina il video nella chat: MP4 o MOV, fino a 200 MB)
 - «Carica queste 10 immagini e 8 video nell'ad set nuovo di Pinex» (più file in un messaggio, fino a 20: Claude li manda a Otto tutti insieme)
-- «Cosa c'è nella knowledge di Qura sull'offerta?» (Claude la legge da solo) o «Aggiorna la knowledge di SYHO con questa decisione» (ti si apre una finestra, confermi tu)
+- «Cosa c'è nella knowledge di Qura sull'offerta?» (Claude la legge da solo) o «Aggiorna la knowledge di SYHO con questa decisione» (Claude la scrive subito, a nome tuo)
 
 ## Mulan
 
@@ -100,7 +100,7 @@ Esempi:
 
 - «Chiedi a Mulan le task aperte di Fibi»
 - «Cosa dice la knowledge di Chiara su InPlace?» (Claude la legge da solo)
-- «Aggiungi alla memory di Fibi questa decisione» (si apre una finestra, confermi tu)
+- «Aggiungi alla memory di Fibi questa decisione» (Claude la scrive subito, a nome tuo)
 
 Qualcosa non va? Scrivi `/mulan doctor`; `/mulan help` ricorda i comandi.
 

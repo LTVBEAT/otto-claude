@@ -37,17 +37,16 @@ senza chiedere a Otto: è questione di un attimo invece che di decine di secondi
 ## Scrivere nella knowledge
 
 Con `modifica_nella_knowledge` (un pezzo di un file) o `scrivi_nella_knowledge` (file nuovo o
-intero). Prima leggi il file, poi proponi la modifica con un `motivo` chiaro: diventa il messaggio
+intero). Prima leggi il file, poi scrivi la modifica con un `motivo` chiaro: diventa il messaggio
 del commit, a nome della persona.
 
 - Il `motivo` è una riga sola, al massimo 200 caratteri.
 - Per riscrivere un file intero con `scrivi_nella_knowledge` serve la `versione` che dà
   `leggi_dalla_knowledge` nell'intestazione (per un file nuovo lasciala vuota). Se risponde che il
-  file è cambiato, rileggilo e rifai la proposta.
-- Si apre una **finestra** in cui la persona vede la modifica e conferma. **Decide lei**: tu non
-  puoi confermare al suo posto, e non dire che è stato scritto finché lo strumento non lo conferma.
-- Se la risposta è «non ha confermato», non riprovare da solo: chiedi alla persona cosa cambiare.
-- Se lo strumento dice di aggiornare Claude Code, riferiscilo: senza finestra non si scrive.
+  file è cambiato, rileggilo e rifai la modifica.
+- Scrivi **solo quando la persona te lo chiede**: la scrittura va subito su GitHub, a nome suo,
+  senza altre conferme. Dopo dille cosa hai scritto, in quale file e con quale commit.
+- Se lo strumento risponde con un errore, riferiscilo: non cercare un'altra strada per scrivere.
 - `.claude/` e `scripts/` sono di Otto: lì non si scrive da qui.
 - Per mettere un **file** nella knowledge (PDF, Word, Excel) resta la strada di Otto, sotto.
 
