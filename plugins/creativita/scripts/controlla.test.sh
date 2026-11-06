@@ -13,7 +13,10 @@ case "$FINTO_HF:$*" in
   nologin:workspace\ list*) echo 'Error: higgsfield: request failed (no response received)'; echo 'Hint: Run: hf auth login'; exit 2 ;;
   nologin:*) echo 'Hint: Run: hf auth login'; exit 2 ;;
   ok:workspace\ list*) echo 'LTV Beat  ws_123'; exit 0 ;;
+  ok:account\ status\ --json*) echo '{"credits": 420, "email": "team@ltvalue.it", "subscription_plan_type": "pro"}'; exit 0 ;;
   ok:account\ status*) echo 'Email: team@ltvalue.it'; echo 'Credits: 420'; exit 0 ;;
+  muto:workspace\ list*) echo 'LTV Beat  ws_123'; exit 0 ;;
+  muto:*) exit 1 ;;
   ok:workspace\ status*) echo 'Workspace: LTV Beat (ws_123)'; exit 0 ;;
   lento:*) sleep 30 ;;
 esac
@@ -49,6 +52,8 @@ contiene "tutto a posto" "$uscita" "✅ Wiki dei clienti: plugin Otto installato
 contiene "tutto a posto" "$uscita" "✅ Figma: collegato"
 contiene "tutto a posto" "$uscita" "✅ Higgsfield: CLI installata"
 contiene "tutto a posto" "$uscita" "✅ Higgsfield: login fatto"
+contiene "account Higgsfield" "$uscita" "con team@ltvalue.it"
+contiene "account Higgsfield" "$uscita" "Se non è l'account dell'agenzia: higgsfield auth logout"
 contiene "tutto a posto" "$uscita" "✅ Token Figma: Massimo"
 manca "tutto a posto" "$uscita" "❌"
 
@@ -84,6 +89,9 @@ contiene "senza login, password da Max" "$uscita" "email e password dell'account
 inizio=$(date +%s); uscita=$(controlla configura FINTO_HF=lento FINTO_FIGMA=connesso); fine=$(date +%s)
 [ $((fine - inizio)) -lt 10 ] || { echo "FAIL CLI lenta: il controllo non si ferma da solo"; ERRORI=1; }
 contiene "CLI lenta" "$uscita" "❌ Higgsfield: login non fatto"
+
+# Login fatto ma account non leggibile: lo dice e rimanda a /creativita account.
+contiene "account non letto" "$(controlla configura FINTO_HF=muto FINTO_FIGMA=connesso)" "/creativita account"
 
 # Account: mostra email, crediti e workspace; senza login dice come entrare.
 uscita=$(controlla account FINTO_HF=ok)

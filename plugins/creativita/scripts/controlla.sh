@@ -56,7 +56,15 @@ righe_higgsfield() {
   fi
   echo '✅ Higgsfield: CLI installata'
   if entro higgsfield workspace list >/dev/null; then
-    echo '✅ Higgsfield: login fatto'
+    # Il login da solo non basta: con un account personale le scene si pagano con i suoi crediti. Si mostra l'email
+    # e la confronta la persona (quella dell'agenzia non sta nel repo, che è pubblico).
+    local email
+    email=$(entro higgsfield account status --json | jq -r '.email // empty' 2>/dev/null)
+    if [ -n "$email" ]; then
+      echo "✅ Higgsfield: login fatto con $email. Se non è l'account dell'agenzia: higgsfield auth logout, poi higgsfield auth login con email e password dell'agenzia (chiedile a Max)"
+    else
+      echo '✅ Higgsfield: login fatto, ma non riesco a leggere con quale account: controllalo con /creativita account'
+    fi
   else
     echo '❌ Higgsfield: login non fatto. Nel terminale: higgsfield auth login (si apre il browser: entra con email e password dell'"'"'account dell'"'"'agenzia: chiedile a Max)'
   fi
