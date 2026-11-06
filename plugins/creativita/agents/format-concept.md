@@ -1,6 +1,6 @@
 ---
 name: format-concept
-description: "Analizza il format e il concept di una statica e propone come riadattarli a un cliente senza rifarla identica. Lo lancia la skill creativita, in parallelo a visual-testi."
+description: "Analizza il format e il concept di una statica e propone come riadattarli a un cliente senza rifarla identica. Lo lancia la skill clienti-beat, in parallelo a visual-testi."
 tools: Read
 ---
 

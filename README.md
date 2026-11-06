@@ -122,7 +122,7 @@ team Beat Performance) e Higgsfield. Per Higgsfield va bene qualsiasi account: s
 quello, se non ne hai uno chiedi a Max quello dell'agenzia. `/creativita account` dice con quale account sei collegato
 e, se vuoi, come cambiarlo.
 
-**Come si usa.** `/creativita on`, poi:
+**Come si usa.** `/creativita on`, poi (nel menu dei comandi la skill si chiama `/creativita:clienti-beat`):
 
 - incolla una statica e di' per quale cliente riadattarla;
 - oppure dai un brief come preferisci: testi in chat, immagini incollate o il link al Google Doc (le immagini dentro il
