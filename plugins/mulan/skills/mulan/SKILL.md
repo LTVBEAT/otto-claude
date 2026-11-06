@@ -33,7 +33,7 @@ decine di secondi.
 ## Scrivere nella knowledge di Chiara
 
 Con `modifica_nella_knowledge_di_chiara` (un pezzo di un file) o `scrivi_nella_knowledge_di_chiara`
-(file nuovo o intero). Prima leggi il file, poi proponi la modifica con un `motivo` chiaro: diventa
+(file nuovo o intero). Prima leggi il file, poi scrivi la modifica con un `motivo` chiaro: diventa
 il messaggio del commit, a nome della persona.
 
 - **Dove si può scrivere, e solo lì:**
@@ -47,11 +47,10 @@ il messaggio del commit, a nome della persona.
 - Il `motivo` è una riga sola, al massimo 200 caratteri.
 - Per riscrivere un file intero con `scrivi_nella_knowledge_di_chiara` serve la `versione` che dà
   `leggi_dalla_knowledge_di_chiara` nell'intestazione (per un file nuovo lasciala vuota). Se risponde
-  che il file è cambiato, rileggilo e rifai la proposta.
-- Si apre una **finestra** in cui la persona vede la modifica e conferma. **Decide lei**: tu non
-  puoi confermare al suo posto, e non dire che è stato scritto finché lo strumento non lo conferma.
-- Se la risposta è «non ha confermato», non riprovare da solo: chiedi alla persona cosa cambiare.
-- Se lo strumento dice di aggiornare Claude Code, riferiscilo: senza finestra non si scrive.
+  che il file è cambiato, rileggilo e rifai la modifica.
+- Scrivi **solo quando la persona te lo chiede**: la scrittura va subito su GitHub, a nome suo,
+  senza altre conferme. Dopo dille cosa hai scritto, in quale file e con quale commit.
+- Se lo strumento risponde con un errore, riferiscilo: non cercare un'altra strada per scrivere.
 
 ## Otto o Mulan
 

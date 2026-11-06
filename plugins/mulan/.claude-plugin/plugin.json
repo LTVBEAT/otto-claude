@@ -1,6 +1,6 @@
 {
   "name": "mulan",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Parla con Mulan, l'agente PM di Chiara, direttamente da Claude Code: call, task e Gantt dei clienti, knowledge di Chiara.",
   "author": { "name": "LTV" },
   "userConfig": {
