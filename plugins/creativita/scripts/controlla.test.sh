@@ -53,7 +53,8 @@ contiene "tutto a posto" "$uscita" "✅ Figma: collegato"
 contiene "tutto a posto" "$uscita" "✅ Higgsfield: CLI installata"
 contiene "tutto a posto" "$uscita" "✅ Higgsfield: login fatto"
 contiene "account Higgsfield" "$uscita" "con team@ltvalue.it"
-contiene "account Higgsfield" "$uscita" "Se non è l'account dell'agenzia: higgsfield auth logout"
+manca "qualsiasi account va bene" "$uscita" "logout"
+manca "qualsiasi account va bene" "$uscita" "agenzia"
 contiene "tutto a posto" "$uscita" "✅ Token Figma: Massimo"
 manca "tutto a posto" "$uscita" "❌"
 
@@ -85,7 +86,7 @@ mv "$BASE/bin/higgsfield.salvato" "$BASE/bin/higgsfield"
 uscita=$(controlla configura FINTO_HF=nologin FINTO_FIGMA=connesso)
 contiene "senza login" "$uscita" "❌ Higgsfield: login non fatto"
 contiene "senza login" "$uscita" "higgsfield auth login"
-contiene "senza login, password da Max" "$uscita" "email e password dell'account dell'agenzia: chiedile a Max"
+contiene "senza login, qualsiasi account" "$uscita" "va bene qualsiasi account"
 inizio=$(date +%s); uscita=$(controlla configura FINTO_HF=lento FINTO_FIGMA=connesso); fine=$(date +%s)
 [ $((fine - inizio)) -lt 10 ] || { echo "FAIL CLI lenta: il controllo non si ferma da solo"; ERRORI=1; }
 contiene "CLI lenta" "$uscita" "❌ Higgsfield: login non fatto"
@@ -98,7 +99,7 @@ uscita=$(controlla account FINTO_HF=ok)
 contiene "account" "$uscita" "team@ltvalue.it"
 contiene "account" "$uscita" "Workspace: LTV Beat"
 contiene "account senza login" "$(controlla account FINTO_HF=nologin)" "higgsfield auth login"
-contiene "account senza login, password da Max" "$(controlla account FINTO_HF=nologin)" "email e password dell'account dell'agenzia: chiedile a Max"
+contiene "account senza login, qualsiasi account" "$(controlla account FINTO_HF=nologin)" "va bene qualsiasi account"
 
 # Mai il token a schermo: lo script non chiama auth token.
 grep -q "auth token" "$QUI/controlla.sh" && { echo "FAIL: lo script chiama auth token"; ERRORI=1; }

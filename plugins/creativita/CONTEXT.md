@@ -29,5 +29,5 @@ La stessa frase può essere l'una o l'altra: se non è chiaro se vale solo lì o
 di metterli: il plugin non li manda a nessuno da solo. Arrivano a tutto il team con l'aggiornamento del plugin.
 (Max, 05/11)
 
-**Account Higgsfield**: di base quello dell'agenzia, fisso; chi usa il plugin può rifare il login e cambiarlo.
-(Max, 05/11)
+**Account Higgsfield**: va bene qualsiasi account con cui la persona è entrata; il plugin non propone di cambiarlo. Chi
+non ne ha uno chiede a Max quello dell'agenzia. (Max, 06/11, al posto di «di base quello dell'agenzia» del 05/11)

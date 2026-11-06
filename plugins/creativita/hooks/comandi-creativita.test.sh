@@ -50,7 +50,7 @@ atteso "/creativita configura" ""
 uscita=$(manda "/creativita account")
 contiene "/creativita account" "$uscita" "scripts/controlla.sh' account"
 contiene "/creativita account" "$uscita" "higgsfield auth logout"
-contiene "/creativita account, password da Max" "$uscita" "chiedile a Max"
+contiene "/creativita account, qualsiasi account" "$uscita" "non proporre di cambiarlo"
 printf '%s' "$uscita" | json "/creativita account"
 [ -z "$(manda "puoi fare /creativita on per me")" ] || { echo "FAIL: un comando dentro una frase non va eseguito"; ERRORI=1; }
 atteso "comando dentro una frase" ""
