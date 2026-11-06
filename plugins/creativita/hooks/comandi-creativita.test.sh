@@ -49,6 +49,7 @@ uscita=$(manda "/creativita configura")
 contiene "/creativita configura" "$uscita" "$(cd "$QUI/.." && pwd)/scripts/controlla.sh' configura"
 contiene "/creativita configura" "$uscita" "whoami"
 contiene "/creativita configura, connettore Figma" "$uscita" "connettore Figma"
+contiene "/creativita configura, più Figma" "$uscita" "Se hai più strumenti di Figma"
 printf '%s' "$uscita" | json "/creativita configura"
 atteso "/creativita configura" ""
 uscita=$(manda "/creativita account")
