@@ -72,6 +72,9 @@ L'MCP di Figma ha un tetto (200 chiamate al giorno con un posto Full); l'API RES
   temporanea e stampano i percorsi, che poi leggi con Read.
 - **Le scritture restano all'MCP:** `create_session` prima, poi `use_figma` e `upload_assets`. L'API vede subito quello
   che l'MCP ha scritto.
+- **Quale Figma:** se hai più strumenti di Figma (il plugin, il connettore dell'app), possono essere entrati con account
+  diversi. Prima di scrivere chiama il `whoami` di ognuno e usa **solo** quello con il posto Full in Beat Performance,
+  per tutto il giro. Se nessuno ce l'ha, fermati e di' con quali email sei collegato (Max, 06/11).
 - Se lo script esce con **3** (token mancante o scaduto) o **4** (limite dell'API), quella lettura la fai con l'MCP e lo
   scrivi nel resoconto, con il messaggio dello script (dice come rifare il token).
 
