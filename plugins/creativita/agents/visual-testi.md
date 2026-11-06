@@ -1,6 +1,6 @@
 ---
 name: visual-testi
-description: "Analizza visual e testi di una statica e dice come rifarli sul branding di un cliente, colori della scena compresi. Lo lancia la skill creativita, in parallelo a format-concept."
+description: "Analizza visual e testi di una statica e dice come rifarli sul branding di un cliente, colori della scena compresi. Lo lancia la skill clienti-beat, in parallelo a format-concept."
 tools: Read
 ---
 

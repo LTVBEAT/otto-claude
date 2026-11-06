@@ -23,7 +23,7 @@ find "$CARTELLA" -type f -mtime +7 -delete 2>/dev/null
 OTTO="$(dirname "$DATI")/otto-ltvbeat/modalita/$SESSIONE"
 
 COMANDO=$(printf '%s' "$INGRESSO" \
-  | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/creativita(:creativita)?[[:space:]]+(on|off|help|configura|account)[[:space:]]*"' \
+  | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/creativita(:creativita|:clienti-beat)?[[:space:]]+(on|off|help|configura|account)[[:space:]]*"' \
   | grep -oiE '(on|off|help|configura|account)[[:space:]]*"$' | tr -d '" ' | tr 'A-Z' 'a-z')
 # Lo script dei controlli sul computer, tra apici singoli nelle istruzioni: il percorso può avere spazi.
 CONTROLLA="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)/scripts/controlla.sh"
@@ -62,7 +62,7 @@ case "$COMANDO" in
     fi
     # Il percorso va nel JSON: barre rovesciate e virgolette si escapano.
     FILE_FASE=$(printf '%s' "$STATO" | sed 's/\\/\\\\/g; s/"/\\"/g')
-    CONTESTO='CREAZIONE CREATIVITÀ ATTIVA: l'"'"'utente lavora alle creatività dei clienti. Per riadattare una statica segui la skill creativita, se c'"'"'è.\nA ogni cambio di fase del giro (analisi, proposte, scena, figma) scrivi la fase nel file della sessione, così la fascia la mostra, con il comando Bash: printf '"'"'<fase>\\n'"'"' > '"'"''"$FILE_FASE"''"'"'\nPer uscire l'"'"'utente scrive /creativita off.'
+    CONTESTO='CREAZIONE CREATIVITÀ ATTIVA: l'"'"'utente lavora alle creatività dei clienti. Per riadattare una statica segui la skill clienti-beat del plugin creativita, se c'"'"'è.\nA ogni cambio di fase del giro (analisi, proposte, scena, figma) scrivi la fase nel file della sessione, così la fascia la mostra, con il comando Bash: printf '"'"'<fase>\\n'"'"' > '"'"''"$FILE_FASE"''"'"'\nPer uscire l'"'"'utente scrive /creativita off.'
     ;;
 esac
 printf '{"hookSpecificOutput":{"hookEventName":"UserPromptSubmit","additionalContext":"%s"}}\n' "$CONTESTO"

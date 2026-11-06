@@ -1,5 +1,5 @@
 ---
-name: creativita
+name: clienti-beat
 description: Crea ad statiche per un cliente LTV/Beat, nel suo brand kit su Figma, con le scene generate su Higgsfield e montate su Figma. Usala quando la persona passa una statica da riadattare per un cliente, o un brief già pronto con testi e reference da realizzare, e quando la creazione creatività è accesa (/creativita on) e arriva una statica o un brief. Anche quando la persona chiede di correggere un'ad già fatta («nella C2 il titolo più grande»), quando dà un feedback sulle creatività fatte, e quando chiede quali indicazioni o feedback hai sulle creatività.
 ---
 

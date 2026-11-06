@@ -35,6 +35,9 @@ contiene "/creativita off" "$uscita" "Creazione creatività spenta"
 
 manda "/creativita:creativita on" >/dev/null
 atteso "/creativita:creativita on" "analisi"
+manda "/creativita off" >/dev/null
+manda "/creativita:clienti-beat on" >/dev/null
+atteso "/creativita:clienti-beat on" "analisi"
 manda "/CREATIVITA OFF" >/dev/null
 atteso "/CREATIVITA OFF" ""
 
