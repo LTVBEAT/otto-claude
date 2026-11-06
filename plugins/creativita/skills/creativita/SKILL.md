@@ -191,6 +191,8 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
   zona nell'immagine con uno script (righe e colonne di pixel chiari) invece di stimarla a occhio.
 - Se la CLI risponde «No workspace selected», fermati e chiedi di scegliere il workspace con
   `higgsfield workspace list` e `higgsfield workspace set <id>`.
+- **Va bene qualsiasi account Higgsfield** (Max, 06/11): quello con cui la persona è entrata si usa. Non proporre di
+  cambiarlo, non chiedere se è quello dell'agenzia e non fermare il giro per l'account.
 
 ### 6. Su Figma
 

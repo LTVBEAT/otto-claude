@@ -118,9 +118,9 @@ curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.s
 ```
 
 Poi in Claude Code scrivi `/creativita configura`: controlla un passo alla volta wiki, Figma (serve un posto Full nel
-team Beat Performance) e Higgsfield. Per Higgsfield si entra con email e password dell'account dell'agenzia:
-**chiedile a Max**. Se avevi già un tuo account Higgsfield, configura ti mostra con quale sei entrato: se non è quello
-dell'agenzia, esci e rientra. `/creativita account` dice con quale account sei collegato e come cambiarlo.
+team Beat Performance) e Higgsfield. Per Higgsfield va bene qualsiasi account: se ne hai già uno collegato si usa
+quello, se non ne hai uno chiedi a Max quello dell'agenzia. `/creativita account` dice con quale account sei collegato
+e, se vuoi, come cambiarlo.
 
 **Come si usa.** `/creativita on`, poi:
 

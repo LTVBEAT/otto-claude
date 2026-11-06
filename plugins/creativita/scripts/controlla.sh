@@ -56,17 +56,17 @@ righe_higgsfield() {
   fi
   echo '✅ Higgsfield: CLI installata'
   if entro higgsfield workspace list >/dev/null; then
-    # Il login da solo non basta: con un account personale le scene si pagano con i suoi crediti. Si mostra l'email
-    # e la confronta la persona (quella dell'agenzia non sta nel repo, che è pubblico).
+    # Va bene qualsiasi account Higgsfield (Max, 06/11): si mostra solo con quale si è entrati, senza consigliare di
+    # cambiarlo. Le scene si pagano con i crediti di quell'account.
     local email
     email=$(entro higgsfield account status --json | jq -r '.email // empty' 2>/dev/null)
     if [ -n "$email" ]; then
-      echo "✅ Higgsfield: login fatto con $email. Se non è l'account dell'agenzia: higgsfield auth logout, poi higgsfield auth login con email e password dell'agenzia (chiedile a Max)"
+      echo "✅ Higgsfield: login fatto con $email"
     else
       echo '✅ Higgsfield: login fatto, ma non riesco a leggere con quale account: controllalo con /creativita account'
     fi
   else
-    echo '❌ Higgsfield: login non fatto. Nel terminale: higgsfield auth login (si apre il browser: entra con email e password dell'"'"'account dell'"'"'agenzia: chiedile a Max)'
+    echo '❌ Higgsfield: login non fatto. Nel terminale: higgsfield auth login (si apre il browser: va bene qualsiasi account Higgsfield; se non ne hai uno, chiedi a Max)'
   fi
 }
 
@@ -81,7 +81,7 @@ case "${1:-configura}" in
     if ! command -v higgsfield >/dev/null 2>&1; then
       echo 'CLI di Higgsfield non installata. Nel terminale: npm i -g @higgsfield/cli'
     elif ! entro higgsfield workspace list >/dev/null; then
-      echo 'Nessun account collegato. Nel terminale: higgsfield auth login (si apre il browser: entra con email e password dell'"'"'account dell'"'"'agenzia: chiedile a Max)'
+      echo 'Nessun account collegato. Nel terminale: higgsfield auth login (si apre il browser: va bene qualsiasi account Higgsfield; se non ne hai uno, chiedi a Max)'
     else
       entro higgsfield account status
       entro higgsfield workspace status
