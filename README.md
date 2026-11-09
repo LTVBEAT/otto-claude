@@ -111,6 +111,11 @@ monta le ad a livelli nel file Figma del cliente, pronte da ritoccare. Per ora c
 ha la scheda `clienti/<cliente>/creativita.md` nella wiki e la pagina «Brand kit» su Figma. Otto non lavora nel giro:
 Claude legge solo la wiki, quindi serve anche il plugin Otto installato. **Solo su Mac.**
 
+**Cosa serve:** il plugin Otto con il suo token, un posto Full nel team Figma Beat Performance, un account Higgsfield e
+Node (per la CLI di Higgsfield: l'installer LTS per Mac da nodejs.org). `jq` c'è già da macOS 15; prima va installato.
+`/creativita configura` controlla tutto e dice cosa fare per ogni cosa che manca. Il token Figma personale è
+facoltativo: senza, il giro funziona lo stesso.
+
 **Installazione**, nel Terminale:
 
 ```

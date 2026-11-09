@@ -15,6 +15,7 @@ atteso() { # $1 cosa si prova, $2 fase attesa ("" = spenta)
 contiene() { # $1 cosa si prova, $2 uscita, $3 testo atteso
   printf '%s' "$2" | grep -qF -- "$3" || { echo "FAIL $1: manca «$3»"; ERRORI=1; }
 }
+manca() { printf '%s' "$2" | grep -qF -- "$3" && { echo "FAIL $1: non doveva esserci «$3»"; ERRORI=1; }; }
 json() { python3 -c 'import json,sys; json.load(sys.stdin)' 2>/dev/null || { echo "FAIL $1: uscita non è JSON valido"; ERRORI=1; }; }
 
 uscita=$(manda "/creativita on")
@@ -50,6 +51,13 @@ contiene "/creativita configura" "$uscita" "$(cd "$QUI/.." && pwd)/scripts/contr
 contiene "/creativita configura" "$uscita" "whoami"
 contiene "/creativita configura, connettore Figma" "$uscita" "connettore Figma"
 contiene "/creativita configura, più Figma" "$uscita" "Se hai più strumenti di Figma"
+# I rimedi valgono anche nell'app: niente /plugin configure, il token di Otto si rimette con l'installazione.
+manca "/creativita configura, app" "$uscita" "/plugin configure"
+contiene "/creativita configura, token Otto" "$uscita" "installa.sh"
+contiene "/creativita configura, Figma nell'app" "$uscita" "Connettori"
+contiene "/creativita configura, plugin Figma da terminale" "$uscita" "claude plugin install figma@claude-plugins-official"
+# ⚠️ non blocca: con solo ✅ e ⚠️ si parte.
+contiene "/creativita configura, avvisi" "$uscita" "⚠️"
 printf '%s' "$uscita" | json "/creativita configura"
 atteso "/creativita configura" ""
 uscita=$(manda "/creativita account")
