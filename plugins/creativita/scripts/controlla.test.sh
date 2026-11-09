@@ -59,9 +59,10 @@ manca "qualsiasi account va bene" "$uscita" "agenzia"
 contiene "tutto a posto" "$uscita" "✅ Token Figma: Massimo"
 manca "tutto a posto" "$uscita" "❌"
 
-# Token Figma assente: la riga dice come crearlo e che il giro va lo stesso; le altre restano ✅.
+# Token Figma assente: è facoltativo, quindi ⚠️ e non ❌; dice come crearlo e che il giro va lo stesso.
 uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso FINTO_TOKEN_FIGMA=assente)
-contiene "senza token Figma" "$uscita" "❌ Token Figma: manca"
+contiene "senza token Figma" "$uscita" "⚠️ Token Figma: manca"
+manca "senza token Figma, non blocca" "$uscita" "❌"
 contiene "senza token Figma" "$uscita" "security add-generic-password -U -s figma-token"
 contiene "senza token Figma" "$uscita" "Senza token il giro funziona lo stesso"
 contiene "senza token Figma" "$uscita" "✅ Higgsfield: login fatto"
@@ -81,6 +82,15 @@ rm "$BASE/bin/higgsfield.salvato" 2>/dev/null; mv "$BASE/bin/higgsfield" "$BASE/
 uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso)
 contiene "senza CLI" "$uscita" "❌ Higgsfield: CLI non installata"
 contiene "senza CLI" "$uscita" "npm i -g @higgsfield/cli"
+# Senza Node (npm non c'è nel PATH dei test) prima va installato Node.
+contiene "senza CLI né Node" "$uscita" "nodejs.org"
+# Con npm: il comando, e sudo se i permessi lo rifiutano.
+printf '#!/bin/bash\n' > "$BASE/bin/npm"; chmod +x "$BASE/bin/npm"
+uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso)
+contiene "senza CLI, con npm" "$uscita" "npm i -g @higgsfield/cli"
+contiene "senza CLI, con npm" "$uscita" "sudo npm i -g @higgsfield/cli"
+manca "senza CLI, con npm" "$uscita" "nodejs.org"
+rm "$BASE/bin/npm"
 mv "$BASE/bin/higgsfield.salvato" "$BASE/bin/higgsfield"
 uscita=$(controlla configura FINTO_HF=nologin FINTO_FIGMA=connesso)
 contiene "senza login" "$uscita" "❌ Higgsfield: login non fatto"
@@ -89,6 +99,12 @@ contiene "senza login, qualsiasi account" "$uscita" "va bene qualsiasi account"
 inizio=$(date +%s); uscita=$(controlla configura FINTO_HF=lento FINTO_FIGMA=connesso); fine=$(date +%s)
 [ $((fine - inizio)) -lt 10 ] || { echo "FAIL CLI lenta: il controllo non si ferma da solo"; ERRORI=1; }
 contiene "CLI lenta" "$uscita" "❌ Higgsfield: login non fatto"
+
+# Senza jq le scene e le letture di Figma non vanno: lo dice, e con Higgsfield a posto è l'unico ❌.
+uscita=$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso CONTROLLA_JQ=jq-che-non-esiste)
+contiene "senza jq" "$uscita" "❌ jq: manca"
+contiene "senza jq" "$uscita" "brew install jq"
+manca "con jq" "$(controlla configura FINTO_HF=ok FINTO_FIGMA=connesso)" "jq: manca"
 
 # Login fatto ma account non leggibile: lo dice e rimanda a /creativita account.
 contiene "account non letto" "$(controlla configura FINTO_HF=muto FINTO_FIGMA=connesso)" "/creativita account"
