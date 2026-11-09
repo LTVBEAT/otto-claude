@@ -7,6 +7,7 @@
 # Il token di Higgsfield non si chiede mai alla CLI: finirebbe a schermo.
 
 ATTESA=${CONTROLLA_ATTESA:-10}
+JQ=${CONTROLLA_JQ:-jq}
 FIGMA_SH=${FIGMA_SH:-$(dirname "$0")/figma.sh}
 # Un comando con un tempo massimo: macOS non ha timeout, perl sì. Il comando gira come figlio di perl, che
 # allo scadere lo ferma ed esce con 124: così bash non stampa «Alarm clock».
@@ -23,20 +24,31 @@ riga_otto() {
   fi
 }
 
-# Il token personale per l'API di Figma: non blocca niente, senza si legge Figma con l'MCP.
+# Il token personale per l'API di Figma: non blocca niente, senza si legge Figma con l'MCP. Per questo ⚠️ e non ❌:
+# con solo ✅ e ⚠️ configura dice «Tutto pronto».
 riga_token_figma() {
   local riga
   riga=$(entro bash "$FIGMA_SH" verifica)
   case "$riga" in
     ✅*) echo "$riga" ;;
-    '') echo "❌ Token Figma: l'API di Figma non risponde. Senza token il giro funziona lo stesso, con più chiamate all'MCP di Figma." ;;
-    *) echo "$riga Senza token il giro funziona lo stesso, con più chiamate all'MCP di Figma." ;;
+    '') echo "⚠️ Token Figma: l'API di Figma non risponde. Senza token il giro funziona lo stesso, con più chiamate all'MCP di Figma." ;;
+    *) echo "⚠️ ${riga#❌ } Senza token il giro funziona lo stesso, con più chiamate all'MCP di Figma." ;;
   esac
+}
+
+# jq lo usano le scene e le letture di Figma: c'è da macOS 15 (Sequoia), prima no.
+riga_jq() {
+  command -v "$JQ" >/dev/null 2>&1 && return
+  echo '❌ jq: manca, e senza non partono le scene né le letture di Figma. Se hai Homebrew, nel terminale: brew install jq; se no aggiorna macOS (da Sequoia 15 è già incluso) o chiedi a Max'
 }
 
 righe_higgsfield() {
   if ! command -v higgsfield >/dev/null 2>&1; then
-    echo '❌ Higgsfield: CLI non installata. Nel terminale: npm i -g @higgsfield/cli'
+    if command -v npm >/dev/null 2>&1; then
+      echo '❌ Higgsfield: CLI non installata. Nel terminale: npm i -g @higgsfield/cli (se risponde EACCES: sudo npm i -g @higgsfield/cli, chiede la password del Mac)'
+    else
+      echo '❌ Higgsfield: CLI non installata, e prima serve Node. Scarica e apri l'"'"'installer LTS per Mac da nodejs.org, poi nel terminale: npm i -g @higgsfield/cli (se risponde EACCES: sudo npm i -g @higgsfield/cli)'
+    fi
     return
   fi
   echo '✅ Higgsfield: CLI installata'
@@ -44,7 +56,7 @@ righe_higgsfield() {
     # Va bene qualsiasi account Higgsfield (Max, 06/11): si mostra solo con quale si è entrati, senza consigliare di
     # cambiarlo. Le scene si pagano con i crediti di quell'account.
     local email
-    email=$(entro higgsfield account status --json | jq -r '.email // empty' 2>/dev/null)
+    email=$(entro higgsfield account status --json | "$JQ" -r '.email // empty' 2>/dev/null)
     if [ -n "$email" ]; then
       echo "✅ Higgsfield: login fatto con $email"
     else
@@ -59,6 +71,7 @@ case "${1:-configura}" in
   configura)
     riga_otto
     riga_token_figma
+    riga_jq
     righe_higgsfield
     ;;
   account)
