@@ -57,7 +57,8 @@ senza un sì.
    I file arrivano identici a quelli della wiki, immagini comprese: non li ricopi tu.
 3. **Prima del comando**, controlla se una delle cartelle esiste già in `~/.claude/skills/` (con
    `ls`). Se c'è, dillo all'utente e chiedi se sostituirla: potrebbe essere una sua skill con lo
-   stesso nome. Se dice di sì, **spostala** in `<cartella>.vecchia-<AAAAMMGG>` (non cancellarla);
+   stesso nome. Se dice di sì, **spostala** in `~/.claude/skills-vecchie/<AAAAMMGG>/` (non cancellarla,
+   e non lasciarla dentro `~/.claude/skills/`: Claude Code la caricherebbe come una skill doppia);
    se dice di no, non installare quella skill.
 4. Lancia il comando della risposta per il sistema dell'utente, **così com'è**, senza cambiare il
    link né la cartella di destinazione. Claude Code chiederà all'utente il permesso di lanciarlo:
