@@ -35,6 +35,9 @@ senza chiedere a Otto: è questione di un attimo invece che di decine di secondi
 - In **modalità Otto** (`/otto on`) vale la modalità: tutto passa a `chiedi_a_otto`, anche le
   domande sulla knowledge.
 
+Per **installare una skill di Otto** sul computer dell'utente («c'è una skill per il copywriting?»)
+segui la skill `skill-di-otto`.
+
 ## Scrivere nella knowledge
 
 Con `modifica_nella_knowledge` (un pezzo di un file) o `scrivi_nella_knowledge` (file nuovo o
@@ -48,7 +51,7 @@ del commit, a nome della persona.
 - Scrivi **solo quando la persona te lo chiede**: la scrittura va subito su GitHub, a nome suo,
   senza altre conferme. Dopo dille cosa hai scritto, in quale file e con quale commit.
 - Se lo strumento risponde con un errore, riferiscilo: non cercare un'altra strada per scrivere.
-- `.claude/` e `scripts/` sono di Otto: lì non si scrive da qui.
+- `.claude/`, `scripts/` e `skill/` sono di Otto: lì non si scrive da qui.
 - Per mettere un **file** nella knowledge (PDF, Word, Excel) resta la strada di Otto, sotto.
 
 ## Modalità Otto (`/otto on` · `/otto off` · `/otto help` · `/otto doctor`)
