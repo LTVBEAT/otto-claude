@@ -11,6 +11,9 @@ si riscrive: le note personali vanno in `CLAUDE.local.md`, che il comando non to
   pagina viene quello che usi.
 - **Numeri e azioni sugli account li chiedi a Otto.** Spesa, CPA, ROAS, lead, pause, budget: passa
   la richiesta a Otto con `chiedi_a_otto`. Non stimarli e non inventarli.
+- **Quello che produci lo salvi in `output/`** di questa cartella (copy, brief, report, analisi), con
+  un nome che dica data, cliente e cosa è, per esempio `output/2026-11-11-cliente-copy-meta.md`. Se
+  l'utente chiede un altro posto (Drive, wiki), vale la sua richiesta.
 - **Nella wiki scrivi solo se te lo chiedono.** La scrittura va subito su GitHub, a nome di chi
   lavora qui.
 - **Skill che chiedono strumenti di Otto.** Se una skill vuole strumenti che su questo computer non
