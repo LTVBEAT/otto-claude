@@ -52,6 +52,9 @@ passa a Otto da solo. Puoi anche dirlo esplicitamente: «chiedi a Otto…», «f
 - **Parlare solo con Otto**: scrivi `/otto on`. Da lì ogni messaggio va a Otto e la risposta è la
   sua, tale e quale. Con `/otto off` torni a parlare con Claude. Vale per la finestra in cui lo
   scrivi, non per le altre.
+- **Le skill di Otto sul tuo computer**: chiedi «c'è una skill per il copywriting?» o «che skill ha
+  Otto?». Claude cerca nella wiki di Otto, ti dice cosa fa e cosa le serve, e la installa se gli
+  dici di sì.
 - **Non ricordi i comandi?** Scrivi `/otto help`.
 - **Qualcosa non va?** Scrivi `/otto doctor`: controlla versione, token, aggiornamenti e collegamento,
   e dice cosa fare. Se resta un ❌, manda l'elenco a Max.
