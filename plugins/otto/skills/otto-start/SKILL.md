@@ -17,7 +17,8 @@ Chiedi in una domanda sola: «Dove preparo la cartella di lavoro? Propongo `~/be
 - Se l'utente dice sì o non indica altro, usa `~/beat-ai` (su Windows `%USERPROFILE%\beat-ai`).
 - Se la cartella **esiste già**, è un aggiornamento: va bene, si continua. Non toccare i file che ci
   sono dentro, tranne il `CLAUDE.md` (passo 2). `CLAUDE.local.md` non si tocca mai.
-- Creala se non c'è (`mkdir -p`).
+- Creala se non c'è, con dentro la cartella `output/` per quello che si produce
+  (`mkdir -p <cartella>/output`). Se `output/` c'è già, non toccare quello che contiene.
 
 ## 2. Il `CLAUDE.md`
 
@@ -49,7 +50,8 @@ personali vanno in `CLAUDE.local.md`.
 
 Chiudi con poche righe:
 
-- cosa hai fatto: la cartella (con il percorso) e quante skill sono installate;
+- cosa hai fatto: la cartella (con il percorso), che quello che si produce finisce in `output/`, e
+  quante skill sono installate;
 - come si comincia: nell'app di Claude, scheda **Code**, apri una **sessione nuova** e scegli la
   cartella appena creata. Le skill si vedono dalla sessione nuova, non da questa;
 - per aggiornare, più avanti: basta rilanciare `/otto start`.
