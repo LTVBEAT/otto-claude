@@ -1,9 +1,9 @@
 ---
-name: otto-start
-description: Prepara la cartella di lavoro di Beat e installa il pacchetto start di skill. Usala SOLO quando l'utente ha scritto /otto start (o /otto:otto start) e il promemoria del plugin dice di seguire la skill otto-start. NON per installare una singola skill (quella è skill-di-otto) e NON per altre richieste.
+name: otto-setup
+description: Prepara la cartella di lavoro di Beat e installa il pacchetto start di skill. Usala SOLO quando l'utente ha scritto /otto setup (o /otto:otto setup) e il promemoria del plugin dice di seguire la skill otto-setup. NON per installare una singola skill (quella è skill-di-otto) e NON per altre richieste.
 ---
 
-# /otto start
+# /otto setup
 
 Prepara il computer di chi entra in Beat: una cartella di lavoro con un `CLAUDE.md` che dice a
 Claude come lavorare, e il pacchetto start di skill in `~/.claude/skills/`. Rilanciato, aggiorna
@@ -31,7 +31,7 @@ personali vanno in `CLAUDE.local.md`.
 
 1. Chiama `pacchetto_start`. Se risponde con un errore (per esempio l'elenco non c'è), riferiscilo
    così com'è e fermati qui: la cartella resta pronta, le skill si installano rilanciando
-   `/otto start` più tardi.
+   `/otto setup` più tardi.
 2. Dalla risposta di' all'utente, in due o tre righe: quante skill installi; che quelle già presenti
    si spostano in `~/.claude/skills-vecchie/<data-ora>/` (se ne aveva modificata una, la sua versione
    resta lì); che alcune skill usano strumenti di Otto che sul suo computer non ci sono, e in quei
@@ -54,4 +54,4 @@ Chiudi con poche righe:
   quante skill sono installate;
 - come si comincia: nell'app di Claude, scheda **Code**, apri una **sessione nuova** e scegli la
   cartella appena creata. Le skill si vedono dalla sessione nuova, non da questa;
-- per aggiornare, più avanti: basta rilanciare `/otto start`.
+- per aggiornare, più avanti: basta rilanciare `/otto setup`.

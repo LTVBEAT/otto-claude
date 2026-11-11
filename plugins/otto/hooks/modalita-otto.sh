@@ -17,8 +17,8 @@ STATO="$CARTELLA/$SESSIONE"
 find "$CARTELLA" -type f -mtime +7 -delete 2>/dev/null
 
 COMANDO=$(printf '%s' "$INGRESSO" \
-  | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/otto(:otto)?[[:space:]]+(on|off|help|doctor|start)[[:space:]]*"' \
-  | grep -oiE '(on|off|help|doctor|start)[[:space:]]*"$' | tr -d '" ' | tr 'A-Z' 'a-z')
+  | grep -oiE '"prompt"[[:space:]]*:[[:space:]]*"[[:space:]]*/otto(:otto)?[[:space:]]+(on|off|help|doctor|setup)[[:space:]]*"' \
+  | grep -oiE '(on|off|help|doctor|setup)[[:space:]]*"$' | tr -d '" ' | tr 'A-Z' 'a-z')
 
 # I comandi di Mulan non sono per Otto: con la modalità accesa non vanno passati a lui.
 printf '%s' "$INGRESSO" \
@@ -99,16 +99,16 @@ case "$COMANDO" in
     controlli_locali
     CONTESTO='L'"'"'utente ha scritto /otto doctor, il controllo del plugin Otto. Non lanciare skill né subagent e non chiamare chiedi_a_otto.\n1. Chiama lo strumento stato_otto con versione_plugin uguale a '"$VERSIONE_PLUGIN"'.\n2. Rispondi solo con questo elenco, nell'"'"'ordine, aggiungendo in fondo le righe di stato_otto così come sono:\n\n**Otto doctor**\n'"$RIGA_SISTEMA"'\n'"$RIGA_CC"'\n'"$RIGA_AUTO"'\n'"$RIGA_SERVER"'\n\n3. Se stato_otto non è disponibile o risponde con un errore, al posto delle sue righe scrivi: ❌ Collegamento a Otto non riuscito: di solito manca il token o non è valido. In Claude Code scrivi /plugin configure otto@ltvbeat e incolla il token che ti ha dato Max; se non ce l'"'"'hai, chiedilo a lui.\n4. Se c'"'"'è almeno una riga con ❌, chiudi con una riga: Per farti aiutare, manda questo elenco a Max.'
     ;;
-  start)
-    # /otto start fa lavorare Claude (domande, strumenti, un comando): non è una riga fissa come gli altri.
+  setup)
+    # /otto setup fa lavorare Claude (domande, strumenti, un comando): non è una riga fissa come gli altri.
     if [ -f "$STATO" ] && [ "$(cat "$STATO")" = on ]; then
-      CONTESTO="${RISPONDI}"'Con la modalità Otto accesa /otto start non parte: andrebbe tutto a Otto, che non può installare niente su questo computer. Scrivi /otto off e poi di nuovo /otto start.'
+      CONTESTO="${RISPONDI}"'Con la modalità Otto accesa /otto setup non parte: andrebbe tutto a Otto, che non può installare niente su questo computer. Scrivi /otto off e poi di nuovo /otto setup.'
     else
-      CONTESTO='L'"'"'utente ha scritto /otto start: prepara la cartella di lavoro e installa il pacchetto start. Segui la skill otto-start del plugin otto, passo per passo. Non passare la richiesta a Otto.'
+      CONTESTO='L'"'"'utente ha scritto /otto setup: prepara la cartella di lavoro e installa il pacchetto start. Segui la skill otto-setup del plugin otto, passo per passo. Non passare la richiesta a Otto.'
     fi
     ;;
   help)
-    CONTESTO="${RISPONDI}"'**OTTO**, l'"'"'agente di LTV: vede gli account Meta e Google dei clienti, fa report e copy, conosce la knowledge.\n\n**I comandi**\n- `/otto on` da ora parli solo con Otto: scrivi e ti risponde lui, tale e quale\n- `/otto off` torni a parlare con Claude\n- `/otto help` questo aiuto\n- `/otto doctor` controlla che tutto funzioni (versione, token, aggiornamenti, collegamento)\n- `/otto start` prepara la cartella di lavoro e installa il pacchetto di skill di Beat (rilancialo per aggiornarlo)\n\n**Senza comandi**\n- Scrivi a Claude «chiedi a Otto come va TKART questa settimana»: Claude gli passa la domanda.\n- Per dargli un file: «metti questo PDF nella knowledge di Qura».\n- Per avere sul tuo computer una skill di Otto: «trovami una skill per il copywriting» (con la modalità Otto spenta).\n\n**Da sapere**\n- Prima di toccare un account (budget, pause) Otto chiede il permesso, e Claude lo chiede a te.\n- I report lunghi richiedono qualche minuto: Claude ti avvisa e recupera la risposta.\n- Otto ricorda la conversazione. Per ripartire da zero: «nuova conversazione con Otto».\n- Mai file con contatti, lead, ordini o pagamenti.'
+    CONTESTO="${RISPONDI}"'**OTTO**, l'"'"'agente di LTV: vede gli account Meta e Google dei clienti, fa report e copy, conosce la knowledge.\n\n**I comandi**\n- `/otto on` da ora parli solo con Otto: scrivi e ti risponde lui, tale e quale\n- `/otto off` torni a parlare con Claude\n- `/otto help` questo aiuto\n- `/otto doctor` controlla che tutto funzioni (versione, token, aggiornamenti, collegamento)\n- `/otto setup` prepara la cartella di lavoro e installa il pacchetto di skill di Beat (rilancialo per aggiornarlo)\n\n**Senza comandi**\n- Scrivi a Claude «chiedi a Otto come va TKART questa settimana»: Claude gli passa la domanda.\n- Per dargli un file: «metti questo PDF nella knowledge di Qura».\n- Per avere sul tuo computer una skill di Otto: «trovami una skill per il copywriting» (con la modalità Otto spenta).\n\n**Da sapere**\n- Prima di toccare un account (budget, pause) Otto chiede il permesso, e Claude lo chiede a te.\n- I report lunghi richiedono qualche minuto: Claude ti avvisa e recupera la risposta.\n- Otto ricorda la conversazione. Per ripartire da zero: «nuova conversazione con Otto».\n- Mai file con contatti, lead, ordini o pagamenti.'
     ;;
   *)
     [ -f "$STATO" ] && [ "$(cat "$STATO")" = on ] || exit 0

@@ -1,6 +1,6 @@
 {
   "name": "otto",
-  "version": "0.7.4",
+  "version": "0.8.0",
   "description": "Parla con Otto, l'agente di LTV, direttamente da Claude Code: account Meta e Google Ads, report, knowledge dei clienti.",
   "author": {
     "name": "LTV"
