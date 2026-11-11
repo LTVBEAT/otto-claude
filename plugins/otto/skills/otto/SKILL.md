@@ -1,7 +1,7 @@
 ---
 name: otto
 description: Usa questa skill quando l'utente vuole chiedere qualcosa a Otto, l'agente di LTV, o dargli un file, un'immagine o un video, o leggere e modificare la knowledge dei clienti, o quando la richiesta riguarda i clienti LTV (TKART, Qura, SYHO, Scuter, Taylora, Pinex...), i loro account Meta o Google Ads, i report, le campagne, i budget o la knowledge dei clienti. NON per la knowledge di Chiara e per call, task e Gantt dei suoi clienti: quelli sono di Mulan. Trigger anche su "chiedi a Otto", "fai fare a Otto", "senti Otto", "cosa dice Otto".
-argument-hint: "[on | off | help | doctor | start]"
+argument-hint: "[on | off | help | doctor | setup]"
 ---
 
 # Lavorare con Otto
@@ -62,8 +62,8 @@ parola per parola e rispondi solo con il testo di Otto. I tre comandi li esegue 
 arrivano con un promemoria che dice la riga da rispondere, e rispondi solo con quella. Valgono anche
 scritti `/otto:otto on`, `/otto:otto off`, `/otto:otto help`: è la forma che propone il menu dei comandi.
 `/otto doctor` è il controllo: il promemoria dice di chiamare `stato_otto` e quale elenco rispondere.
-`/otto start` è diverso: prepara la cartella di lavoro e installa il pacchetto di skill di Beat, e
-si fa seguendo la skill `otto-start`.
+`/otto setup` è diverso: prepara la cartella di lavoro e installa il pacchetto di skill di Beat, e
+si fa seguendo la skill `otto-setup`.
 
 ## Come scrivergli
 

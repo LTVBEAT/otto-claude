@@ -55,7 +55,7 @@ passa a Otto da solo. Puoi anche dirlo esplicitamente: «chiedi a Otto…», «f
 - **Le skill di Otto sul tuo computer**: chiedi «c'è una skill per il copywriting?» o «che skill ha
   Otto?». Claude cerca nella wiki di Otto, ti dice cosa fa e cosa le serve, e la installa se gli
   dici di sì.
-- **Primo giorno in Beat**: scrivi `/otto start`. Prepara la cartella di lavoro (proposta
+- **Primo giorno in Beat**: scrivi `/otto setup`. Prepara la cartella di lavoro (proposta
   `~/beat-ai`) e installa il pacchetto di skill di Beat. Rilancialo quando vuoi aggiornarlo.
 - **Non ricordi i comandi?** Scrivi `/otto help`.
 - **Qualcosa non va?** Scrivi `/otto doctor`: controlla versione, token, aggiornamenti e collegamento,

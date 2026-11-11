@@ -1,9 +1,13 @@
 # Cartella di lavoro Beat
 
-Questa cartella l'ha preparata `/otto start` del plugin otto. Rilanciando `/otto start` questo file
+Questa cartella l'ha preparata `/otto setup` del plugin otto. Rilanciando `/otto setup` questo file
 si riscrive: le note personali vanno in `CLAUDE.local.md`, che il comando non tocca.
 
 ## Come lavori qui
+
+- **Prima le regole del team.** All'inizio di ogni sessione leggi `agency/regole-team.md` nella wiki
+  di Beat (con `leggi_dalla_knowledge`) e seguile. Se dicono una cosa diversa da questo file, valgono
+  le regole della wiki: si aggiornano lì per tutti.
 
 - **Prima la wiki.** Per ogni domanda su un cliente, un brief, una campagna o un copy, cerca prima
   nella wiki di Beat con gli strumenti del plugin otto (`cerca_nella_knowledge`,
