@@ -36,6 +36,12 @@ stanno sul suo computer (`scripts/feedback.sh`). Se una riga nuova contraddice u
   pagina, il prodotto) sullo schermo è di AI; se parla di social, è di social; e così per ogni tema. (Max, 03/11)
 - **Gli oggetti e i dispositivi sono di oggi**, salvo che il format chieda un'epoca: computer, telefoni e scrivanie
   moderni. Nel bambino del B14 il PC anni 2000 andava sostituito con uno attuale. (Max, 03/11)
+- **Lo schermo dell'app o del sito è una schermata vera.** Si prende dal brand kit, dal cliente o dal sito (le
+  immagini della pagina), mai ridisegnata partendo da un'altra ad. La scena si genera con lo schermo vuoto e frontale,
+  poi su Figma ci si appoggia la schermata vera, misurata sullo schermo. Se nel brand kit mancano le schermate, si
+  chiedono al cliente e intanto si prendono dal sito. (Max, 16/11)
+- **Fra le schermate vere si sceglie la più visiva:** grafici, card, foto, una chat breve. Non quella con un muro di
+  testo: nella statica di Qura con «Protocollo» lo schermo era troppo pieno di testo. (Max, 16/11)
 
 ### Pubblico
 - **Il pubblico è quello del cliente, non quello della reference.** Età, mestiere o situazione scritti nella reference
@@ -104,3 +110,16 @@ stanno sul suo computer (`scripts/feedback.sh`). Se una riga nuova contraddice u
   (scelta sua, fra le proposte preferiva il numero dei tool contro il lavoro ancora manuale); pranzo della domenica con
   la didascalia originale «Io quando il «tutorial da 10 minuti» diventa la mia domenica.», non la versione limata.
 - **Scartata:** B14 C1, «Caricamento: quello bravo con l'AI». (Max, 03/11)
+
+### Qura
+- **Le scene hanno lo stile delle immagini di Qura:** eleganti e un po' formali, luce calda, pochi oggetti, fondi beige
+  e marroni sfumati, un'aria da cura. Non scene da scrivania o da ufficio piene di oggetti (pianta, tazza, penne), che
+  sono lo stile di Learnn. Il concept della reference può restare: il MacBook con i post-it andava bene, l'ambiente no.
+  (Max, 16/11)
+
+#### Cosa ha funzionato in Qura
+- **«Ti presentiamo il check-up completo di qura»** (B11_ 16/11, C1): lancio di prodotto preso da Superpower, telefono
+  su piedistallo di travertino con drappo di seta e schermata vera dell'app. «Non incredibile ma giusta, si può
+  lanciare così.» (Max, 16/11)
+- **Post-it sul MacBook in stile Qura** (B7_ 04/11, C6-2) e **post-it contro telefono con l'app** (C4): «meglio di
+  prima», «super utilizzabile». (Max, 16/11)
