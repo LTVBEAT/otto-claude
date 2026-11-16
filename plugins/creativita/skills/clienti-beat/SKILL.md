@@ -17,6 +17,12 @@ Si producono **ad** statiche nel brand del cliente: scena su Higgsfield, montagg
 a Figma senza fermarsi: niente conferma del brand, delle proposte, dei prompt, del costo o delle scene. La persona
 sceglie dentro Figma.
 
+**Eccezione, rigenerare una scena** (Max, 16/11): una scena già generata **non si rigenera mai senza il sì della
+persona**, né per un difetto che hai visto tu, né per fare spazio, né per una correzione. Chiedi con il riquadro delle
+domande, dicendo quale ad, cosa cambi e i crediti: «Nella C2 il "4" sembra un "7": rigenero la scena? (N crediti)».
+Durante il giro la scena difettosa va su Figma lo stesso e la domanda si fa nel resoconto, per non fermare il giro.
+Non è una rigenerazione il rilancio di una scena mai arrivata (`ERRORE`, `nsfw`): quello resta automatico.
+
 **Eccezione, i testi scelti dalla persona** (Max, 03/11, B15): se chiede di scegliere lei i testi («proponimi i
 testi», «i testi li decido io»), al passo 4 le proponi due o tre testi per ogni ad che ne ha bisogno, con il riquadro
 delle domande, e **intanto generi le scene che non dipendono dalla scelta**: quelle senza testo nella scena, e quelle
@@ -143,16 +149,23 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
   image (Meta, 9:16) for <cliente>, <cosa vende>». Dentro: «recreate the format of the reference», soggetto e
   composizione, i colori del brand kit con codici e ruolo, lo stile, gli spazi vuoti per i testi che vanno su Figma, e
   «no other text»: senza, il modello aggiunge poster e cartelli con scritte inventate.
-- **Si genera l'immagine intera, in un colpo** (Max, 03/11): dispositivi con lo schermo acceso, post-it, regali,
-  bollini, grafica. Niente elementi generati a parte e niente schermi bianchi da riempire.
-  - **Schermi:** la scena si genera con lo schermo **vuoto e frontale** (una superficie chiara uniforme); su Figma ci
-    si appoggia la schermata vera (brand kit, cliente o sito), misurata sullo schermo con uno script sui pixel chiari.
-    Se una schermata vera non c'è, il contenuto si genera con la più vicina come seconda `--image-references` e lo si
-    dice nel resoconto (feedback di Max, 16/11).
+- **Mockup: l'immagine vera dentro il supporto, su Figma** (Max, 16/11). Vale per telefoni, computer, tablet,
+  billboard, poster, copertine di libri e riviste, dove si può:
+  - la scena si genera con il supporto **vuoto e frontale** (una superficie chiara uniforme: schermo, cartellone,
+    copertina); su Figma ci si appoggia l'immagine vera (schermata dal brand kit, dal cliente o dal sito; la creatività
+    da mostrare sul billboard; la copertina), misurata sul supporto con uno script sui pixel chiari (passo 6,
+    «Mockup»);
+  - se l'ad è grafica, su fondo pieno e senza scena fotografica, il dispositivo si fa direttamente su Figma (passo 6);
+  - il contenuto si genera solo quando il mockup non regge, con l'immagine più vicina come seconda
+    `--image-references`: supporto in forte prospettiva o coperto in parte, oppure nessuna immagine vera disponibile.
+    Lo si dice nel resoconto.
+- **Il resto si genera in un colpo** (Max, 03/11): post-it, regali, bollini, grafica. Niente elementi generati a
+  parte.
   - **Testi dentro l'immagine** quando su Figma verrebbero brutti: scritti a mano (post-it, Paint, pennarello),
     inclinati, in prospettiva, su un oggetto; anche la grafica con lettere o numeri, come un «-40€» in 3D. Nel prompt
     il testo esatto tra virgolette e «spell it exactly», poi si controlla lettera per lettera.
-  - **Su Figma solo la tipografia pulita:** headline, sottotitoli, testi brevi, CTA, disclaimer, logo.
+  - **Su Figma solo la tipografia pulita:** headline, sottotitoli, testi brevi, CTA, disclaimer, logo, e i
+    mockup.
   - **Il testo piatto sopra la foto va su Figma, mai nella scena** (Max, 03/11, B15): citazioni, didascalie da meme,
     titoli e frasi in sovrimpressione, anche se nella reference sembrano parte dell'immagine. Nel prompt si lascia la
     zona vuota e si scrive «no text». Si genera solo il testo che sta **su un oggetto** della scena. Nel dubbio, va su
@@ -186,9 +199,10 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
   - Per una sola scena in 1:1 (rara: il 1:1 si ricava dal 9:16 su Figma) `--formato 1:1`.
 - Un'ad fatta solo di testo su fondo pieno (un messaggio, un titolo su nero) **non si genera**: si fa tutta su Figma.
 - **Controlla ogni scena con occhio critico:** numeri e lettere della grafica (un «4» che sembra un «7», una «€»
-  deformata), colori rispetto al brand, mani e volti, oggetti non richiesti. Se c'è un difetto chiaro, **una**
-  rigenerazione automatica con il prompt corretto; se resta, la scena va su Figma lo stesso e il
-  difetto si scrive nel resoconto.
+  deformata), colori rispetto al brand, mani e volti, oggetti non richiesti. Se c'è un difetto chiaro, **non
+  rigenerare da solo**: la scena va su Figma lo stesso, prepari il prompt corretto nella cartella del giro e nel
+  resoconto chiedi se rigenerarla (vedi «Eccezione, rigenerare una scena»). Se dice sì, `scene.sh genera <cartella>
+  <nome>` e la nuova scena sostituisce la vecchia nei due formati e in «Foto e immagini».
 - Una scena che finisce con stato `nsfw` è quasi sempre un falso positivo, spesso per una reference con un personaggio
   famoso: i crediti tornano (`higgsfield account transactions`). Si rilancia una volta senza quella reference,
   descrivendo il format a parole.
@@ -221,7 +235,8 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
    - `Scena`: rettangolo largo 1080 con l'immagine (`imageHash`, FILL). Nel 1:1 spostalo in verticale perché restino
      in quadro soggetto e grafica. Non allungarlo oltre l'altezza dell'immagine (1080×1930 per un 9:16 a 1k): con FILL
      l'immagine si ingrandisce e taglia i lati (03/11: console, biglietto e tessere tagliati). Se il visual non entra
-     nella zona sicura, si rigenera la scena più compatta, non si sposta il rettangolo lasciando un buco in fondo.
+     nella zona sicura, non si sposta il rettangolo lasciando un buco in fondo: si chiede se rigenerare la scena più
+     compatta.
    - Gli **elementi fissi dell'ad** sono quelli della scheda del cliente: CTA, prove accanto alla CTA (come un
      bollino di recensioni), logo. Vanno dove la scena è libera, anche in alto sotto il logo: mai sopra il visual
      principale.
@@ -231,13 +246,23 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
      2. mettili insieme in una **card** nel colore di ripiego della scheda (se manca, il colore scuro del brand kit),
         angoli come i pulsanti del kit, sopra la parte meno importante della scena: mai su volti, prodotto, schermi o
         testo della scena;
-     3. se nemmeno la card entra senza coprire il visual, la scena si rigenera con più spazio libero.
+     3. se nemmeno la card entra senza coprire il visual, chiedi se rigenerare la scena con più spazio libero.
      Scrivi nel resoconto quale ripiego hai usato.
    - **Il pulsante della CTA si legge sempre**: su una scena chiara, se il brand kit ha solo il pulsante chiaro, usa la
      forma e il colore che la scheda indica per le scene chiare (se mancano, la stessa forma piena nel colore scuro
      del kit, con il testo chiaro), e nel resoconto proponi di aggiungere quella variante al brand kit.
    - I testi come livelli, nel font del brand kit (se manca in Figma, il sostituto indicato dal brand kit) e nei suoi
      colori, nello spazio lasciato libero dalla scena.
+   - **Mockup** (supporti del passo 4):
+     - **Nella scena:** misura il supporto vuoto con lo script sui pixel chiari, poi sopra `Scena` un rettangolo
+       `Mockup - <cosa>` con quella posizione e misura, gli angoli arrotondati come lo schermo, l'immagine vera caricata
+       con `upload_assets` (FILL) e la stessa rotazione del supporto. Nel 1:1 lo sposti insieme a `Scena`.
+     - **Ad grafica senza scena:** se il brand kit ha il componente del dispositivo (per esempio «App … / Mobile»,
+       «Desktop»), usa un'istanza e cambiane l'immagine dello schermo. Se no lo disegni con `use_figma`: un frame
+       `Mockup - <cosa>` (corpo scuro con angoli arrotondati e cornice; per il telefono la fotocamera in alto, per il
+       computer la base, per billboard e poster cornice e pali, per la copertina il dorso), dentro un rettangolo
+       `Schermo` con l'immagine vera (FILL) e sotto una leggera ombra.
+     - Rotazione sì, prospettiva no: Figma non la fa, quindi un supporto in prospettiva resta generato (passo 4).
    - Il logo come **istanza del componente del brand kit** indicato nella scheda, non come testo.
    - Le istanze (logo, schermate dell'app) si scalano con `rescale()`, non con `resize()`: `resize` cambia il riquadro
      ma non il contenuto, e la schermata esce tagliata.
@@ -260,8 +285,11 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
 
 Uno solo, alla fine: link alla pagina e ai frame su Figma, schermate, crediti usati, brand usato in due righe, copy con
 le regole applicate, difetti rimasti, elementi aggiunti al brand kit in «Da verificare», letture fatte con l'MCP
-invece che con lo script, e scelte fatte da te (materiale, regole in conflitto). La persona sceglie le varianti dentro
-Figma.
+invece che con lo script, mockup usati e dispositivi lasciati generati con il motivo, e scelte fatte da te (materiale,
+regole in conflitto). La persona sceglie le varianti dentro Figma.
+
+Se qualche scena ha un difetto o va rifatta più compatta, chiudi con **una** domanda nel riquadro delle domande: quali
+scene rigenerare, ognuna con il difetto e i crediti. Senza il sì non rigeneri niente.
 
 ## Ingresso dal brief
 
@@ -306,8 +334,12 @@ feedback»). Parte quando la persona chiede di cambiare un'ad già fatta, anche 
      lotto («in tutto il B15 il logo più piccolo»), tutte le ad del lotto.
 3. **Come.**
    - Testi, colori, posizioni, logo: con `use_figma` sui frame scelti.
-   - Scena da cambiare: prompt corretto nella cartella del giro, costo detto prima («uso N crediti»), `scene.sh genera
-     <cartella> <nome>`, poi `upload_assets` nel rettangolo `Scena` dei due formati, e la nuova scena anche in «Foto e
+   - Scena da cambiare: **prima chiedi se rigenerarla** (Max, 16/11), con il riquadro delle domande, dicendo cosa
+     cambi e i crediti; se la modifica si può fare anche su Figma (coprire un dettaglio, un mockup al posto del
+     dispositivo, spostare un testo), proponila come alternativa. Il sì serve anche quando l'ha chiesto la persona
+     senza dire di rifare l'immagine («nella C2 cambia il telefono»); basta la sua richiesta solo se dice esplicitamente
+     di rigenerare («rifai la scena della C2»). Poi prompt corretto nella cartella del giro, `scene.sh genera
+     <cartella> <nome>`, `upload_assets` nel rettangolo `Scena` dei due formati, e la nuova scena anche in «Foto e
      immagini».
    - Se la correzione va contro un **feedback**, chiedi «Vale solo qui o sempre?». Solo qui: la fai. Sempre: la fai
      e aggiorni il feedback della persona (quelli del team non si toccano, li cambia Max).
@@ -320,6 +352,8 @@ feedback»). Parte quando la persona chiede di cambiare un'ad già fatta, anche 
 ## Regole
 
 - Si creano sempre **ad**: ogni prompt di scena lo dice esplicitamente, e anche le richieste ai subagenti.
+- Nessuna scena già generata si rigenera senza il sì della persona.
+- Telefoni, computer, billboard e copertine: supporto vuoto nella scena e immagine vera appoggiata su Figma (mockup).
 - Nessuna regola di un cliente sta in questa skill: si leggono a ogni giro da Figma, dalla wiki e dai feedback.
 - Prove (testimonianze, numeri, screenshot, volti di clienti o studenti) solo da materiale vero, mai generate.
 - Il token di Higgsfield non si chiede mai alla CLI. Il token di Figma lo legge solo `figma.sh`, dal Portachiavi: non
