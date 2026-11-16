@@ -145,8 +145,10 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
   «no other text»: senza, il modello aggiunge poster e cartelli con scritte inventate.
 - **Si genera l'immagine intera, in un colpo** (Max, 03/11): dispositivi con lo schermo acceso, post-it, regali,
   bollini, grafica. Niente elementi generati a parte e niente schermi bianchi da riempire.
-  - **Schermi:** il contenuto si genera, con la schermata vera del brand kit come seconda `--image-references`
-    (sito, app): così lo schermo somiglia al prodotto vero.
+  - **Schermi:** la scena si genera con lo schermo **vuoto e frontale** (una superficie chiara uniforme); su Figma ci
+    si appoggia la schermata vera (brand kit, cliente o sito), misurata sullo schermo con uno script sui pixel chiari.
+    Se una schermata vera non c'è, il contenuto si genera con la più vicina come seconda `--image-references` e lo si
+    dice nel resoconto (feedback di Max, 16/11).
   - **Testi dentro l'immagine** quando su Figma verrebbero brutti: scritti a mano (post-it, Paint, pennarello),
     inclinati, in prospettiva, su un oggetto; anche la grafica con lettere o numeri, come un «-40€» in 3D. Nel prompt
     il testo esatto tra virgolette e «spell it exactly», poi si controlla lettera per lettera.
