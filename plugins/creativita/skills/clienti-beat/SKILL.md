@@ -184,8 +184,9 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
 
 ### 5. Le scene su Higgsfield
 
-- Modello (Max, 03/11): **GPT Image 2.5 Sunburst**, `gpt_image_2_5 --variant sunburst --quality xhigh --resolution 1k
-  --aspect_ratio 9:16`. La statica o la reference del brief va come prima `--image-references`.
+- Modello (Max, 17/11): **GPT Image 2.6 Sunburst**, `gpt_image_2_6 --quality xhigh --resolution 1k --aspect_ratio 9:16`.
+  Nel 2.6 il Sunburst è il modello base, senza `--variant` (Flare è `gpt_image_2_6_flare`).
+  La statica o la reference del brief va come prima `--image-references`.
 - **Le scene si lanciano con lo script** `bash "${CLAUDE_PLUGIN_ROOT}/scripts/scene.sh"`, non con comandi scritti a
   mano. In una cartella temporanea del giro, per ogni scena `<nome>.txt` con il prompt e, se servono, `<nome>.ref` con
   le reference, un percorso per riga, prima la statica o la reference del brief. Nome della scena = nome dell'ad

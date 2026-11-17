@@ -5,12 +5,12 @@
 # Nella cartella, per ogni scena: <nome>.txt con il prompt (in inglese, comincia con «Paid social static ad») e, se
 # servono, <nome>.ref con le reference, un percorso per riga e nell'ordine (prima la statica o la reference del brief).
 # L'immagine finisce in <nome>.png. Senza nomi si generano solo le scene che non hanno ancora il PNG.
-# Modello del giro (Max, 03/11): gpt_image_2_5 sunburst, xhigh, 1k. Al massimo 4 scene insieme: il piano pro rifiuta
+# Modello del giro (Max, 17/11): gpt_image_2_6 (il Sunburst: Flare è gpt_image_2_6_flare), xhigh, 1k. Al massimo 4 scene insieme: il piano pro rifiuta
 # la quinta con rate_limit_reached, senza spendere, e qui si rilancia da sola. nsfw ed errori non si rilanciano.
 # Uscite: 0 tutte fatte, 1 almeno una non fatta (NSFW o ERRORE nella sua riga), 2 uso sbagliato.
 set -u
 
-MODELLO=(gpt_image_2_5 --variant sunburst --quality xhigh --resolution 1k)
+MODELLO=(gpt_image_2_6 --quality xhigh --resolution 1k)
 INSIEME=4
 TENTATIVI=5
 ATTESA=${SCENE_ATTESA:-20}
