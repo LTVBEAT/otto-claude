@@ -55,7 +55,7 @@ uscita=$(scene costo "$G"); c=$?
 codice "costo" $c 0
 contiene "costo" "$uscita" "2 scene, 5 crediti"
 manca "costo, nessuna generazione" "$(cat "$BASE/argomenti")" "generate create"
-contiene "costo, parametri" "$(cat "$BASE/argomenti")" "generate cost gpt_image_2_5 --variant sunburst --quality xhigh --resolution 1k --aspect_ratio 9:16"
+contiene "costo, parametri" "$(cat "$BASE/argomenti")" "generate cost gpt_image_2_6 --quality xhigh --resolution 1k --aspect_ratio 9:16"
 
 # genera: reference nell'ordine del .ref, PNG scaricato, una riga per scena.
 printf '%s\n' "$BASE/statica.png" "$BASE/app.png" > "$G/c1.ref"
