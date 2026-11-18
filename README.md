@@ -109,6 +109,36 @@ Esempi:
 
 Qualcosa non va? Scrivi `/mulan doctor`; `/mulan help` ricorda i comandi.
 
+## Alfred
+
+**Alfred** è l'agente debrief e task di LTV: dopo le call fa il debrief, lo confronta con le task dei
+clienti su TaskFlow, propone le modifiche e scrive solo quelle approvate. È un plugin a parte, `alfred`,
+dallo stesso catalogo `ltvbeat`. Per ora lo usano Max e Antonio, gli unici che possono approvare le
+scritture.
+
+**Installazione.** Mac, nel Terminale:
+
+```
+curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s alfred
+```
+
+Windows, in PowerShell:
+
+```
+$env:LTV_PLUGIN="alfred"; irm https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.ps1 | iex
+```
+
+Il **token di Alfred è diverso da quelli di Otto e Mulan**: te lo dà Max. A mano, da Claude Code:
+`/plugin install alfred@ltvbeat` e `/plugin configure alfred@ltvbeat`.
+
+Esempi:
+
+- «Chiedi ad Alfred le task aperte di Scuter»
+- «Fai il debrief della call di oggi con Scuter»
+- «Ho finito la landing di Birthday» (Claude lo dice ad Alfred, che propone come aggiornare la task)
+
+Qualcosa non va? Scrivi `/alfred doctor`; `/alfred help` ricorda i comandi.
+
 ## Creazione creatività
 
 Il plugin `creativita` fa ad statiche per Meta (9:16 e 1:1) nel brand del cliente: genera le scene su Higgsfield e

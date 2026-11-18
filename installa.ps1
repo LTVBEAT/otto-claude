@@ -22,12 +22,15 @@ function Installa-Corpo {
     } elseif ($Plugin -eq "mulan") {
         $Nome = "Mulan"; $Indirizzo = "https://otto-hermes.ltvalue.it/mulan"
         $Prova = "chiedi a Mulan le task aperte di Fibi"
+    } elseif ($Plugin -eq "alfred") {
+        $Nome = "Alfred"; $Indirizzo = "https://otto-hermes.ltvalue.it/alfred"
+        $Prova = "chiedi ad Alfred le task aperte di Scuter"
     } elseif ($Plugin -eq "creativita") {
         # Nessun server suo e nessun token: dopo l'installazione si collega con /creativita configura.
         $Nome = "Creazione creativita'"; $Indirizzo = ""
         $Prova = "/creativita configura"
     } else {
-        Write-Host "Plugin sconosciuto: otto, mulan o creativita."
+        Write-Host "Plugin sconosciuto: otto, mulan, alfred o creativita."
         return
     }
     $Minima = [version]"2.1.147"
