@@ -150,7 +150,8 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
 - **Elementi** (Max, 17/11): quali elementi dell'ad vanno su Figma, fra logo, headline, subheadline, copy, CTA e
   prove, presi dalla voce «Elementi» di `format-concept`, con il perché. **Nessuno è obbligatorio**: tutti, alcuni o
   nessuno. Più il visual dice da solo il messaggio, meno ne servono; la CTA c'è già nel pulsante dell'annuncio di Meta.
-  Le varianti di un giro non hanno tutte la stessa combinazione, salvo che il brief la imponga.
+  Ogni variante sceglie in base al suo visual (Max, 18/11): non serve variare la combinazione fra le varianti, né
+  seguire una distribuzione fissa; se due varianti hanno bisogno degli stessi elementi, va bene così.
 - **Scena:** il prompt per l'immagine, in inglese. **Comincia sempre dicendo che è un'ad**: «Paid social static ad
   image (Meta, 9:16) for <cliente>, <cosa vende>». Dentro: «recreate the format of the reference», soggetto e
   composizione, i colori del brand kit con codici e ruolo, lo stile, gli spazi vuoti solo per gli elementi scelti
@@ -321,8 +322,9 @@ Doc, o un misto.
 4. Niente idee nuove: concept e note del brief (impianto, scena, persona) sono vincolanti ed entrano nel prompt.
    - **Ad con i testi:** niente subagenti. I testi del brief **si usano così come sono**. Se un testo va contro le
      regole del cliente o non entra nel formato, usalo comunque e segnalalo nel resoconto con la correzione proposta.
-     Gli elementi dell'ad sono quelli che il brief scrive: niente CTA, prove o logo aggiunti per completare lo
-     schema, salvo che le note del brief li chiedano.
+     I testi scritti nel brief restano tutti (Max, 18/11). Gli elementi che il brief non nomina (logo, CTA, prove)
+     si decidono leggendo il brief: cosa chiede, a chi parla, quanto porta il visual. Mai aggiunti solo per completare
+     lo schema.
    - **Ad con i testi a metà** (c'è la headline, manca la CTA): i testi del brief restano tutti come sono; i pezzi
      mancanti si aggiungono solo se la voce «Elementi» di `format-concept` li sceglie, e li scrive `visual-testi`,
      coerenti con quelli presenti.
