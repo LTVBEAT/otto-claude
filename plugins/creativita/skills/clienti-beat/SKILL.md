@@ -126,6 +126,9 @@ chiede conferma. Insieme si leggono i feedback con `feedback.sh mostra` (vedi «
   `elenca_knowledge` e `cerca_nella_knowledge` nella cartella del cliente): leggili e **seguili nei momenti in cui
   servono**: regole dei
   testi quando scrivi i copy, regole visive quando scrivi i prompt, regole di formato quando monti su Figma.
+- **Le regole di un cliente valgono solo per lui** (Max, 18/11). Scheda, wiki, skill e feedback di un altro cliente
+  non si usano mai, nemmeno come modello di impaginazione: per esempio lo schema fisso delle ad e Trustpilot sempre
+  presente di `learnn-immagini` valgono solo per Learnn.
 - Il brand kit su Figma vince sul visual, la wiki su tono e testi. Se si contraddicono, scegli la regola più recente e
   scrivilo nel resoconto.
 - Nel resoconto finale scrivi in due righe il brand usato: colori con codici, font, elementi.
@@ -140,7 +143,8 @@ cliente, il riassunto del brand kit (palette con ruoli e divieti, font, logo, el
 numero di varianti.
 
 Le istruzioni e le skill del cliente su creatività, copy, tono e visual (quelle trovate al passo 2) e i feedback (l'uscita di `feedback.sh mostra`) si
-passano **con il testo intero**, non riassunte: i subagenti hanno solo Read e la wiki non la leggono da soli. Se un file è molto lungo,
+passano **con il testo intero**, non riassunte. Dei feedback passa le parti «per tutti» e quelle del cliente del giro,
+non le sezioni degli altri clienti: i subagenti hanno solo Read e la wiki non la leggono da soli. Se un file è molto lungo,
 taglia solo le parti che non riguardano le ad statiche, e nel resoconto scrivi cosa hai passato.
 
 ### 4. Le varianti
