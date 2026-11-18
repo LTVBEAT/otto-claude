@@ -105,7 +105,9 @@ chiede conferma. Insieme si leggono i feedback con `feedback.sh mostra` (vedi «
 
 - **Prima la scheda del cliente** (Max, 05/11): `leggi_dalla_knowledge` su `clienti/<slug>/creativita.md`. È il punto
   d'ingresso fisso: dice dove sono il file Figma, i materiali, le linee guida, le regole del copy, le skill del cliente
-  e gli **elementi fissi dell'ad** (CTA, prove, logo, card di ripiego, safe zone), che userai ai passi 4 e 6.
+  e gli **elementi dell'ad** (logo, CTA, prove, card di ripiego, safe zone, impaginazione con tutti gli elementi), che
+  userai ai passi 4 e 6. Una scheda che li chiama ancora «elementi fissi» si legge allo stesso modo: dice come sono
+  fatti quando ci sono, non che ci devono essere (Max, 17/11).
 - **Se il cliente non è pronto, il giro si ferma.** Manca la scheda, nella scheda manca il link Figma, oppure nel file
   non c'è la pagina «Brand kit»: di' «<Cliente> non è ancora pronto per il plugin: manca <cosa>. Il modello della
   scheda è in `${CLAUDE_PLUGIN_ROOT}/scheda-modello.md`» e non andare avanti. Non chiedere il link in chat.
@@ -145,9 +147,14 @@ taglia solo le parti che non riguardano le ad statiche, e nel resoconto scrivi c
 
 Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. Per ognuna:
 - **Idea:** format e significato riadattati al materiale vero, e perché non è una copia.
+- **Elementi** (Max, 17/11): quali elementi dell'ad vanno su Figma, fra logo, headline, subheadline, copy, CTA e
+  prove, presi dalla voce «Elementi» di `format-concept`, con il perché. **Nessuno è obbligatorio**: tutti, alcuni o
+  nessuno. Più il visual dice da solo il messaggio, meno ne servono; la CTA c'è già nel pulsante dell'annuncio di Meta.
+  Le varianti di un giro non hanno tutte la stessa combinazione, salvo che il brief la imponga.
 - **Scena:** il prompt per l'immagine, in inglese. **Comincia sempre dicendo che è un'ad**: «Paid social static ad
   image (Meta, 9:16) for <cliente>, <cosa vende>». Dentro: «recreate the format of the reference», soggetto e
-  composizione, i colori del brand kit con codici e ruolo, lo stile, gli spazi vuoti per i testi che vanno su Figma, e
+  composizione, i colori del brand kit con codici e ruolo, lo stile, gli spazi vuoti solo per gli elementi scelti
+  (nessuno spazio se non ce ne sono), e
   «no other text»: senza, il modello aggiunge poster e cartelli con scritte inventate.
 - **Mockup: l'immagine vera dentro il supporto, su Figma** (Max, 16/11). Vale per telefoni, computer, tablet,
   billboard, poster, copertine di libri e riviste, dove si può:
@@ -175,7 +182,8 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
   resoconto.
 - **Materiale vero del cliente al posto degli oggetti generici:** se la reference ha un prodotto o un regalo, al suo
   posto va qualcosa del cliente (un telefono con il suo prodotto, un suo corso), non un oggetto qualsiasi.
-- **Copy:** headline, testi brevi e CTA, nel tono e con le regole del cliente, con il font del brand kit. Uno per
+- **Copy:** solo i testi degli elementi scelti, presi da `visual-testi` (che li scrive per tutti gli elementi
+  possibili: gli altri si scartano), nel tono e con le regole del cliente, con il font del brand kit. Uno per
   variante, uguali fra 9:16 e 1:1. Prima di Figma **controlla ogni testo contro le regole e le skill del cliente**
   (lunghezze, parole vietate, tono, promesse che il materiale vero non sostiene) e correggi quello che non torna; nel
   resoconto ogni copy ha accanto, in una riga, le regole applicate.
@@ -238,10 +246,12 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
      l'immagine si ingrandisce e taglia i lati (03/11: console, biglietto e tessere tagliati). Se il visual non entra
      nella zona sicura, non si sposta il rettangolo lasciando un buco in fondo: si chiede se rigenerare la scena più
      compatta.
-   - Gli **elementi fissi dell'ad** sono quelli della scheda del cliente: CTA, prove accanto alla CTA (come un
-     bollino di recensioni), logo. Vanno dove la scena è libera, anche in alto sotto il logo: mai sopra il visual
-     principale.
-   - **Se non c'è spazio libero per CTA e prove** (Max, 03/11, B15), prima quello che dice la scheda in «Quando non ci
+   - **Si montano solo gli elementi scelti al passo 4** (Max, 17/11): niente si aggiunge per completare lo schema.
+     Come sono fatti (CTA, prove accanto alla CTA come un bollino di recensioni, logo) lo dice la scheda del cliente.
+     Vanno dove la scena è libera, anche in alto sotto il logo: mai sopra il visual principale. Con tutti gli
+     elementi, l'impaginazione della scheda; se manca, logo in alto, testi nello spazio libero, CTA e prove in basso,
+     dentro la safe zone.
+   - **Se non c'è spazio libero per CTA e prove**, quando sono fra gli elementi scelti (Max, 03/11, B15), prima quello che dice la scheda in «Quando non ci
      stanno», poi in quest'ordine:
      1. stringili: la CTA corta e le prove nella versione piccola della scheda, in fila invece che uno sotto l'altro;
      2. mettili insieme in una **card** nel colore di ripiego della scheda (se manca, il colore scuro del brand kit),
@@ -285,7 +295,7 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
 ### 7. Il resoconto
 
 Uno solo, alla fine: link alla pagina e ai frame su Figma, schermate, crediti usati, brand usato in due righe, copy con
-le regole applicate, difetti rimasti, elementi aggiunti al brand kit in «Da verificare», letture fatte con l'MCP
+le regole applicate, per ogni ad gli elementi montati e in una riga perché, difetti rimasti, elementi aggiunti al brand kit in «Da verificare», letture fatte con l'MCP
 invece che con lo script, mockup usati e dispositivi lasciati generati con il motivo, e scelte fatte da te (materiale,
 regole in conflitto). La persona sceglie le varianti dentro Figma.
 
@@ -311,8 +321,11 @@ Doc, o un misto.
 4. Niente idee nuove: concept e note del brief (impianto, scena, persona) sono vincolanti ed entrano nel prompt.
    - **Ad con i testi:** niente subagenti. I testi del brief **si usano così come sono**. Se un testo va contro le
      regole del cliente o non entra nel formato, usalo comunque e segnalalo nel resoconto con la correzione proposta.
-   - **Ad con i testi a metà** (c'è la headline, manca la CTA): i testi del brief restano come sono; i pezzi mancanti
-     li scrivono i subagenti del passo 3, coerenti con quelli presenti.
+     Gli elementi dell'ad sono quelli che il brief scrive: niente CTA, prove o logo aggiunti per completare lo
+     schema, salvo che le note del brief li chiedano.
+   - **Ad con i testi a metà** (c'è la headline, manca la CTA): i testi del brief restano tutti come sono; i pezzi
+     mancanti si aggiungono solo se la voce «Elementi» di `format-concept` li sceglie, e li scrive `visual-testi`,
+     coerenti con quelli presenti.
    - **Ad senza testi:** passo 3 completo. Le varianti sono esecuzioni dentro il concept del brief, e i copy si
      scrivono con le regole e le skill del cliente.
 5. Da qui come i passi 4, 5, 6 e 7 (per le ad con i testi, del passo 4 solo la scena).

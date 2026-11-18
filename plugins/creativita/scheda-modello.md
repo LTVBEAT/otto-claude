@@ -25,7 +25,9 @@ Tono, parole da usare e da evitare, lunghezze, promesse permesse e vietate. Oppu
 ## Skill del cliente
 I file della wiki da seguire e quando: quando scrivi i copy, quando scrivi i prompt, quando monti su Figma.
 
-## Elementi fissi dell'ad
+## Elementi dell'ad
+Come sono fatti gli elementi quando ci sono. Nessuno è obbligatorio: il giro sceglie per ogni ad quali usare.
+- Impaginazione con tutti gli elementi: <frame del brand kit o descrizione: ordine, allineamento, distanze>
 - CTA: <testo> · versione corta: <testo>
 - Prove accanto alla CTA (per esempio Trustpilot): <quali, dove stanno nel brand kit> · versione piccola: <come>
 - Logo: <nome del componente nel brand kit> · su scena chiara: <variante>
