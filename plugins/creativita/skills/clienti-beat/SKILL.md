@@ -43,7 +43,8 @@ Come si usano:
 - **Si leggono a ogni giro**, al passo 2, con `feedback.sh mostra`, e si seguono: nei prompt, nei copy, nel
   montaggio. Vincono su brand kit, wiki e reference quando li contraddicono. Se quelli della persona contraddicono
   quelli del team, per lei vincono i suoi. Nel resoconto scrivi dove hanno deciso loro.
-- **Si passano interi ai subagenti** del passo 3 (tutta l'uscita di `mostra`), insieme alle regole del cliente.
+- **Si passano ai subagenti** del passo 3 le parti «per tutti» e quelle del cliente del giro, mai le sezioni degli
+  altri clienti, insieme alle regole del cliente.
 - **Quando la persona dà un'indicazione** sulle creatività (anche dentro un messaggio su altro): se è chiaro che vale
   solo per l'ad o il lotto di adesso è una correzione, e si sistema e basta. Se è chiaro che vale sempre, salvala.
   Se non è chiaro, chiedi in una riga: «Vale solo qui o sempre?».
@@ -95,7 +96,7 @@ L'MCP di Figma ha un tetto (200 chiamate al giorno con un posto Full); l'API RES
 - Il materiale vero (il corso, il prodotto, il servizio): se non lo dice, scegli quello più adatto dalla wiki e
   scrivilo nel resoconto finale.
 - Prima della domanda leggi la scheda del cliente (passo 2): se il cliente non è pronto ti fermi lì, senza chiedere
-  niente.
+  niente. Senza scheda ma con il brand kit dato in chat, vai avanti (passo 2).
 - **L'unica domanda:** con il riquadro delle domande (AskUserQuestion), quante varianti per ogni ad: 1, 2 o 3.
 
 ### 2. Il brand: Figma e wiki
@@ -108,12 +109,18 @@ chiede conferma. Insieme si leggono i feedback con `feedback.sh mostra` (vedi «
   e gli **elementi dell'ad** (logo, CTA, prove, card di ripiego, safe zone, impaginazione con tutti gli elementi), che
   userai ai passi 4 e 6. Una scheda che li chiama ancora «elementi fissi» si legge allo stesso modo: dice come sono
   fatti quando ci sono, non che ci devono essere (Max, 17/11).
-- **Se il cliente non è pronto, il giro si ferma.** Manca la scheda, nella scheda manca il link Figma, oppure nel file
-  non c'è la pagina «Brand kit»: di' «<Cliente> non è ancora pronto per il plugin: manca <cosa>. Il modello della
-  scheda è in `${CLAUDE_PLUGIN_ROOT}/scheda-modello.md`» e non andare avanti. Non chiedere il link in chat.
-- **Brand kit su Figma.** Il file è quello della scheda. Le pagine del file con `figma.sh struttura <file> "" 1`, quella
-  del brand kit con `figma.sh struttura <file> <pagina> 1`. Il brand kit è la pagina **«Brand kit»**, di solito con
-  «Asset · 01 Logo», «02 Esperti», «03 Immagini», «04 Terze parti» e «Linee guida». Le linee guida si guardano sezione per sezione, tutte con **una**
+- **Cliente senza scheda, con il brand kit dato in chat** (Max, 18/11): se la persona passa il file Figma del brand
+  kit del cliente, il giro parte lo stesso. Si usano **solo** quel brand kit, le regole di questa skill e i feedback
+  «per tutti»; le ad si montano in quel file. Niente schede, wiki, skill o feedback di altri clienti: quello che il
+  brand kit non dice si decide guardando il brand kit, o si lascia fuori, mai copiando un altro cliente. Nel
+  resoconto scrivi che la scheda manca e il modello è in `${CLAUDE_PLUGIN_ROOT}/scheda-modello.md`.
+- **Altrimenti, se il cliente non è pronto, il giro si ferma.** Manca la scheda e la persona non ha dato il brand kit,
+  nella scheda manca il link Figma, oppure nel file non c'è la pagina «Brand kit»: di' «<Cliente> non è ancora pronto
+  per il plugin: manca <cosa>. Il modello della scheda è in `${CLAUDE_PLUGIN_ROOT}/scheda-modello.md`» e non andare
+  avanti. Non chiedere il link in chat.
+- **Brand kit su Figma.** Il file è quello della scheda, o quello dato in chat. Le pagine del file con `figma.sh struttura <file> "" 1`, quella
+  del brand kit con `figma.sh struttura <file> <pagina> 1`. Il brand kit è la pagina **«Brand kit»** (se il file
+  dato in chat non ce l'ha, la pagina che lo contiene), con le sezioni che ha quel cliente. Le linee guida si guardano sezione per sezione, tutte con **una**
   `figma.sh schermate` sui nodi delle sezioni. Ne ricavi palette con codici e ruoli, divieti, font, varianti del logo,
   foto ed elementi disponibili. Le foto e le schermate del prodotto da usare come reference della scena si scaricano
   con `figma.sh immagini <file> <nodo>` (per esempio sul nodo «Asset · 03 Immagini»).
@@ -128,7 +135,9 @@ chiede conferma. Insieme si leggono i feedback con `feedback.sh mostra` (vedi «
   testi quando scrivi i copy, regole visive quando scrivi i prompt, regole di formato quando monti su Figma.
 - **Le regole di un cliente valgono solo per lui** (Max, 18/11). Scheda, wiki, skill e feedback di un altro cliente
   non si usano mai, nemmeno come modello di impaginazione: per esempio lo schema fisso delle ad e Trustpilot sempre
-  presente di `learnn-immagini` valgono solo per Learnn.
+  presente di `learnn-immagini` valgono solo per Learnn. Lo stesso per le skill di un cliente installate sul computer
+  (per esempio `learnn-copywriting`, `video-learn`, `qura-script-voce`): si usano solo le skill che la scheda del
+  cliente del giro elenca.
 - Il brand kit su Figma vince sul visual, la wiki su tono e testi. Se si contraddicono, scegli la regola più recente e
   scrivilo nel resoconto.
 - Nel resoconto finale scrivi in due righe il brand usato: colori con codici, font, elementi.
