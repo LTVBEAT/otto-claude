@@ -1,7 +1,8 @@
 #!/bin/bash
-# Installa Otto (o Mulan, o la creazione creatività) in Claude Code.
+# Installa Otto (o Mulan, Alfred, la creazione creatività) in Claude Code.
 #   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash
 #   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s mulan
+#   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s alfred
 #   curl -fsSL https://raw.githubusercontent.com/LTVBEAT/otto-claude/main/installa.sh | bash -s creativita
 set -uo pipefail
 
@@ -9,9 +10,10 @@ PLUGIN="${1:-otto}"
 case "$PLUGIN" in
   otto) NOME=Otto; INDIRIZZO=https://otto-hermes.ltvalue.it/mcp; PROVA="chiedi a Otto come vanno gli account di TKART questa settimana";;
   mulan) NOME=Mulan; INDIRIZZO=https://otto-hermes.ltvalue.it/mulan; PROVA="chiedi a Mulan le task aperte di Fibi";;
+  alfred) NOME=Alfred; INDIRIZZO=https://otto-hermes.ltvalue.it/alfred; PROVA="chiedi ad Alfred le task aperte di Scuter";;
   # La creazione creatività non ha un server suo né un token: dopo l'installazione si collega con /creativita configura.
   creativita) NOME="Creazione creatività"; INDIRIZZO=""; PROVA="/creativita configura";;
-  *) echo "Plugin sconosciuto: otto, mulan o creativita."; exit 1;;
+  *) echo "Plugin sconosciuto: otto, mulan, alfred o creativita."; exit 1;;
 esac
 MINIMA="2.1.147"
 

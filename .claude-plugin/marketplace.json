@@ -18,6 +18,11 @@
       "description": "Parla con Mulan, l'agente PM di Chiara, direttamente da Claude Code"
     },
     {
+      "name": "alfred",
+      "source": "./plugins/alfred",
+      "description": "Parla con Alfred, l'agente debrief e task di LTV, direttamente da Claude Code"
+    },
+    {
       "name": "creativita",
       "source": "./plugins/creativita",
       "description": "Creazione creatività: da una statica a creatività nel brand del cliente, su Figma a livelli"
