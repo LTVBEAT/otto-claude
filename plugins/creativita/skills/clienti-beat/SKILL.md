@@ -168,7 +168,8 @@ Unisci le analisi in tante varianti quante richieste, senza chiedere conferma. P
 - **Scena:** il prompt per l'immagine, in inglese. **Comincia sempre dicendo che è un'ad**: «Paid social static ad
   image (Meta, 9:16) for <cliente>, <cosa vende>». Dentro: «recreate the format of the reference», soggetto e
   composizione, i colori del brand kit con codici e ruolo, lo stile, gli spazi vuoti solo per gli elementi scelti
-  (nessuno spazio se non ce ne sono), e
+  (nessuno spazio se non ce ne sono) e **al centro del frame**, non in alto, con il soggetto principale centrato e la
+  scena che continua fino al bordo basso (Max, 19/11), e
   «no other text»: senza, il modello aggiunge poster e cartelli con scritte inventate.
 - **Mockup: l'immagine vera dentro il supporto, su Figma** (Max, 16/11). Vale per telefoni, computer, tablet,
   billboard, poster, copertine di libri e riviste, dove si può:
@@ -263,8 +264,9 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
    - **Si montano solo gli elementi scelti al passo 4** (Max, 17/11): niente si aggiunge per completare lo schema.
      Come sono fatti (CTA, prove accanto alla CTA come un bollino di recensioni, logo) lo dice la scheda del cliente.
      Vanno dove la scena è libera, anche in alto sotto il logo: mai sopra il visual principale. Con tutti gli
-     elementi, l'impaginazione della scheda; se manca, logo in alto, testi nello spazio libero, CTA e prove in basso,
-     dentro la safe zone.
+     elementi, l'impaginazione della scheda; se manca, logo in alto, sotto un blocco unico con testi, CTA e prove,
+     **centrato** come dice «Safe zone» più sotto. CTA e prove stanno subito sotto i testi, non spinte sul bordo
+     basso della safe zone.
    - **Se non c'è spazio libero per CTA e prove**, quando sono fra gli elementi scelti (Max, 03/11, B15), prima quello che dice la scheda in «Quando non ci
      stanno», poi in quest'ordine:
      1. stringili: la CTA corta e le prove nella versione piccola della scheda, in fila invece che uno sotto l'altro;
@@ -297,10 +299,15 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
      una riga ogni 2100 px per concept (C1 a y 0, C2 a y 2100...). In una pagina che ha già delle ad, la prima riga
      nuova va 2100 px sotto l'ultima.
    - **Safe zone:** quella della scheda, se ne indica una; se no quella di Meta per il 9:16, area utile x 65-1015,
-     y 269-1248 (liberi il 14% in alto, il 35% in basso e il 6% ai lati). Testi, logo, CTA e soggetti
-     essenziali dentro; lo sfondo può andare al vivo.
+     y 269-1248 (liberi il 14% in alto, il 35% in basso e il 6% ai lati: le specifiche di Meta per le immagini di
+     Stories e Reels). Testi, logo, CTA e soggetti essenziali dentro; lo sfondo può andare al vivo.
+     **La safe zone è un limite, non lo spazio da riempire** (Max, 19/11). Il blocco con testi, CTA e prove si centra
+     sulla metà del frame (y 960 nel 9:16), non distribuito dall'alto al basso della safe zone; se è troppo alto per
+     restare sopra y 1248, si sale solo quanto serve. Il soggetto principale della scena sta al centro, non nella metà
+     alta. Il logo resta dove dice la scheda (per esempio in cima). Sotto la safe zone ci va la scena, mai un fondo
+     vuoto. Nel 1:1 lo stesso blocco si centra sul frame.
 4. Guarda i frame con **una** `figma.sh schermate` su tutti i frame del giro: testi tagliati, sovrapposti alla grafica o
-   fuori dalla zona sicura si correggono subito.
+   fuori dalla zona sicura, e un blocco spinto in alto con un vuoto sotto, si correggono subito.
 5. **Le scene in «Foto e immagini»**, a brief finito: se la pagina non c'è, creala. Una riga per brief, la più recente
    in alto, con sopra il nome del lotto come testo; un rettangolo per scena, con la misura dell'immagine e il nome
    dell'ad (`B<n>_ <data> - C<k>`, `C<k>-2`...), riempito con lo **stesso `imageHash`** già caricato nei frame: niente
