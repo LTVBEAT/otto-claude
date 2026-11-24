@@ -1,8 +1,10 @@
 {
   "name": "alfred",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Parla con Alfred, l'agente debrief e task di LTV, direttamente da Claude Code: debrief delle call, task ed esperimenti su TaskFlow, attese del cliente.",
-  "author": { "name": "LTV" },
+  "author": {
+    "name": "LTV"
+  },
   "userConfig": {
     "token": {
       "type": "string",
@@ -16,7 +18,11 @@
     "alfred": {
       "type": "http",
       "url": "https://otto-hermes.ltvalue.it/alfred",
-      "headers": { "Authorization": "Bearer ${user_config.token}" }
+      "headers": {
+        "Authorization": "Bearer ${user_config.token}",
+        "X-Claude-Sessione": "${CLAUDE_CODE_HOST_SESSION_ID}"
+      },
+      "headersHelper": "printf '{\"X-Claude-Processo\":\"%s-%s\"}' \"$PPID\" \"$(ps -o lstart= -p $PPID | tr -cd 0-9)\""
     }
   }
 }
