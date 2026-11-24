@@ -280,6 +280,36 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
      del kit, con il testo chiaro), e nel resoconto proponi di aggiungere quella variante al brand kit.
    - I testi come livelli, nel font del brand kit (se manca in Figma, il sostituto indicato dal brand kit) e nei suoi
      colori, nello spazio lasciato libero dalla scena.
+   - **Testi grandi** (Max, 24/11): l'ad si guarda sul telefono, e un testo che sembra giusto su Figma lì è piccolo.
+     Misure minime nei frame da 1080 di larghezza, 9:16 e 1:1 uguali:
+
+     | Elemento | Minimo | Di solito |
+     |---|---|---|
+     | headline | 96 px | 110-150 px |
+     | subheadline e copy | 52 px | 56-68 px |
+     | testo della CTA | 44 px | 46-54 px |
+     | prove, etichette, disclaimer | 32 px | 34-40 px |
+
+     La scheda del cliente può chiedere di più, mai di meno. Se un testo non entra alla misura minima, **si accorcia il
+     testo, non il corpo**: lo riscrivi più corto con le regole del cliente (un testo del brief lo tieni e proponi la
+     versione corta nel resoconto). La headline sta su 3 righe al massimo, interlinea 1-1,15.
+   - **Contrasto** (Max, 24/11): ogni testo si legge a colpo d'occhio sulla scena che ha dietro. Si misura, non si
+     stima: con uno script sui pixel della scena nella zona del testo, il rapporto di contrasto WCAG fra il colore del
+     testo e il colore medio della zona deve essere **almeno 4,5:1**, e nessuna parte della zona deve scendere sotto
+     3:1 (un cielo chiaro con una nuvola, un volto). Se non basta, in quest'ordine:
+     1. l'altro colore del testo del brand kit (chiaro su scena scura, scuro su scena chiara);
+     2. un'altra zona libera della scena, più uniforme, sempre fuori dal visual principale;
+     3. una sfumatura morbida dal bordo del frame verso il testo, nel colore scuro (o chiaro) della scena stessa,
+        opaca al massimo al 60% e senza un bordo netto: deve sembrare luce della foto, non un elemento;
+     4. la card del ripiego (sotto, «Se non c'è spazio libero»);
+     5. chiedere se rigenerare la scena con una zona più calma per i testi.
+     Nel resoconto scrivi, per ogni ad, il contrasto misurato e il ripiego usato.
+   - **Niente fasce né riquadri messi a caso** (Max, 24/11). Sull'ad va solo quello che ha un motivo: gli elementi
+     scelti al passo 4 e, se serve, la card del ripiego. Mai una fascia piena da bordo a bordo, una barra nera dietro
+     una riga di testo o un riquadro aggiunto «per stare sicuri». La card, quando c'è, è una sola per frame, abbraccia
+     il blocco dei testi con un margine interno uguale sui quattro lati (almeno 40 px), è allineata al blocco e ai
+     margini della safe zone, ha gli angoli dei pulsanti del kit e non tocca i bordi del frame. Il fondo nero del frame
+     non si vede mai: la scena copre tutto il frame, in tutti e due i formati.
    - **Mockup** (supporti del passo 4):
      - **Nella scena:** misura il supporto vuoto con lo script sui pixel chiari, poi sopra `Scena` un rettangolo
        `Mockup - <cosa>` con quella posizione e misura, gli angoli arrotondati come lo schermo, l'immagine vera caricata
@@ -307,7 +337,9 @@ generate) e **una pagina per brief**, `B<n>_ <data>`.
      alta. Il logo resta dove dice la scheda (per esempio in cima). Sotto la safe zone ci va la scena, mai un fondo
      vuoto. Nel 1:1 lo stesso blocco si centra sul frame.
 4. Guarda i frame con **una** `figma.sh schermate` su tutti i frame del giro: testi tagliati, sovrapposti alla grafica o
-   fuori dalla zona sicura, e un blocco spinto in alto con un vuoto sotto, si correggono subito.
+   fuori dalla zona sicura, un blocco spinto in alto con un vuoto sotto, testi sotto le misure minime, contrasto sotto
+   4,5:1, fasce o riquadri senza motivo e fondo nero che si vede: si correggono subito. Guarda ogni frame anche
+   rimpicciolito a 360 px di larghezza (`--scala 0.33`): se lì un testo non si legge, è troppo piccolo.
 5. **Le scene in «Foto e immagini»**, a brief finito: se la pagina non c'è, creala. Una riga per brief, la più recente
    in alto, con sopra il nome del lotto come testo; un rettangolo per scena, con la misura dell'immagine e il nome
    dell'ad (`B<n>_ <data> - C<k>`, `C<k>-2`...), riempito con lo **stesso `imageHash`** già caricato nei frame: niente
