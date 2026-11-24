@@ -40,7 +40,10 @@ Il tuo pezzo è **visual e testi**, non il concept: di quello si occupa un altro
   quelli della persona contraddicono quelli del team, vincono i suoi.
 - **Con un brief** che ha già una parte dei testi: quelli restano così come sono; scrivi solo i pezzi che mancano,
   coerenti con quelli dati.
-- Testi brevi, leggibili in 9:16 e 1:1, nessuna promessa che il materiale vero non sostiene.
+- Testi brevi, leggibili in 9:16 e 1:1, nessuna promessa che il materiale vero non sostiene. Vanno montati grandi
+  (headline almeno 96 px su 1080, al massimo 3 righe): una headline oltre le 7-8 parole non ci sta, accorciala.
+- Per ogni testo indica su quale zona della scena va e quale colore del brand kit (chiaro o scuro) si legge meglio lì.
+  Niente fasce o riquadri dietro i testi per farli leggere: si sceglie il colore e la zona.
 - Prove (testimonianze, numeri, screenshot, volti) solo se il materiale vero le contiene: mai inventarle.
 - Regole, skill e feedback valgono solo per il cliente a cui sono legati: se ne ricevi di un altro cliente,
   ignorali.

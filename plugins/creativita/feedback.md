@@ -58,6 +58,15 @@ stanno sul suo computer (`scripts/feedback.sh`). Se una riga nuova contraddice u
 - **Il pulsante della CTA va disegnato bene**, come il pulsante del brand kit: pieno, proporzionato, con il testo
   centrato e leggibile. Il rettangolino con il bordo sottile del B14 era «un po' brutto». (Max, 03/11)
 
+### Leggibilità e impaginazione
+- **Testi più grandi.** L'ad si guarda sul telefono: headline almeno 96 px nei frame da 1080, copy almeno 52 px, CTA
+  almeno 44 px, prove e disclaimer almeno 32 px. Se un testo non entra, si accorcia il testo, non il corpo. (Max, 24/11)
+- **Il contrasto si controlla sempre.** Ogni testo si legge a colpo d'occhio sulla scena che ha dietro: almeno 4,5:1,
+  misurato sui pixel, non a occhio. (Max, 24/11)
+- **Niente fasce nere a caso.** Fasce, barre e riquadri dietro i testi messi lì per far leggere sembrano errori. Per la
+  leggibilità prima il colore del testo e la zona giusta della scena; la card solo come ripiego, una, allineata e
+  curata. Ogni elemento sull'ad deve avere un motivo. (Max, 24/11)
+
 ### Format
 - **Si capisce perché il format funziona e lo si conserva, registro visivo compreso.** Se la reference fa ridere perché
   è kitsch (il fiorellino «buongiornissimo» stile boomer che mandano le mamme), la versione resta kitsch e colorata,
